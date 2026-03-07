@@ -1,9 +1,15 @@
+/* ─────────────────────────────────────────────────────────────
+   Hero — Mobile-first
+   Base: 375–393px  |  md: 768px  |  lg: 1024px
+   ───────────────────────────────────────────────────────────── */
+
 .section {
   position: relative;
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 100px var(--content-pad) 60px;
+  /* Reduced horizontal padding on mobile so heading text gets more width */
+  padding: 100px 12px 60px;
   overflow: hidden;
   background: #fff;
 }
@@ -17,7 +23,6 @@
 @media (min-width: 1024px) {
   .section {
     padding: 80px var(--content-pad-lg) 80px;
-    min-height: 100svh;
   }
 }
 
@@ -55,7 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-40);
+  gap: var(--sp-32);
 }
 
 @media (min-width: 1024px) {
@@ -74,6 +79,7 @@
   gap: var(--sp-20);
   text-align: center;
   flex: 1;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -84,14 +90,14 @@
   }
 }
 
+/* ── Heading ─────────────────────────────────────────────── */
 .heading {
   font-family: var(--font-header);
   font-weight: var(--weight-light);
-  font-size: var(--size-header);
+  font-size: var(--size-header);   /* 34px */
   line-height: var(--lh-header);
   letter-spacing: var(--ls-header);
   color: var(--color-fg-1);
-  max-width: 360px;
 }
 
 @media (min-width: 1024px) {
@@ -101,6 +107,38 @@
   }
 }
 
+/* ── Shimmer on "future-ready schools." ──────────────────── */
+@keyframes textShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-fg-1)   0%,
+    var(--color-fg-1)  38%,
+    #A8D98E            50%,   /* subtle brand green highlight */
+    var(--color-fg-1)  62%,
+    var(--color-fg-1) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    -webkit-text-fill-color: var(--color-fg-1);
+    background: none;
+    animation: none;
+  }
+}
+
+/* ── Subtext ─────────────────────────────────────────────── */
 .subtext {
   font-family: var(--font-body);
   font-weight: var(--weight-regular);
@@ -119,7 +157,6 @@
 /* ── Logo carousel ───────────────────────────────────────── */
 .carouselWrapper {
   width: 100%;
-  max-width: 393px;
   overflow: hidden;
   position: relative;
 }
@@ -185,8 +222,32 @@
   border-radius: 50%;
 }
 
+/* ── CTA button ──────────────────────────────────────────── */
 .cta {
   margin-top: var(--sp-8);
+}
+
+/* Mobile: hide the desktop CTA (it lives in textCol) */
+.ctaDesktop {
+  display: none;
+}
+
+/* Mobile: show the CTA inside connectorArea */
+.ctaMobile {
+  display: inline-flex;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  /* Desktop: show CTA in text column */
+  .ctaDesktop {
+    display: inline-flex;
+  }
+  /* Desktop: hide the one inside connectorArea */
+  .ctaMobile {
+    display: none;
+  }
 }
 
 /* ── Media column ────────────────────────────────────────── */
@@ -196,7 +257,7 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
-  max-width: 393px;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -205,39 +266,68 @@
   }
 }
 
-.centreLine {
+/* ── Connector area (mobile: line + video + CTA) ─────────── */
+/*
+  The ::before pseudo-element draws the thin vertical decorative line
+  that runs behind both the video and the CTA button.
+*/
+.connectorArea {
+  position: relative;
   display: flex;
-  justify-content: center;
-  margin-bottom: var(--sp-16);
-  height: 60px;
-  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-24);
+  padding: 20px 0 0;
+  width: 100%;
 }
 
-.centreLine img {
-  height: 60px;
-  width: auto;
-  opacity: 0.5;
+/* Vertical connector line */
+.connectorArea::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-0.5px);
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(140, 190, 120, 0.45) 8%,
+    rgba(140, 190, 120, 0.45) 92%,
+    transparent 100%
+  );
+  z-index: 0;
+  pointer-events: none;
 }
 
 @media (min-width: 1024px) {
-  .centreLine {
-    display: none; /* On desktop the layout is horizontal, no vertical spacer needed */
+  .connectorArea {
+    padding: 0;
+    gap: 0;
+  }
+  /* Hide the connector line on desktop */
+  .connectorArea::before {
+    display: none;
   }
 }
 
 /* ── Video frame ─────────────────────────────────────────── */
 .videoFrame {
   position: relative;
-  width: 100%;
-  max-width: 347px;
+  z-index: 1;
+  /* Mobile: extend to 8px from each screen edge */
+  width: calc(100vw - 16px);
+  max-width: none;
   border-radius: var(--radius-video);
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-video);
 }
 
 @media (min-width: 1024px) {
   .videoFrame {
+    width: 100%;
     max-width: 480px;
   }
 }

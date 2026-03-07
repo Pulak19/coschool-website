@@ -1,10 +1,10 @@
 import styles from './Hero.module.css';
 
 /* ── YouTube embed ───────────────────────────────────────── */
-const YT_ID       = '61iN2emMqbs';
-const YT_EMBED    = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&rel=0&playsinline=1`;
+const YT_ID    = '61iN2emMqbs';
+const YT_EMBED = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&rel=0&playsinline=1`;
 
-/* ── Asset URLs (from Figma localhost server) ─────────────── */
+/* ── School logos ────────────────────────────────────────── */
 const SCHOOL_LOGOS = [
   { src: '/assets/7189a43be41332f496c96c2c441cb0d41369c051.png', alt: 'Partner School 1' },
   { src: '/assets/317ba6c582beb06f3b2d8582cf8f2825f34cfd9e.png', alt: 'Partner School 2' },
@@ -15,8 +15,6 @@ const SCHOOL_LOGOS = [
 ];
 
 export default function Hero() {
-
-  // Duplicate logos for seamless infinite scroll
   const logoSet = [...SCHOOL_LOGOS, ...SCHOOL_LOGOS];
 
   return (
@@ -26,10 +24,12 @@ export default function Hero() {
       <div className={styles.orbBottomLeft} aria-hidden="true" />
 
       <div className={styles.inner}>
-        {/* ── Left / Text column ───────────────────────────── */}
+
+        {/* ── Text column ───────────────────────────────── */}
         <div className={styles.textCol}>
           <h1 className={styles.heading}>
-            India's trusted AI Partner for future&#8209;ready schools.
+            India's trusted AI Partner for{' '}
+            <span className={styles.shimmer}>future&#8209;ready schools.</span>
           </h1>
 
           <p className={styles.subtext}>
@@ -54,35 +54,38 @@ export default function Hero() {
             </div>
           </div>
 
-          <a href="#cta" className={`btn-primary ${styles.cta}`} aria-label="Learn more about CoSchool">
+          {/* Desktop-only CTA — hidden on mobile */}
+          <a href="#cta" className={`btn-primary ${styles.cta} ${styles.ctaDesktop}`} aria-label="Learn more about CoSchool">
             About Us
           </a>
         </div>
 
-        {/* ── Right / Media column ─────────────────────────── */}
+        {/* ── Media column ──────────────────────────────── */}
         <div className={styles.mediaCol}>
-          {/* Vertical centre line (decorative) */}
-          <div className={styles.centreLine} aria-hidden="true">
-            <img
-              src="/assets/06f6282eca5939739fbfc96885e61200d300680c.svg"
-              alt=""
-              width="1"
-              height="323"
-            />
-          </div>
+          {/*
+            connectorArea: holds the decorative vertical line (via ::before),
+            the video, and the mobile-only CTA — in that order top to bottom.
+          */}
+          <div className={styles.connectorArea}>
+            {/* Video frame — full-width on mobile */}
+            <div className={styles.videoFrame}>
+              <iframe
+                className={styles.video}
+                src={YT_EMBED}
+                title="Intro video about CoSchool"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading="eager"
+              />
+            </div>
 
-          {/* Video frame — YouTube embed, autoplays muted */}
-          <div className={styles.videoFrame}>
-            <iframe
-              className={styles.video}
-              src={YT_EMBED}
-              title="Intro video about CoSchool"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-              loading="eager"
-            />
+            {/* Mobile-only CTA — hidden on desktop */}
+            <a href="#cta" className={`btn-primary ${styles.cta} ${styles.ctaMobile}`} aria-label="Learn more about CoSchool">
+              About Us
+            </a>
           </div>
         </div>
+
       </div>
     </section>
   );

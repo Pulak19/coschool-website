@@ -1,0 +1,91 @@
+/* ============================================================
+   CoSchool Design System — CSS Custom Properties
+   Source: Figma Style Sheet (node 4:80)
+   ============================================================ */
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────── */
+  --color-brand:        #73B462;
+  --color-brand-light:  #ABE881;
+  --color-brand-stroke: #DCE9D3;
+  --color-brand-glow:   rgba(171, 232, 129, 0.3);
+  --color-fg-1:         #3C3D3C;
+  --color-fg-2:         #434C3D;
+  --color-bg-orb:       rgba(213, 244, 205, 0.4);
+  --color-card-border:  #DBE6DA;
+  --color-dark:         #141713;
+  --color-dark-section: #1A1D18;
+
+  /* ── Button ─────────────────────────────────────────────── */
+  --btn-bg:             linear-gradient(110.52deg, rgba(0,0,0,0.96) 7.97%, rgba(39,39,39,0.96) 97.89%);
+  --btn-border:         rgba(255,255,255,1);
+  --btn-hover-border:   #ABE881;
+  --btn-hover-shadow:   0px 2px 24px 0px rgba(171, 232, 129, 0.3);
+  --btn-hover-scale:    1.05;
+  --btn-radius:         38px;
+  --btn-pad-v:          10px;
+  --btn-pad-h:          26px;
+  --btn-pad-v-lg:       16px;
+  --btn-pad-h-lg:       40px;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-header: 'Roboto Serif', Georgia, serif;
+  --font-body:   'Open Sans', system-ui, sans-serif;
+  --font-footer: 'Poppins', system-ui, sans-serif;
+
+  --size-header:    34px;
+  --size-subheader: 20px;
+  --size-body:      15px;
+  --size-label:     11px;
+
+  --weight-thin:     100;
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  --lh-header: 1.2;
+  --lh-body:   1.5;
+
+  --ls-header:    -0.2881px;
+  --ls-subheader: -0.29px;
+  --ls-label:      3px;
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --sp-4:  4px;
+  --sp-8:  8px;
+  --sp-10: 10px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-20: 20px;
+  --sp-24: 24px;
+  --sp-26: 26px;
+  --sp-32: 32px;
+  --sp-40: 40px;
+  --sp-56: 56px;
+  --sp-13: 13px;
+  --sp-30: 30px;
+  --sp-80: 80px;
+
+  /* ── Radius ─────────────────────────────────────────────── */
+  --radius-btn:  38px;
+  --radius-card: 20px;
+  --radius-video: 20px;
+
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-video: 0px 4px 20px 0px rgba(76, 163, 15, 0.2);
+  --shadow-card:  0px 20px 30px 0px rgba(110, 188, 57, 0.1);
+
+  /* ── Animation ───────────────────────────────────────────── */
+  --dur-btn:     180ms;
+  --dur-state:   600ms;
+  --dur-stagger: 80ms;
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-std:    ease-in-out;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --max-width: 1440px;
+  --content-pad: 19px;
+  --content-pad-md: 40px;
+  --content-pad-lg: 80px;
+}

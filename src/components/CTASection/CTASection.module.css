@@ -1,0 +1,221 @@
+.section {
+  background: #fff;
+  overflow: hidden;
+}
+
+/* ── Green bg band ───────────────────────────────────────── */
+.greenBg {
+  background: #f7fef3;
+  position: relative;
+  padding: var(--sp-56) var(--content-pad) var(--sp-56);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .greenBg {
+    padding: var(--sp-80) var(--content-pad-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .greenBg {
+    padding: 80px var(--content-pad-lg);
+  }
+}
+
+/* Background orbs (yellow-tinted in Screen 5) */
+.orbTR {
+  position: absolute;
+  top: -52px;
+  right: -7px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: rgba(255, 245, 182, 0.19);
+  filter: blur(52px);
+  pointer-events: none;
+}
+
+.orbBL {
+  position: absolute;
+  bottom: 80px;
+  left: -87px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: rgba(255, 238, 197, 0.19);
+  filter: blur(52px);
+  pointer-events: none;
+}
+
+/* ── Inner grid ──────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-40);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+}
+
+/* ── CTA text ────────────────────────────────────────────── */
+.ctaText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-16);
+  text-align: center;
+  max-width: 343px;
+}
+
+@media (min-width: 1024px) {
+  .ctaText {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+    max-width: 480px;
+  }
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+}
+
+@media (min-width: 1024px) {
+  .heading {
+    font-size: clamp(34px, 2.8vw, 48px);
+  }
+}
+
+.subheading {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-subheader);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-subheader);
+  color: var(--color-fg-2);
+  max-width: 260px;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+  max-width: 260px;
+}
+
+.body strong {
+  font-weight: var(--weight-bold);
+}
+
+/* ── Video column ────────────────────────────────────────── */
+.videoCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-16);
+  flex: 1;
+  max-width: 393px;
+}
+
+@media (min-width: 1024px) {
+  .videoCol {
+    max-width: 480px;
+  }
+}
+
+.vertLine {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.3;
+}
+
+.vertLine img {
+  width: 1px;
+  height: 60px;
+}
+
+.videoFrame {
+  position: relative;
+  width: 100%;
+  max-width: 347px;
+  border-radius: var(--radius-video);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: var(--shadow-video);
+}
+
+@media (min-width: 1024px) {
+  .videoFrame {
+    max-width: 100%;
+  }
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+  border-radius: var(--radius-video);
+}
+
+.videoLabel {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+  text-align: center;
+}
+
+/* ── Quote section ───────────────────────────────────────── */
+.quoteSection {
+  padding: var(--sp-56) var(--content-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-26);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .quoteSection {
+    padding: var(--sp-80) var(--content-pad-lg);
+    max-width: 800px;
+  }
+}
+
+.quote {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-style: normal;
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.03;
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+  text-align: center;
+}
+
+.quote em {
+  font-style: italic;
+}

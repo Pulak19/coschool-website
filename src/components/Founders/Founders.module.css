@@ -1,0 +1,271 @@
+.section {
+  background: #fff;
+  overflow: hidden;
+}
+
+/* ── White header ─────────────────────────────────────────── */
+.header {
+  padding: var(--sp-40) var(--content-pad) var(--sp-32);
+  text-align: center;
+  display: none; /* the section heading is handled by CardsStack above */
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+}
+
+/* ── Dark card ────────────────────────────────────────────── */
+.darkCard {
+  background: var(--color-dark);
+  border-radius: 24px 24px 0 0;
+  padding: var(--sp-40) var(--content-pad) var(--sp-56);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .darkCard {
+    padding: var(--sp-56) var(--content-pad-md) var(--sp-80);
+  }
+}
+
+@media (min-width: 1024px) {
+  .darkCard {
+    padding: 60px var(--content-pad-lg) 80px;
+  }
+}
+
+/* ── Founders header ─────────────────────────────────────── */
+.foundersHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-24);
+  margin-bottom: var(--sp-8);
+}
+
+.foundersTitle {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: #fff;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .foundersTitle {
+    font-size: clamp(34px, 2.8vw, 44px);
+  }
+}
+
+.vertLine {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.25;
+}
+
+.vertLine img {
+  width: 1px;
+  height: 60px;
+  filter: invert(1);
+}
+
+/* ── Photo ───────────────────────────────────────────────── */
+.photoWrap {
+  width: 100%;
+  max-width: 451px;
+  margin: 0 auto;
+}
+
+.photoInner {
+  position: relative;
+  width: 100%;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+/* Name badges */
+.badge1,
+.badge2 {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px;
+  border-radius: 2px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.badge1 {
+  bottom: 14%;
+  left: 18%;
+  background: rgba(255,255,255,0.5);
+}
+
+.badge2 {
+  bottom: 22%;
+  right: 8%;
+  background: rgba(255,255,255,0.8);
+}
+
+.badgeName1 {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-body);
+  color: #4a4d57;
+  white-space: nowrap;
+}
+
+.badgeName2 {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-body);
+  color: #b33136;
+  white-space: nowrap;
+}
+
+/* ── Bio ─────────────────────────────────────────────────── */
+.bio {
+  max-width: 296px;
+  margin: var(--sp-24) auto 0;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .bio {
+    max-width: 420px;
+  }
+}
+
+.bioText {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: rgba(255,255,255,0.75);
+}
+
+.bioLine {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.2;
+  margin: var(--sp-24) 0;
+}
+
+.bioLine img {
+  width: 1px;
+  height: 60px;
+  filter: invert(1);
+}
+
+/* ── Mission ─────────────────────────────────────────────── */
+.mission {
+  max-width: 296px;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-16);
+}
+
+@media (min-width: 1024px) {
+  .mission {
+    max-width: 420px;
+  }
+}
+
+.missionLabel {
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--color-brand);
+}
+
+.missionText {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: clamp(28px, 6vw, 40px);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: #fff;
+}
+
+/* ── Partners ────────────────────────────────────────────── */
+.partners {
+  padding: var(--sp-40) var(--content-pad) var(--sp-40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-24);
+}
+
+@media (min-width: 768px) {
+  .partners {
+    padding: var(--sp-40) var(--content-pad-md);
+  }
+}
+
+.partnersLabel {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+}
+
+.partnerLogos {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-24);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.partnerLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partnerLogo img {
+  object-fit: contain;
+  max-height: 60px;
+}
+
+/* Placeholder box for missing logos */
+.partnerPlaceholder {
+  width: 96px;
+  height: 60px;
+  border: 1px dashed var(--color-brand-stroke);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partnerPlaceholder span {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  color: var(--color-fg-2);
+  text-align: center;
+  padding: 4px;
+}

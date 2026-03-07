@@ -1,0 +1,251 @@
+.section {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 100px var(--content-pad) 60px;
+  overflow: hidden;
+  background: #fff;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 100px var(--content-pad-md) 60px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 80px var(--content-pad-lg) 80px;
+    min-height: 100svh;
+  }
+}
+
+/* ── Background orbs ─────────────────────────────────────── */
+.orbTopRight {
+  position: absolute;
+  top: -30px;
+  right: -40px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: var(--color-bg-orb);
+  filter: blur(37px);
+  pointer-events: none;
+}
+
+.orbBottomLeft {
+  position: absolute;
+  bottom: 80px;
+  left: -88px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: var(--color-bg-orb);
+  filter: blur(37px);
+  pointer-events: none;
+}
+
+/* ── Inner layout ─────────────────────────────────────────── */
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-40);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 60px;
+  }
+}
+
+/* ── Text column ─────────────────────────────────────────── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-20);
+  text-align: center;
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .textCol {
+    align-items: flex-start;
+    text-align: left;
+    max-width: 520px;
+  }
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+  max-width: 360px;
+}
+
+@media (min-width: 1024px) {
+  .heading {
+    font-size: clamp(34px, 3.2vw, 52px);
+    max-width: 520px;
+  }
+}
+
+.subtext {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+  max-width: 260px;
+}
+
+@media (min-width: 1024px) {
+  .subtext {
+    max-width: 380px;
+  }
+}
+
+/* ── Logo carousel ───────────────────────────────────────── */
+.carouselWrapper {
+  width: 100%;
+  max-width: 393px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fade edges */
+.carouselWrapper::before,
+.carouselWrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.carouselWrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.carouselWrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #fff, transparent);
+}
+
+.carouselTrack {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  animation: carouselScroll 18s linear infinite;
+  width: max-content;
+}
+
+.carouselTrack:hover {
+  animation-play-state: paused;
+}
+
+@keyframes carouselScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselTrack {
+    animation: none;
+  }
+}
+
+.logoSlot {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.schoolLogo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.cta {
+  margin-top: var(--sp-8);
+}
+
+/* ── Media column ────────────────────────────────────────── */
+.mediaCol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 393px;
+}
+
+@media (min-width: 1024px) {
+  .mediaCol {
+    max-width: 520px;
+  }
+}
+
+.centreLine {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--sp-16);
+  height: 60px;
+  overflow: hidden;
+}
+
+.centreLine img {
+  height: 60px;
+  width: auto;
+  opacity: 0.5;
+}
+
+@media (min-width: 1024px) {
+  .centreLine {
+    display: none; /* On desktop the layout is horizontal, no vertical spacer needed */
+  }
+}
+
+/* ── Video frame ─────────────────────────────────────────── */
+.videoFrame {
+  position: relative;
+  width: 100%;
+  max-width: 347px;
+  border-radius: var(--radius-video);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: var(--shadow-video);
+}
+
+@media (min-width: 1024px) {
+  .videoFrame {
+    max-width: 480px;
+  }
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+  border-radius: var(--radius-video);
+}

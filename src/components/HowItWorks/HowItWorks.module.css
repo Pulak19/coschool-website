@@ -1,0 +1,265 @@
+.section {
+  background: #fff;
+  padding: var(--sp-80) var(--content-pad) var(--sp-40);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--sp-80) var(--content-pad-md) var(--sp-40);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 100px var(--content-pad-lg) 60px;
+  }
+}
+
+/* ── Intro / header ──────────────────────────────────────── */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-16);
+  max-width: 393px;
+  margin: 0 auto var(--sp-40);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .intro {
+    max-width: 600px;
+  }
+}
+
+/* SchoolAI logo group */
+.brandLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.brandLogoMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.brandLogoMain img {
+  object-fit: contain;
+}
+
+.brandLogoBy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 72px; /* align with "School" text in logo */
+}
+
+.vertLine {
+  height: 77px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.4;
+}
+
+.vertLine img {
+  width: 1px;
+  height: 77px;
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+}
+
+@media (min-width: 1024px) {
+  .heading {
+    font-size: clamp(34px, 2.8vw, 44px);
+  }
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+  white-space: pre-wrap;
+}
+
+/* Feature bullets card */
+.featureCard {
+  background: #f7f9f6;
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: var(--radius-card);
+  padding: 27px 19px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-16);
+}
+
+.featureBullet {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-10);
+}
+
+.featureBullet img {
+  flex-shrink: 0;
+}
+
+.featureBulletText {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+}
+
+/* ── HOW IT WORKS label ─────────────────────────────────── */
+.howLabel {
+  font-family: var(--font-body);
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-label);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-label);
+  color: #4CA30F;
+  text-align: center;
+  text-transform: uppercase;
+  margin: var(--sp-40) 0 var(--sp-24);
+}
+
+/* ── Persona role heading ────────────────────────────────── */
+.personaRole {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+  text-align: center;
+  margin: var(--sp-40) auto var(--sp-20);
+  max-width: 343px;
+}
+
+@media (min-width: 1024px) {
+  .personaRole {
+    font-size: clamp(34px, 2.8vw, 44px);
+    max-width: 600px;
+  }
+}
+
+/* ── Persona section ─────────────────────────────────────── */
+.persona {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-24);
+  align-items: center;
+  max-width: 393px;
+  margin: 0 auto var(--sp-56);
+}
+
+@media (min-width: 1024px) {
+  .persona {
+    flex-direction: row;
+    max-width: var(--max-width);
+    gap: 60px;
+    padding: 0 var(--content-pad-lg);
+    align-items: center;
+  }
+
+  .personaReverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.personaText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-13);
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .personaText {
+    max-width: 400px;
+  }
+}
+
+.personaTextContent {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.personaFeature {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-subheader);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-subheader);
+  color: var(--color-fg-1);
+}
+
+.personaBody {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+}
+
+.personaMedia {
+  flex: 1;
+  width: 100%;
+}
+
+/* ── iPad mockup ─────────────────────────────────────────── */
+.ipadWrap {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.ipadInner {
+  position: relative;
+  width: 100%;
+  padding-bottom: 71.2%; /* 306/430 aspect ratio */
+}
+
+.ipadScreen {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: calc(100% - 30px);
+  height: calc(100% - 24px);
+  object-fit: cover;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.ipadFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Bottom CTA ─────────────────────────────────────────── */
+.ctaWrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-40) 0 var(--sp-56);
+}

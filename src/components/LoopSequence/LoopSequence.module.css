@@ -1,0 +1,329 @@
+/* ─────────────────────────────────────────────────────────────
+   LoopSequence — Scroll-driven red-arc animation
+   Figma: Revision 1 (10:2707) + Revision 2 (10:2762)
+   Mobile-first: base = 375–393px, breakpoints at 768px, 1024px
+   ───────────────────────────────────────────────────────────── */
+
+/* Section is tall enough to scroll through 6 states (100vh each) */
+.section {
+  position: relative;
+  height: 600vh;
+  background: #fff;
+}
+
+/* Sticky viewport — content locks here while section scrolls past */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Background orbs ─────────────────────────────────────── */
+.orbTR {
+  position: absolute;
+  top: 134px;
+  right: -88px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: rgba(213, 244, 205, 0.4);
+  filter: blur(37px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbBL {
+  position: absolute;
+  bottom: 0;
+  left: -88px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  background: rgba(213, 244, 205, 0.4);
+  filter: blur(37px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+/*
+  Fixed height so the circle area never shifts regardless of state.
+  Figma (10:2707): header top=46px, icon=44px, gap=16px, title≈2 lines.
+  We set a min-height so it's always the same vertical footprint.
+*/
+.header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-16);
+  padding-top: 46px;
+  width: 100%;
+  max-width: 343px;
+  text-align: center;
+  flex-shrink: 0;
+  /* Fixed height prevents header from shifting when content changes */
+  min-height: 160px;
+}
+
+@media (min-width: 1024px) {
+  .header {
+    max-width: 540px;
+    min-height: 180px;
+  }
+}
+
+.headerIcon {
+  width: 45px;
+  height: 44px;
+}
+
+.title {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: clamp(34px, 2.8vw, 44px);
+  }
+}
+
+/* ── Circle area ─────────────────────────────────────────── */
+.circleArea {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  /* min-height prevents area from collapsing */
+  min-height: 0;
+}
+
+/* ── Circle wrapper ──────────────────────────────────────── */
+.circleWrap {
+  position: relative;
+  width: min(351px, 90vw);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .circleWrap {
+    width: min(480px, 50vw);
+  }
+}
+
+/* SVG fills the wrapper */
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Red arc stroke — GPU-accelerated */
+.arcStroke {
+  transition: stroke-dashoffset 0.15s linear;
+  will-change: stroke-dashoffset;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcStroke {
+    transition: none;
+  }
+}
+
+/* ── Illustration (centered inside circle) ───────────────── */
+.illustrationWrap {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48%;   /* ~168/351 from Figma */
+  aspect-ratio: 168 / 185;
+  pointer-events: none;
+  transition: opacity var(--dur-state) var(--ease-std);
+}
+
+/* Fade out the whole illustration wrap in final state */
+.illustrationWrapHidden {
+  opacity: 0;
+}
+
+.illustration {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translateX(8px);
+  transition:
+    opacity var(--dur-state) var(--ease-std),
+    transform var(--dur-state) var(--ease-spring);
+}
+
+.illustrationVisible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Final state center (2f) ─────────────────────────────── */
+.finalCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-state) var(--ease-std);
+}
+
+.finalCenterVisible {
+  opacity: 1;
+}
+
+.finalText {
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-subheader);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-subheader);
+  color: var(--color-brand);
+  text-align: center;
+}
+
+/* ── Step number ─────────────────────────────────────────── */
+/*
+  Always rendered. In final state (2f) the entire row fades out
+  via .stepRowHidden — no layout shift since it keeps its space.
+*/
+.stepRow {
+  position: relative;
+  width: 140px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -8px;   /* slightly overlap circle bottom */
+  pointer-events: none;
+  transition: opacity var(--dur-state) var(--ease-std);
+}
+
+.stepRowHidden {
+  opacity: 0;
+}
+
+.stepNumber {
+  position: absolute;
+  font-family: var(--font-header);
+  font-weight: var(--weight-thin);
+  font-size: clamp(80px, 20vw, 120px);
+  line-height: 1.03;
+  letter-spacing: var(--ls-header);
+  color: rgba(99, 175, 45, 0.28);
+  text-align: center;
+  opacity: 0;
+  transition: opacity var(--dur-state) var(--ease-std);
+  user-select: none;
+}
+
+.stepNumberVisible {
+  opacity: 1;
+}
+
+/* ── Caption ─────────────────────────────────────────────── */
+/*
+  Always rendered. In final state (2f) fades out via .captionWrapHidden.
+  Fixed min-height prevents layout jump even when invisible.
+*/
+.captionWrap {
+  position: relative;
+  width: 322px;
+  text-align: center;
+  margin-bottom: 32px;
+  flex-shrink: 0;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--dur-state) var(--ease-std);
+}
+
+.captionWrapHidden {
+  opacity: 0;
+}
+
+@media (min-width: 1024px) {
+  .captionWrap {
+    width: 440px;
+  }
+}
+
+.caption {
+  position: absolute;
+  font-family: var(--font-body);
+  font-weight: var(--weight-bold);
+  font-size: var(--size-subheader);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-subheader);
+  color: var(--color-fg-1);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-state) var(--ease-std),
+    transform var(--dur-state) var(--ease-spring);
+}
+
+.captionVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Progress dots (mobile indicator) ───────────────────── */
+.progressDots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--sp-8);
+  z-index: 4;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(200, 200, 200, 0.6);
+  transition: background var(--dur-btn) var(--ease-std),
+              transform var(--dur-btn) var(--ease-std);
+}
+
+.dotActive {
+  background: #E03030;
+  transform: scale(1.4);
+}
+
+@media (min-width: 1024px) {
+  .progressDots {
+    display: none;
+  }
+}

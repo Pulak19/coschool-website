@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './Nav.module.css';
 
-const LOGO_SRC       = 'http://localhost:3845/assets/e66d37c4b88483b3c6d7f9aa4633d64091ca67e2.svg';
-const LOGO_WHITE_SRC = 'http://localhost:3845/assets/732de6843b4f1bd5fbced728a151768a4837a1f2.svg';
+const LOGO_SRC       = '/assets/e66d37c4b88483b3c6d7f9aa4633d64091ca67e2.svg';
+const LOGO_WHITE_SRC = '/assets/732de6843b4f1bd5fbced728a151768a4837a1f2.svg';
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#hero' },
@@ -64,7 +64,7 @@ export default function Nav() {
           onClick={() => setMenuOpen((o) => !o)}
         >
           <img
-            src="http://localhost:3845/assets/66c420125efae681354f488f24bff9b7af3facbc.svg"
+            src="/assets/66c420125efae681354f488f24bff9b7af3facbc.svg"
             alt=""
             width="18"
             height="18"

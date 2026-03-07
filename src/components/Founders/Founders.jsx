@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import styles from './Founders.module.css';
 
-const FOUNDERS_PHOTO = 'http://localhost:3845/assets/0ee1586dbffa13ca8932e31e99a9035aa8e589fd.png';
-const VERT_LINE      = 'http://localhost:3845/assets/3a05e52d8b662a9c3c4b10e96eaceb33167358be.svg';
+const FOUNDERS_PHOTO = '/assets/0ee1586dbffa13ca8932e31e99a9035aa8e589fd.png';
+const VERT_LINE      = '/assets/3a05e52d8b662a9c3c4b10e96eaceb33167358be.svg';
 
 /* Placeholder partner logos — replace with actual assets */
 const PARTNERS = [

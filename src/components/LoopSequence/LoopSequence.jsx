@@ -2,33 +2,33 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import styles from './LoopSequence.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
-const BROKEN_ICON = 'http://localhost:3845/assets/a685246c558f29ba34e4f4e5fa4fabb204ffe31b.svg';
+const BROKEN_ICON = '/assets/a685246c558f29ba34e4f4e5fa4fabb204ffe31b.svg';
 
 /* ── State data ──────────────────────────────────────────── */
 const STATES = [
   {
     id: '2a', step: 1,
-    illustration: 'http://localhost:3845/assets/9050e2157c849d89645f31f9d325bf01921d8ae9.svg',
+    illustration: '/assets/9050e2157c849d89645f31f9d325bf01921d8ae9.svg',
     caption: 'Teaching happens with fixed lesson plan',
   },
   {
     id: '2b', step: 2,
-    illustration: 'http://localhost:3845/assets/75ce0ef92d8cd66be6e0d54ac6a9248d395780ad.svg',
+    illustration: '/assets/75ce0ef92d8cd66be6e0d54ac6a9248d395780ad.svg',
     caption: 'Students practice with learning gaps with no help',
   },
   {
     id: '2c', step: 3,
-    illustration: 'http://localhost:3845/assets/1638cea70f7245bf4a385a2cb9623426745e033c.svg',
+    illustration: '/assets/1638cea70f7245bf4a385a2cb9623426745e033c.svg',
     caption: "Teachers can't intervene timely and parents can't help",
   },
   {
     id: '2d', step: 4,
-    illustration: 'http://localhost:3845/assets/77a6a69cfda4e64f8814a57bf7e6a826d4a4bc26.svg',
+    illustration: '/assets/77a6a69cfda4e64f8814a57bf7e6a826d4a4bc26.svg',
     caption: 'Feedback arrives late and students move ahead with unresolved gaps',
   },
   {
     id: '2e', step: 5,
-    illustration: 'http://localhost:3845/assets/cb312fcd6cea6c5b072ca7ff1efba493dc8e0fa1.svg',
+    illustration: '/assets/cb312fcd6cea6c5b072ca7ff1efba493dc8e0fa1.svg',
     caption: 'Leaders decide without learning visibility',
   },
   {

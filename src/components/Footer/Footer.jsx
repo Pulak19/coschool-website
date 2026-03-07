@@ -1,7 +1,7 @@
 import styles from './Footer.module.css';
 
-const LOGO_WHITE = 'http://localhost:3845/assets/732de6843b4f1bd5fbced728a151768a4837a1f2.svg';
-const ARROW_ICON = 'http://localhost:3845/assets/4d92bef19e05594a36016139ac4b9d12b12fc197.svg';
+const LOGO_WHITE = '/assets/732de6843b4f1bd5fbced728a151768a4837a1f2.svg';
+const ARROW_ICON = '/assets/4d92bef19e05594a36016139ac4b9d12b12fc197.svg';
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#hero' },

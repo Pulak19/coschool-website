@@ -5,8 +5,8 @@ import styles from './CTASection.module.css';
 const YT_ID         = '61iN2emMqbs';
 const YT_WALKTHROUGH = `https://www.youtube.com/embed/${YT_ID}?rel=0&playsinline=1`;
 
-const VERT_LINE     = 'http://localhost:3845/assets/635e69af13927df7c1865331535343f2b5d088df.svg';
-const QUOTE_ICON    = 'http://localhost:3845/assets/ea9c058485855fde34df078855b6702d7b35aa9c.svg';
+const VERT_LINE     = '/assets/635e69af13927df7c1865331535343f2b5d088df.svg';
+const QUOTE_ICON    = '/assets/ea9c058485855fde34df078855b6702d7b35aa9c.svg';
 
 function useFadeIn() {
   const ref = useRef(null);

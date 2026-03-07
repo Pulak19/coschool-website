@@ -2,8 +2,8 @@ import { useRef, useEffect, useCallback } from 'react';
 import styles from './CardsStack.module.css';
 
 /* ── Asset ───────────────────────────────────────────────── */
-const CARD_ICON = 'http://localhost:3845/assets/59a8d6a60c4831bea3dd7b6863a0a5692f178ab1.svg';
-const VERT_LINE = 'http://localhost:3845/assets/3a05e52d8b662a9c3c4b10e96eaceb33167358be.svg';
+const CARD_ICON = '/assets/59a8d6a60c4831bea3dd7b6863a0a5692f178ab1.svg';
+const VERT_LINE = '/assets/3a05e52d8b662a9c3c4b10e96eaceb33167358be.svg';
 
 const CARDS = [
   {

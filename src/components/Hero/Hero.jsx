@@ -6,12 +6,12 @@ const YT_EMBED    = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&lo
 
 /* ── Asset URLs (from Figma localhost server) ─────────────── */
 const SCHOOL_LOGOS = [
-  { src: 'http://localhost:3845/assets/7189a43be41332f496c96c2c441cb0d41369c051.png', alt: 'Partner School 1' },
-  { src: 'http://localhost:3845/assets/317ba6c582beb06f3b2d8582cf8f2825f34cfd9e.png', alt: 'Partner School 2' },
-  { src: 'http://localhost:3845/assets/56cacf5efbe291c1a7ad94ff87df708d3478cdc6.png', alt: 'Partner School 3' },
-  { src: 'http://localhost:3845/assets/21cd530f0bc18ad3630da63e3150ea96c4118dfe.png', alt: 'Partner School 4' },
-  { src: 'http://localhost:3845/assets/ab8ed4ef94483d8e032d65850d16e40465e94f48.png', alt: 'Partner School 5' },
-  { src: 'http://localhost:3845/assets/1af9e7182a6274f1e6bf0d33e112a2214e408c3f.png', alt: 'Partner School 6' },
+  { src: '/assets/7189a43be41332f496c96c2c441cb0d41369c051.png', alt: 'Partner School 1' },
+  { src: '/assets/317ba6c582beb06f3b2d8582cf8f2825f34cfd9e.png', alt: 'Partner School 2' },
+  { src: '/assets/56cacf5efbe291c1a7ad94ff87df708d3478cdc6.png', alt: 'Partner School 3' },
+  { src: '/assets/21cd530f0bc18ad3630da63e3150ea96c4118dfe.png', alt: 'Partner School 4' },
+  { src: '/assets/ab8ed4ef94483d8e032d65850d16e40465e94f48.png', alt: 'Partner School 5' },
+  { src: '/assets/1af9e7182a6274f1e6bf0d33e112a2214e408c3f.png', alt: 'Partner School 6' },
 ];
 
 export default function Hero() {
@@ -64,7 +64,7 @@ export default function Hero() {
           {/* Vertical centre line (decorative) */}
           <div className={styles.centreLine} aria-hidden="true">
             <img
-              src="http://localhost:3845/assets/06f6282eca5939739fbfc96885e61200d300680c.svg"
+              src="/assets/06f6282eca5939739fbfc96885e61200d300680c.svg"
               alt=""
               width="1"
               height="323"

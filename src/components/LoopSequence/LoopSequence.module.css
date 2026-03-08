@@ -12,12 +12,12 @@
   background: #fff;
 }
 
-/* Sticky viewport — content locks here while section scrolls past */
+/* Sticky viewport — sits below fixed nav (64px), locks while section scrolls */
 .sticky {
   position: sticky;
-  top: 0;
-  height: 100svh;
-  min-height: 600px;
+  top: 64px;
+  height: calc(100svh - 64px);
+  min-height: 540px;
   overflow: hidden;
 }
 
@@ -49,12 +49,20 @@
 }
 
 /* ── Icon wrap — always at top, same position in all states ─ */
+/*
+  108px container matches Figma's "Broken Link" block, giving the
+  spread animation room above and below the 44px icon.
+*/
 .iconWrap {
   position: absolute;
-  top: 72px;
+  top: 46px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .headerIcon {
@@ -105,30 +113,30 @@
 }
 
 /* ── Circle layer — fades in + slides up from below ─────────── */
+/*
+  padding-top = 46 (icon top) + 108 (icon container h) + 67 (gap) = 221px
+  This places the circleWrap exactly where Figma specifies.
+*/
 .circleLayer {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 132px;
+  padding-top: 221px;
   z-index: 1;
   will-change: opacity, transform;
 }
 
 /* ── Circle area ─────────────────────────────────────────── */
+/* padding-bottom = 47px gap between circle and caption (Figma spec) */
 .circleArea {
   position: relative;
-  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0;
-  min-height: 0;
-  /* gap between circle bottom and caption */
-  padding-bottom: 100px;
+  padding-bottom: 47px;
 }
 
 /* ── Circle wrapper ──────────────────────────────────────── */
@@ -165,9 +173,10 @@
 }
 
 /* ── Illustration (centered inside circle) ───────────────── */
+/* top: 23% = 80px / 351px — matches Figma's 80px offset from circle top */
 .illustrationWrap {
   position: absolute;
-  top: 20%;
+  top: 23%;
   left: 50%;
   transform: translateX(-50%);
   width: 48%;   /* ~168/351 from Figma */
@@ -228,13 +237,12 @@
 
 /* ── Step number ─────────────────────────────────────────── */
 /*
-  Positioned absolutely inside circleWrap, right below the illustration
-  (illustration bottom ≈ 73% of circleWrap height) with 24px gap.
+  top: 82% of circleWrap ≈ 288px → number center ≈ 328px.
+  Figma places step number center at 328px from circleWrap top.
 */
 .stepRow {
   position: absolute;
-  /* illustration: top 20% + height ~52.86% = bottom ~73% */
-  top: calc(73% + 24px);
+  top: 82%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -276,7 +284,6 @@
   position: relative;
   width: 322px;
   text-align: center;
-  margin-bottom: 32px;
   flex-shrink: 0;
   min-height: 64px;
   display: flex;

@@ -63,7 +63,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--sp-16);
-  padding-top: 46px;
+  padding-top: 132px;
   width: 100%;
   max-width: 343px;
   text-align: center;
@@ -82,6 +82,18 @@
 .headerIcon {
   width: 45px;
   height: 44px;
+  overflow: visible;
+}
+
+/* Each SVG fragment transitions smoothly as scroll drives it */
+.iconFragment {
+  transition: transform 0.12s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconFragment {
+    transition: none;
+  }
 }
 
 .title {
@@ -112,6 +124,8 @@
   gap: 0;
   /* min-height prevents area from collapsing */
   min-height: 0;
+  /* 100px gap between circle bottom and caption */
+  padding-bottom: 100px;
 }
 
 /* ── Circle wrapper ──────────────────────────────────────── */
@@ -211,19 +225,21 @@
 
 /* ── Step number ─────────────────────────────────────────── */
 /*
-  Always rendered. In final state (2f) the entire row fades out
-  via .stepRowHidden — no layout shift since it keeps its space.
+  Positioned absolutely inside circleWrap, right below the illustration
+  (illustration bottom ≈ 73% of circleWrap height) with 10px gap.
 */
 .stepRow {
-  position: relative;
-  width: 140px;
-  height: 90px;
+  position: absolute;
+  /* illustration: top 20% + height ~52.86% = bottom ~73% */
+  top: calc(73% + 24px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -8px;   /* slightly overlap circle bottom */
   pointer-events: none;
   transition: opacity var(--dur-state) var(--ease-std);
+  z-index: 1;
 }
 
 .stepRowHidden {
@@ -297,33 +313,3 @@
   transform: translateY(0);
 }
 
-/* ── Progress dots (mobile indicator) ───────────────────── */
-.progressDots {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: var(--sp-8);
-  z-index: 4;
-}
-
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(200, 200, 200, 0.6);
-  transition: background var(--dur-btn) var(--ease-std),
-              transform var(--dur-btn) var(--ease-std);
-}
-
-.dotActive {
-  background: #E03030;
-  transform: scale(1.4);
-}
-
-@media (min-width: 1024px) {
-  .progressDots {
-    display: none;
-  }
-}

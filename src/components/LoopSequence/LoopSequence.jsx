@@ -1,9 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import styles from './LoopSequence.module.css';
 
-/* ── Assets ──────────────────────────────────────────────── */
-const BROKEN_ICON = '/assets/a685246c558f29ba34e4f4e5fa4fabb204ffe31b.svg';
-
 /* ── State data ──────────────────────────────────────────── */
 const STATES = [
   {
@@ -42,31 +39,14 @@ const STATES = [
 const R    = 168;
 const CX   = 200;
 const CY   = 200;
-const CIRC = 2 * Math.PI * R; // ≈ 1055.6
+const CIRC = 2 * Math.PI * R;
 
-/*
- * Arc path: starts at 9 o'clock (left, 180°) and draws the full
- * circle going counterclockwise on screen (9→6→3→12→9).
- * sweep=0 = counterclockwise in SVG (matches visual CCW on screen).
- * Two half-arcs because a single arc cannot span the full circle.
- */
 const CIRCLE_PATH = [
-  `M ${CX - R} ${CY}`,                           // Start: 9 o'clock
-  `A ${R} ${R} 0 1 0 ${CX + R} ${CY}`,           // Half CCW (through bottom)
-  `A ${R} ${R} 0 0 0 ${CX - R} ${CY}`,           // Half CCW (through top) back to start
+  `M ${CX - R} ${CY}`,
+  `A ${R} ${R} 0 1 0 ${CX + R} ${CY}`,
+  `A ${R} ${R} 0 0 0 ${CX - R} ${CY}`,
 ].join(' ');
 
-/*
- * Node positions + arc-fraction at which they are "reached"
- * as the red streak grows counterclockwise from 9 o'clock.
- *
- * Angles in SVG coords (0°=right, clockwise positive):
- *   Node 1: 180°  → arc frac 0
- *   Node 2: 107.7° → 72.3° counterclockwise → frac 72.3/360 = 0.2008
- *   Node 3: 39.7°  → 140.3° CCW            → frac 0.3897
- *   Node 4: 330.9° → 209.1° CCW            → frac 0.5808
- *   Node 5: 250.7° → 289.3° CCW            → frac 0.8036
- */
 const NODE_DATA = [
   { step: 1, cx: 32,    cy: 200.0, arcFrac: 0      },
   { step: 2, cx: 149.1, cy: 360.1, arcFrac: 0.2008 },
@@ -74,6 +54,56 @@ const NODE_DATA = [
   { step: 4, cx: 346.8, cy: 118.5, arcFrac: 0.5808 },
   { step: 5, cx: 144.4, cy: 41.4,  arcFrac: 0.8036 },
 ];
+
+/* ── Broken icon — inline SVG with scroll-driven fragment spread ── */
+/*
+ * Four fragments of the broken-link icon spread apart as rawProgress
+ * increases (0 = together on landing, 1 = spread apart on deep scroll).
+ * Each fragment moves in its natural "break" direction.
+ */
+function BrokenIcon({ spread }) {
+  const s = spread;
+  return (
+    <svg
+      viewBox="0 0 44.8594 44"
+      width="45"
+      height="44"
+      fill="none"
+      aria-hidden="true"
+      className={styles.headerIcon}
+      style={{ overflow: 'visible' }}
+    >
+      {/* Bottom-left main fragment → moves down-left */}
+      <path
+        className={styles.iconFragment}
+        transform={`translate(${-s * 0.6}, ${s * 0.45})`}
+        d="M11.9439 17.7931L14.2148 20.0487C14.7589 20.5876 15.3273 21.1179 15.8478 21.6772C14.2825 23.213 12.7266 24.7584 11.18 26.3131C10.022 27.4745 8.88826 28.6309 7.75165 29.821C6.72504 30.8492 5.87198 32.5616 5.93755 34.0411C6.07991 36.3347 7.85039 38.3235 10.1753 38.4919C12.7303 38.677 14.2094 37.1305 15.8854 35.4935L18.6588 32.7439C19.9345 31.4728 21.6645 29.8464 22.8259 28.5566C23.0852 28.9375 26.3893 32.2941 26.7551 32.5362C26.1526 33.0911 25.3727 33.921 24.7714 34.5197L20.0376 39.2285C16.2223 42.9754 8.42971 46.9999 2.06079 39.5121C0.47942 37.1754 0.0956146 34.4282 0.62306 31.689C0.903341 30.2372 1.48198 28.8596 2.32236 27.6431C3.04724 26.5816 4.2841 25.3878 5.20523 24.4536L9.27412 20.3671L10.8264 18.8207C11.1824 18.4665 11.5327 18.0714 11.9439 17.7931Z"
+        fill="#FE0000"
+      />
+      {/* Top-right main fragment → moves up-right */}
+      <path
+        className={styles.iconFragment}
+        transform={`translate(${s * 0.6}, ${-s * 0.45})`}
+        d="M32.4917 0H36.3019C36.4633 0.116857 37.3909 0.28807 37.6683 0.386775C39.0494 0.878118 40.3739 1.65354 41.4352 2.65598C43.3722 4.49011 44.5096 7.01289 44.6016 9.67897C44.669 12.1558 43.8763 14.6661 42.4023 16.6561C41.7313 17.5621 40.7865 18.4455 40.0012 19.2634C37.7297 21.6294 35.322 23.8806 33.0672 26.2607C32.0329 25.0116 30.3172 23.5455 29.1745 22.3012C29.1971 22.1375 34.2434 17.1973 34.7208 16.6698C36.4912 14.7132 38.9443 13.1587 39.0186 10.1591C39.0478 8.98034 38.5231 7.67585 37.7175 6.84303C36.873 5.97313 35.7156 5.47723 34.5033 5.46588C31.6537 5.42923 29.9543 7.60727 28.0944 9.44217L22.1987 15.311C21.8273 15.0536 21.2056 14.3487 20.8552 13.993C19.9985 13.1276 19.1373 12.2668 18.2716 11.4106C19.269 10.2679 20.9452 8.70113 22.0417 7.60607L25.0702 4.59233C26.1545 3.52166 27.3737 2.25735 28.6722 1.4727C29.4555 1.01962 30.294 0.660331 31.1404 0.344502C31.4727 0.220512 32.2334 0.162726 32.4917 0Z"
+        fill="#FE0000"
+      />
+      {/* Top-left corner fragment → moves far up-left */}
+      <path
+        className={styles.iconFragment}
+        transform={`translate(${-s * 1.2}, ${-s * 1.2})`}
+        d="M0 0H3.67665H4.38432C5.73401 2.02896 7.1928 4.01615 8.56118 6.03367C8.94816 6.60425 10.0356 8.05527 10.2985 8.59298C9.95079 9.01128 9.53777 9.4307 9.14577 9.81041C8.56457 9.53979 7.9469 9.01381 7.39376 8.63938C5.78286 7.53281 4.18012 6.41446 2.58564 5.28434C1.92669 4.82208 0.66929 3.89389 0 3.55415V3.53758V0Z"
+        fill="#FE0000"
+      />
+      {/* Bottom-right corner fragment → moves far down-right */}
+      <path
+        className={styles.iconFragment}
+        transform={`translate(${s * 1.2}, ${s * 1.2})`}
+        d="M44.2281 43.8103L40.5515 43.8103L39.8438 43.8103C38.4941 41.7813 37.0354 39.7942 35.667 37.7766C35.28 37.206 34.1925 35.755 33.9297 35.2173C34.2774 34.799 34.6904 34.3796 35.0824 33.9999C35.6636 34.2705 36.2813 34.7965 36.8344 35.1709C38.4453 36.2775 40.048 37.3958 41.6425 38.526C42.3015 38.9882 43.5589 39.9164 44.2281 40.2562L44.2281 40.2727L44.2281 43.8103Z"
+        fill="#FE0000"
+      />
+    </svg>
+  );
+}
 
 /* ── LoopCircle SVG ──────────────────────────────────────── */
 function LoopCircle({ arcProgress }) {
@@ -85,15 +115,12 @@ function LoopCircle({ arcProgress }) {
       className={styles.svg}
       aria-hidden="true"
     >
-      {/* Base ring (light gray) */}
       <circle
         cx={CX} cy={CY} r={R}
         fill="none"
         stroke="rgba(180,195,175,0.45)"
         strokeWidth="1.5"
       />
-
-      {/* Growing red arc (counterclockwise from 9 o'clock) */}
       <path
         d={CIRCLE_PATH}
         fill="none"
@@ -104,20 +131,16 @@ function LoopCircle({ arcProgress }) {
         strokeDashoffset={dashOffset}
         className={styles.arcStroke}
       />
-
-      {/* Node dots */}
       {NODE_DATA.map((node) => {
         const isRed = arcProgress >= node.arcFrac;
         return (
           <g key={node.step}>
-            {/* Outer glow ring when red */}
             <circle
               cx={node.cx} cy={node.cy} r={10}
               fill="rgba(224,48,48,0.18)"
               stroke="none"
               style={{ opacity: isRed ? 1 : 0, transition: 'opacity 0.4s ease' }}
             />
-            {/* Inner dot */}
             <circle
               cx={node.cx} cy={node.cy} r={7.8}
               fill="#fff"
@@ -125,7 +148,6 @@ function LoopCircle({ arcProgress }) {
               strokeWidth={isRed ? 2.5 : 1.5}
               style={{ transition: 'stroke 0.4s ease' }}
             />
-            {/* Centre fill dot when red */}
             <circle
               cx={node.cx} cy={node.cy} r={4}
               fill="#E03030"
@@ -146,18 +168,18 @@ export default function LoopSequence() {
   const [rawProgress, setRawProgress] = useState(0);
 
   const isFinal    = stateIdx === 5;
-  // arcProgress goes 0→1 as user scrolls through states 0–4.
-  // States 0-4 span 5/6 of total scroll; multiply by 6/5 to normalise to [0,1].
   const arcProgress = isFinal ? 1 : Math.min(1, rawProgress * (6 / 5));
 
-  /* ── Scroll handler ─────────────────────────────────────── */
+  // Spread increases as user scrolls — fragments start together, move apart
+  const iconSpread = rawProgress * 9;
+
   const onScroll = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => {
       const section = sectionRef.current;
       if (!section) return;
 
-      const rect    = section.getBoundingClientRect();
+      const rect     = section.getBoundingClientRect();
       const scrolled = -rect.top;
       const total    = rect.height - window.innerHeight;
       if (total <= 0) return;
@@ -189,33 +211,25 @@ export default function LoopSequence() {
       data-state={current.id}
       aria-label="The broken flow in today's education system"
     >
-      {/* ── Sticky viewport ──────────────────────────────── */}
       <div className={styles.sticky}>
 
-        {/* Background orbs */}
         <div className={styles.orbTR} aria-hidden="true" />
         <div className={styles.orbBL} aria-hidden="true" />
 
-        {/* ── Header (persistent, fixed height) ───────────── */}
+        {/* ── Header ───────────────────────────────────────── */}
         <header className={styles.header}>
-          <img src={BROKEN_ICON} alt="" width="45" height="44" className={styles.headerIcon} />
+          <BrokenIcon spread={iconSpread} />
           <h2 className={styles.title}>
             The broken flow in today's education system
           </h2>
         </header>
 
-        {/* ── Circle + illustration + number ──────────────── */}
-        {/*
-          circleArea is flex:1 and always the same structure —
-          no elements mount or unmount here, so no layout reflow.
-        */}
+        {/* ── Circle + illustration + step number ──────────── */}
         <div className={styles.circleArea} aria-live="polite" aria-atomic="true">
-
-          {/* SVG circle — always rendered */}
           <div className={styles.circleWrap}>
             <LoopCircle arcProgress={arcProgress} />
 
-            {/* Illustrations (2a–2e) — always in DOM, opacity-toggled */}
+            {/* Illustrations (2a–2e) */}
             <div className={`${styles.illustrationWrap} ${isFinal ? styles.illustrationWrapHidden : ''}`}>
               {STATES.slice(0, 5).map((s, i) => (
                 <img
@@ -230,29 +244,29 @@ export default function LoopSequence() {
               ))}
             </div>
 
-            {/* Final state center text (2f) — always in DOM, opacity-toggled */}
+            {/* Final state center text (2f) */}
             <div className={`${styles.finalCenter} ${isFinal ? styles.finalCenterVisible : ''}`}>
               <p className={styles.finalText}>.and the broken loop continues</p>
             </div>
-          </div>
 
-          {/* Step number (2a–2e) — always rendered, fades out in 2f */}
-          <div
-            className={`${styles.stepRow} ${isFinal ? styles.stepRowHidden : ''}`}
-            aria-hidden="true"
-          >
-            {STATES.slice(0, 5).map((s, i) => (
-              <span
-                key={s.id}
-                className={`${styles.stepNumber} ${stateIdx === i ? styles.stepNumberVisible : ''}`}
-              >
-                {s.step}
-              </span>
-            ))}
+            {/* Step number — positioned inside circle, below illustration */}
+            <div
+              className={`${styles.stepRow} ${isFinal ? styles.stepRowHidden : ''}`}
+              aria-hidden="true"
+            >
+              {STATES.slice(0, 5).map((s, i) => (
+                <span
+                  key={s.id}
+                  className={`${styles.stepNumber} ${stateIdx === i ? styles.stepNumberVisible : ''}`}
+                >
+                  {s.step}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* ── Caption (2a–2e) — always rendered, fades out in 2f ── */}
+        {/* ── Caption (2a–2e) ──────────────────────────────── */}
         <div className={`${styles.captionWrap} ${isFinal ? styles.captionWrapHidden : ''}`}>
           {STATES.slice(0, 5).map((s, i) => (
             <p
@@ -264,15 +278,6 @@ export default function LoopSequence() {
           ))}
         </div>
 
-        {/* ── Progress dots (mobile) ───────────────────────── */}
-        <div className={styles.progressDots} aria-hidden="true">
-          {STATES.map((s, i) => (
-            <span
-              key={s.id}
-              className={`${styles.dot} ${stateIdx === i ? styles.dotActive : ''}`}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

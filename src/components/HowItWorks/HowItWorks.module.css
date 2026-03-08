@@ -2,6 +2,7 @@
   background: #fff;
   padding: var(--sp-80) var(--content-pad) var(--sp-40);
   overflow: hidden;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -16,8 +17,83 @@
   }
 }
 
+/* ── Gradient frame — 3-sided ∩ around logo (mobile only) ── */
+/*
+  Left + right via ::before/::after, right via .logoFrameRight child.
+  Positioned relative to section top, matching Figma placement.
+*/
+.logoFrame {
+  position: absolute;
+  top: 23px;
+  left: 40px;
+  right: 40px;
+  height: 147px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top gradient line */
+.logoFrame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.55) 20%,
+    rgba(140, 185, 120, 0.55) 80%,
+    transparent 100%
+  );
+}
+
+/* Left gradient line */
+.logoFrame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.5) 25%,
+    rgba(140, 185, 120, 0.5) 75%,
+    transparent 100%
+  );
+}
+
+/* Right gradient line */
+.logoFrameRight {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.5) 25%,
+    rgba(140, 185, 120, 0.5) 75%,
+    transparent 100%
+  );
+}
+
+/* Hide frame on wider screens */
+@media (min-width: 768px) {
+  .logoFrame {
+    display: none;
+  }
+}
+
 /* ── Intro / header ──────────────────────────────────────── */
 .intro {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,31 +109,54 @@
   }
 }
 
-/* SchoolAI logo group */
+/* ── SchoolAI logo ────────────────────────────────────────── */
 .brandLogo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
 }
 
 .brandLogoMain {
   display: flex;
-  align-items: flex-start;
-  gap: 4px;
+  align-items: flex-end; /* baseline-align the wordmark parts */
+  gap: 5px;
 }
 
-.brandLogoMain img {
+.logoLeft {
+  display: block;
+  width: 111px;
+  height: auto;
   object-fit: contain;
 }
 
-.brandLogoBy {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-left: 72px; /* align with "School" text in logo */
+.logoRight {
+  display: block;
+  width: 33px;
+  height: auto;
+  object-fit: contain;
+  /* align slightly above the baseline to match Figma */
+  margin-bottom: 4px;
 }
 
+.brandByRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* left-align with the "Ai" portion of the logo */
+  padding-left: 72px;
+}
+
+.brandByText {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #3b374f;
+  letter-spacing: -0.12px;
+  line-height: 1.3;
+}
+
+/* ── Connector: logo → heading ───────────────────────────── */
 .vertLine {
   height: 77px;
   display: flex;
@@ -70,6 +169,7 @@
   height: 77px;
 }
 
+/* ── Heading ─────────────────────────────────────────────── */
 .heading {
   font-family: var(--font-header);
   font-weight: var(--weight-light);
@@ -85,25 +185,65 @@
   }
 }
 
+/* ── Tagline ─────────────────────────────────────────────── */
 .tagline {
   font-family: var(--font-body);
   font-weight: var(--weight-regular);
   font-size: var(--size-body);
   line-height: var(--lh-body);
   color: var(--color-fg-2);
-  white-space: pre-wrap;
 }
 
-/* Feature bullets card */
+/* ── Feature bullets card ────────────────────────────────── */
+/*
+  Subtle shimmer sweeps across via ::after.
+  Scroll-driven tilt applied via JS inline transform.
+*/
 .featureCard {
-  background: #f7f9f6;
-  border: 1px solid rgba(255,255,255,0.8);
+  background: linear-gradient(114.698deg, rgb(255, 255, 255) 0.91%, rgb(242, 245, 240) 100%);
+  border: 1px solid #a5d187;
   border-radius: var(--radius-card);
   padding: 27px 19px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--sp-16);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  transition: transform 0.4s var(--ease-std);
+}
+
+/* Shimmer stripe — sweeps left to right every 6 s */
+@keyframes cardShimmer {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(220%); }
+}
+
+.featureCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.32) 50%,
+    transparent 100%
+  );
+  animation: cardShimmer 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featureCard::after {
+    animation: none;
+  }
+  .featureCard {
+    transition: none;
+  }
 }
 
 .featureBullet {
@@ -124,17 +264,39 @@
   color: var(--color-fg-2);
 }
 
-/* ── HOW IT WORKS label ─────────────────────────────────── */
+/* ── HOW IT WORKS label group ────────────────────────────── */
+/*
+  Generous top margin provides the "breather" before the steps begin.
+*/
+.howLabelGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-16);
+  margin-top: 80px;
+  margin-bottom: var(--sp-24);
+}
+
 .howLabel {
-  font-family: var(--font-body);
-  font-weight: var(--weight-semibold);
-  font-size: var(--size-label);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-label);
-  color: #4CA30F;
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: var(--size-header);
+  line-height: var(--lh-header);
+  letter-spacing: var(--ls-header);
+  color: var(--color-fg-1);
   text-align: center;
-  text-transform: uppercase;
-  margin: var(--sp-40) 0 var(--sp-24);
+}
+
+.howVertLine {
+  height: 147px;
+  display: flex;
+  justify-content: center;
+  opacity: 0.4;
+}
+
+.howVertLine img {
+  width: 1px;
+  height: 147px;
 }
 
 /* ── Persona role heading ────────────────────────────────── */
@@ -262,4 +424,39 @@
   display: flex;
   justify-content: center;
   padding: var(--sp-40) 0 var(--sp-56);
+}
+
+/* Shimmer on CTA button */
+.ctaBtn {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes btnShimmer {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(250%); }
+}
+
+.ctaBtn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+  animation: btnShimmer 5s ease-in-out infinite;
+  animation-delay: 2s;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaBtn::after {
+    animation: none;
+  }
 }

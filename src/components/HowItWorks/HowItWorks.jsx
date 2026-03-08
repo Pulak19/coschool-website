@@ -5,8 +5,9 @@ import styles from './HowItWorks.module.css';
 const SCHOOL_AI_LOGO_LEFT  = '/assets/128bcf7d26282a72f274e095622049314669b70c.svg';
 const SCHOOL_AI_LOGO_RIGHT = '/assets/b79886e508077f22b2f4fa5f999983e0684f0ed7.svg';
 const BY_COSCHOOL          = '/assets/dceefcdd05c9fb15ba2e9eb40b80b6f74efb34c0.svg';
-const VERT_LINE            = '/assets/20d546716f32dd9555996edc108f0db820f3f1fe.svg';
-const CHECK_ICON           = '/assets/98dee7337dbe634d9da372ca8650a1cb1a5ec704.svg';
+const CONNECTOR_LINE       = '/assets/8ccc836ba9309b96fdf298c53fd86c9fa0c51020.svg';
+const HOW_VERT_LINE        = '/assets/985019123e7f43ca1a182bb846dc6ecf4797d192.svg';
+const CHECK_ICON           = '/assets/f23b72ff3341f4cd6ff46415458c6d512adef035.svg';
 const ACCENT_MARK          = '/assets/e1817a74f1a3ad3fe2eb77fa22a85cf11227d305.svg';
 const IPAD_FRAME           = '/assets/113f6c88d43c35ec11a950e6656f2781a318356c.png';
 
@@ -18,7 +19,7 @@ const PERSONA_DATA = [
     feature: 'Assigning Homework',
     body: 'Set goals, unlock chapters, maintain complete control — the natural way.',
     screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
-    imageLeft: false, // text left, iPad right on desktop
+    imageLeft: false,
   },
   {
     id: 'student',
@@ -53,7 +54,7 @@ const FEATURE_BULLETS = [
 ];
 
 /* ── Fade-in hook ────────────────────────────────────────── */
-function useFadeIn(deps = []) {
+function useFadeIn() {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current;
@@ -69,7 +70,7 @@ function useFadeIn(deps = []) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, deps); // eslint-disable-line
+  }, []);
   return ref;
 }
 
@@ -101,7 +102,7 @@ function IpadMockup({ src, alt }) {
 }
 
 /* ── Persona section ─────────────────────────────────────── */
-function PersonaSection({ persona, index }) {
+function PersonaSection({ persona }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -156,28 +157,71 @@ function PersonaSection({ persona, index }) {
 
 /* ── Main component ──────────────────────────────────────── */
 export default function HowItWorks() {
-  const headerRef = useFadeIn();
-  const featureRef = useFadeIn();
+  const headerRef    = useFadeIn();
+  const featureRef   = useFadeIn();
+  const featureCardRef = useRef(null);
+
+  /* ── Scroll-driven card tilt ────────────────────────────── */
+  useEffect(() => {
+    const card = featureCardRef.current;
+    if (!card) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const onScroll = () => {
+      const rect   = card.getBoundingClientRect();
+      const mid    = rect.top + rect.height / 2;
+      const vMid   = window.innerHeight / 2;
+      // normalised offset: -1 (card below) … +1 (card above)
+      const offset = Math.max(-1, Math.min(1, (mid - vMid) / (window.innerHeight * 0.5)));
+      // Max 1.5° tilt — deliberately very subtle
+      card.style.transform =
+        `perspective(900px) rotateX(${offset * 1.5}deg) rotateZ(${-offset * 0.4}deg)`;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <section id="how-it-works" className={styles.section} aria-label="How CoSchool works">
 
+      {/* ── Gradient frame lines (3-sided ∩ around logo) ──── */}
+      <div className={styles.logoFrame} aria-hidden="true">
+        <span className={styles.logoFrameRight} />
+      </div>
+
       {/* ── Section header / intro ────────────────────────── */}
       <div ref={headerRef} className={`${styles.intro} fade-in`}>
+
         {/* SchoolAI by CoSchool logo */}
-        <div className={styles.brandLogo} aria-label="SchoolAI by CoSchool">
+        <div className={styles.brandLogo} aria-label="School AI by CoSchool">
           <div className={styles.brandLogoMain}>
-            <img src={SCHOOL_AI_LOGO_LEFT}  alt="SchoolAI" width="111" height="50" loading="lazy" />
-            <img src={SCHOOL_AI_LOGO_RIGHT} alt="" width="33" height="40" loading="lazy" aria-hidden="true" />
+            <img
+              src={SCHOOL_AI_LOGO_LEFT}
+              alt="School AI"
+              className={styles.logoLeft}
+              width="111"
+              loading="eager"
+            />
+            <img
+              src={SCHOOL_AI_LOGO_RIGHT}
+              alt=""
+              className={styles.logoRight}
+              width="33"
+              loading="eager"
+              aria-hidden="true"
+            />
           </div>
-          <div className={styles.brandLogoBy}>
-            <img src={BY_COSCHOOL} alt="by CoSchool" width="77" height="11" loading="lazy" />
+          <div className={styles.brandByRow}>
+            <span className={styles.brandByText}>by</span>
+            <img src={BY_COSCHOOL} alt="CoSchool" width="59" height="11" loading="eager" />
           </div>
         </div>
 
-        {/* Vertical line */}
+        {/* Connector line: logo → heading */}
         <div className={styles.vertLine} aria-hidden="true">
-          <img src={VERT_LINE} alt="" width="1" height="77" />
+          <img src={CONNECTOR_LINE} alt="" width="1" height="77" />
         </div>
 
         <h2 className={styles.heading}>Closes the learning loop</h2>
@@ -186,7 +230,9 @@ export default function HowItWorks() {
         </p>
 
         {/* Feature bullets card */}
-        <div ref={featureRef} className={`${styles.featureCard} fade-in`}>
+        <div ref={(el) => { featureRef.current = el; featureCardRef.current = el; }}
+          className={`${styles.featureCard} fade-in`}
+        >
           {FEATURE_BULLETS.map((text) => (
             <div key={text} className={styles.featureBullet}>
               <img src={CHECK_ICON} alt="" width="18" height="18" loading="lazy" aria-hidden="true" />
@@ -196,22 +242,27 @@ export default function HowItWorks() {
         </div>
       </div>
 
-      {/* ── HOW IT WORKS label ───────────────────────────── */}
-      <p className={styles.howLabel} aria-label="How it works section">
-        HOW IT WORKS
-      </p>
+      {/* ── HOW IT WORKS label + connector ───────────────── */}
+      <div className={styles.howLabelGroup}>
+        <p className={styles.howLabel} aria-label="How it works section">
+          How it works
+        </p>
+        <div className={styles.howVertLine} aria-hidden="true">
+          <img src={HOW_VERT_LINE} alt="" width="1" height="147" loading="lazy" />
+        </div>
+      </div>
 
       {/* ── Persona sections ─────────────────────────────── */}
-      {PERSONA_DATA.map((persona, i) => (
+      {PERSONA_DATA.map((persona) => (
         <div key={persona.id}>
           <h3 className={styles.personaRole}>{persona.role}</h3>
-          <PersonaSection persona={persona} index={i} />
+          <PersonaSection persona={persona} />
         </div>
       ))}
 
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <div className={styles.ctaWrap}>
-        <a href="#cta" className="btn-primary">
+        <a href="#cta" className={`btn-primary ${styles.ctaBtn}`}>
           Try School AI for free
         </a>
       </div>

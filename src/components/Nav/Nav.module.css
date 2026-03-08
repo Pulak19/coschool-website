@@ -4,6 +4,7 @@
   left: 0;
   right: 0;
   z-index: 100;
+  background: #fff;
   transition: background var(--dur-state) var(--ease-std),
               box-shadow var(--dur-state) var(--ease-std);
 }

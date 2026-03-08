@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import styles from './LoopSequence.module.css';
 
-/* ── State data ──────────────────────────────────────────── */
+/* ── State data (circle states 2a–2f) ───────────────────── */
 const STATES = [
   {
     id: '2a', step: 1,
@@ -55,12 +55,7 @@ const NODE_DATA = [
   { step: 5, cx: 144.4, cy: 41.4,  arcFrac: 0.8036 },
 ];
 
-/* ── Broken icon — inline SVG with scroll-driven fragment spread ── */
-/*
- * Four fragments of the broken-link icon spread apart as rawProgress
- * increases (0 = together on landing, 1 = spread apart on deep scroll).
- * Each fragment moves in its natural "break" direction.
- */
+/* ── Broken icon ─────────────────────────────────────────── */
 function BrokenIcon({ spread }) {
   const s = spread;
   return (
@@ -167,11 +162,26 @@ export default function LoopSequence() {
   const [stateIdx,    setStateIdx]    = useState(0);
   const [rawProgress, setRawProgress] = useState(0);
 
-  const isFinal    = stateIdx === 5;
-  const arcProgress = isFinal ? 1 : Math.min(1, rawProgress * (6 / 5));
+  // introProgress: 0→1 during the first 1/7 of total scroll
+  const introProgress = Math.min(1, rawProgress * 7);
 
-  // Spread increases as user scrolls — fragments start together, move apart
+  // circleStateIdx: which STATES entry to show (0–5 → 2a–2f)
+  const circleStateIdx = Math.max(0, stateIdx - 1);
+  const isFinal = stateIdx === 6;
+
+  // Arc grows across circle states 1–5 (1/7 → 6/7 of total scroll)
+  const arcProgress = isFinal ? 1 : Math.max(0, Math.min(1, (rawProgress * 7 - 1) / 5));
+
+  // Icon spread increases from 0 as user scrolls
   const iconSpread = rawProgress * 9;
+
+  // Intro title: fades out + slides up as introProgress → 1
+  const titleOpacity    = Math.max(0, 1 - introProgress * 2);
+  const titleTranslateY = -introProgress * 50;
+
+  // Circle layer: fades in + slides up from below as introProgress → 1
+  const circleOpacity    = Math.max(0, (introProgress - 0.3) / 0.7);
+  const circleTranslateY = Math.max(0, (1 - introProgress) * 40);
 
   const onScroll = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
@@ -185,7 +195,8 @@ export default function LoopSequence() {
       if (total <= 0) return;
 
       const raw = Math.max(0, Math.min(1, scrolled / total));
-      const idx = Math.min(5, Math.floor(raw * 6));
+      // 7 states: 0=intro, 1–5=2a–2e, 6=2f
+      const idx = Math.min(6, Math.floor(raw * 7));
 
       setRawProgress(raw);
       setStateIdx(idx);
@@ -201,14 +212,14 @@ export default function LoopSequence() {
     };
   }, [onScroll]);
 
-  const current = STATES[stateIdx];
+  const current = STATES[circleStateIdx];
 
   return (
     <section
       ref={sectionRef}
       id="loop-section"
       className={styles.section}
-      data-state={current.id}
+      data-state={stateIdx === 0 ? 'intro' : current.id}
       aria-label="The broken flow in today's education system"
     >
       <div className={styles.sticky}>
@@ -216,66 +227,88 @@ export default function LoopSequence() {
         <div className={styles.orbTR} aria-hidden="true" />
         <div className={styles.orbBL} aria-hidden="true" />
 
-        {/* ── Header ───────────────────────────────────────── */}
-        <header className={styles.header}>
+        {/* ── Icon — always at top, same position across all states ── */}
+        <div className={styles.iconWrap} aria-hidden="true">
           <BrokenIcon spread={iconSpread} />
-          <h2 className={styles.title}>
-            The broken flow in today's education system
-          </h2>
-        </header>
-
-        {/* ── Circle + illustration + step number ──────────── */}
-        <div className={styles.circleArea} aria-live="polite" aria-atomic="true">
-          <div className={styles.circleWrap}>
-            <LoopCircle arcProgress={arcProgress} />
-
-            {/* Illustrations (2a–2e) */}
-            <div className={`${styles.illustrationWrap} ${isFinal ? styles.illustrationWrapHidden : ''}`}>
-              {STATES.slice(0, 5).map((s, i) => (
-                <img
-                  key={s.id}
-                  src={s.illustration}
-                  alt={`Illustration for step ${s.step}`}
-                  width="168"
-                  height="185"
-                  loading="lazy"
-                  className={`${styles.illustration} ${stateIdx === i ? styles.illustrationVisible : ''}`}
-                />
-              ))}
-            </div>
-
-            {/* Final state center text (2f) */}
-            <div className={`${styles.finalCenter} ${isFinal ? styles.finalCenterVisible : ''}`}>
-              <p className={styles.finalText}>.and the broken loop continues</p>
-            </div>
-
-            {/* Step number — positioned inside circle, below illustration */}
-            <div
-              className={`${styles.stepRow} ${isFinal ? styles.stepRowHidden : ''}`}
-              aria-hidden="true"
-            >
-              {STATES.slice(0, 5).map((s, i) => (
-                <span
-                  key={s.id}
-                  className={`${styles.stepNumber} ${stateIdx === i ? styles.stepNumberVisible : ''}`}
-                >
-                  {s.step}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
 
-        {/* ── Caption (2a–2e) ──────────────────────────────── */}
-        <div className={`${styles.captionWrap} ${isFinal ? styles.captionWrapHidden : ''}`}>
-          {STATES.slice(0, 5).map((s, i) => (
-            <p
-              key={s.id}
-              className={`${styles.caption} ${stateIdx === i ? styles.captionVisible : ''}`}
-            >
-              {s.caption}
-            </p>
-          ))}
+        {/* ── Intro layer: title only, fades out + slides up ────── */}
+        <div
+          className={styles.introLayer}
+          style={{
+            opacity: titleOpacity,
+            transform: `translateY(${titleTranslateY}px)`,
+            pointerEvents: titleOpacity < 0.05 ? 'none' : 'auto',
+          }}
+        >
+          <h2 className={styles.introTitle}>
+            The broken flow in today's education system
+          </h2>
+        </div>
+
+        {/* ── Circle layer: fades in + slides up from below ─────── */}
+        <div
+          className={styles.circleLayer}
+          style={{
+            opacity: circleOpacity,
+            transform: `translateY(${circleTranslateY}px)`,
+            pointerEvents: circleOpacity < 0.05 ? 'none' : 'auto',
+          }}
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <div className={styles.circleArea}>
+            <div className={styles.circleWrap}>
+              <LoopCircle arcProgress={arcProgress} />
+
+              {/* Illustrations (2a–2e) */}
+              <div className={`${styles.illustrationWrap} ${isFinal ? styles.illustrationWrapHidden : ''}`}>
+                {STATES.slice(0, 5).map((s, i) => (
+                  <img
+                    key={s.id}
+                    src={s.illustration}
+                    alt={`Illustration for step ${s.step}`}
+                    width="168"
+                    height="185"
+                    loading="lazy"
+                    className={`${styles.illustration} ${circleStateIdx === i ? styles.illustrationVisible : ''}`}
+                  />
+                ))}
+              </div>
+
+              {/* Final state center text (2f) */}
+              <div className={`${styles.finalCenter} ${isFinal ? styles.finalCenterVisible : ''}`}>
+                <p className={styles.finalText}>.and the broken loop continues</p>
+              </div>
+
+              {/* Step number — positioned inside circle, below illustration */}
+              <div
+                className={`${styles.stepRow} ${isFinal ? styles.stepRowHidden : ''}`}
+                aria-hidden="true"
+              >
+                {STATES.slice(0, 5).map((s, i) => (
+                  <span
+                    key={s.id}
+                    className={`${styles.stepNumber} ${circleStateIdx === i ? styles.stepNumberVisible : ''}`}
+                  >
+                    {s.step}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Caption (2a–2e) */}
+          <div className={`${styles.captionWrap} ${isFinal ? styles.captionWrapHidden : ''}`}>
+            {STATES.slice(0, 5).map((s, i) => (
+              <p
+                key={s.id}
+                className={`${styles.caption} ${circleStateIdx === i ? styles.captionVisible : ''}`}
+              >
+                {s.caption}
+              </p>
+            ))}
+          </div>
         </div>
 
       </div>

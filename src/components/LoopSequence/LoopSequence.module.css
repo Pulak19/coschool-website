@@ -1,13 +1,14 @@
 /* ─────────────────────────────────────────────────────────────
-   LoopSequence — Scroll-driven red-arc animation
-   Figma: Revision 1 (10:2707) + Revision 2 (10:2762)
+   LoopSequence — Two-phase scroll animation
+   Phase 0 (intro): icon + centered title
+   Phase 1–6 (circle): icon + arc circle + captions
    Mobile-first: base = 375–393px, breakpoints at 768px, 1024px
    ───────────────────────────────────────────────────────────── */
 
-/* Section is tall enough to scroll through 6 states (100vh each) */
+/* Section is tall enough to scroll through 7 states (100vh each) */
 .section {
   position: relative;
-  height: 600vh;
+  height: 700vh;
   background: #fff;
 }
 
@@ -18,9 +19,6 @@
   height: 100svh;
   min-height: 600px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 /* ── Background orbs ─────────────────────────────────────── */
@@ -50,33 +48,13 @@
   z-index: 0;
 }
 
-/* ── Header ──────────────────────────────────────────────── */
-/*
-  Fixed height so the circle area never shifts regardless of state.
-  Figma (10:2707): header top=46px, icon=44px, gap=16px, title≈2 lines.
-  We set a min-height so it's always the same vertical footprint.
-*/
-.header {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sp-16);
-  padding-top: 132px;
-  width: 100%;
-  max-width: 343px;
-  text-align: center;
-  flex-shrink: 0;
-  /* Fixed height prevents header from shifting when content changes */
-  min-height: 160px;
-}
-
-@media (min-width: 1024px) {
-  .header {
-    max-width: 540px;
-    min-height: 180px;
-  }
+/* ── Icon wrap — always at top, same position in all states ─ */
+.iconWrap {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
 }
 
 .headerIcon {
@@ -96,25 +74,51 @@
   }
 }
 
-.title {
+/* ── Intro layer — title only, fades out + slides up ────────── */
+.introLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+
+.introTitle {
   font-family: var(--font-header);
   font-weight: var(--weight-light);
   font-size: var(--size-header);
   line-height: var(--lh-header);
   letter-spacing: var(--ls-header);
   color: var(--color-fg-1);
+  text-align: center;
+  max-width: 343px;
 }
 
 @media (min-width: 1024px) {
-  .title {
+  .introTitle {
     font-size: clamp(34px, 2.8vw, 44px);
+    max-width: 540px;
   }
+}
+
+/* ── Circle layer — fades in + slides up from below ─────────── */
+.circleLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 132px;
+  z-index: 1;
+  will-change: opacity, transform;
 }
 
 /* ── Circle area ─────────────────────────────────────────── */
 .circleArea {
   position: relative;
-  z-index: 2;
   flex: 1;
   width: 100%;
   display: flex;
@@ -122,9 +126,8 @@
   align-items: center;
   justify-content: center;
   gap: 0;
-  /* min-height prevents area from collapsing */
   min-height: 0;
-  /* 100px gap between circle bottom and caption */
+  /* gap between circle bottom and caption */
   padding-bottom: 100px;
 }
 
@@ -226,7 +229,7 @@
 /* ── Step number ─────────────────────────────────────────── */
 /*
   Positioned absolutely inside circleWrap, right below the illustration
-  (illustration bottom ≈ 73% of circleWrap height) with 10px gap.
+  (illustration bottom ≈ 73% of circleWrap height) with 24px gap.
 */
 .stepRow {
   position: absolute;
@@ -312,4 +315,3 @@
   opacity: 1;
   transform: translateY(0);
 }
-

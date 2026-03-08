@@ -281,7 +281,10 @@
   Fixed min-height prevents layout jump even when invisible.
 */
 .captionWrap {
-  position: relative;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 322px;
   text-align: center;
   flex-shrink: 0;

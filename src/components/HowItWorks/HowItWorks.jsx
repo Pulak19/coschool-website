@@ -15,7 +15,6 @@ const IPAD_FRAME           = '/assets/113f6c88d43c35ec11a950e6656f2781a318356c.p
 const PERSONA_DATA = [
   {
     id: 'teacher',
-    role: "Teacher's assistant",
     feature: 'Assigning Homework',
     body: 'Set goals, unlock chapters, maintain complete control — the natural way.',
     screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
@@ -23,7 +22,6 @@ const PERSONA_DATA = [
   },
   {
     id: 'student',
-    role: "Student's AI tutor",
     feature: 'Learn with AI',
     body: 'Guided practice with real-time hints, adaptive difficulty, and progress tracking.',
     screenSrc: '/assets/cb1235a3896fed456878160b7b5b29c154f2f94b.png',
@@ -31,7 +29,6 @@ const PERSONA_DATA = [
   },
   {
     id: 'parent',
-    role: "Parent's Confidant",
     feature: 'Stay in the loop',
     body: 'Daily summaries, learning nudges, and insights — so parents can reinforce at home.',
     screenSrc: '/assets/1c63e34f92b80349e2364f3e551c5057aa1cee4f.png',
@@ -39,7 +36,6 @@ const PERSONA_DATA = [
   },
   {
     id: 'admin',
-    role: "Admin's Insights",
     feature: 'Govern with data',
     body: 'School-wide learning dashboards that surface gaps and drive informed decisions.',
     screenSrc: '/assets/71cc0798fdcb1e14b3d0fbf37d1137e8a3480bf8.png',
@@ -75,9 +71,9 @@ function useFadeIn() {
 }
 
 /* ── iPad mockup ─────────────────────────────────────────── */
-function IpadMockup({ src, alt }) {
+function IpadMockup({ src, alt, imageLeft }) {
   return (
-    <div className={styles.ipadWrap}>
+    <div className={`${styles.ipadWrap} ${imageLeft ? styles.ipadWrapReverse : ''}`}>
       <div className={styles.ipadInner}>
         <img
           src={src}
@@ -149,7 +145,7 @@ function PersonaSection({ persona }) {
 
       {/* iPad side */}
       <div className={`${styles.personaMedia} fade-in`} data-fade style={{ transitionDelay: '160ms' }}>
-        <IpadMockup src={persona.screenSrc} alt={`${persona.role} screen in CoSchool app`} />
+        <IpadMockup src={persona.screenSrc} alt={`${persona.feature} screen in CoSchool app`} imageLeft={persona.imageLeft} />
       </div>
     </div>
   );
@@ -224,21 +220,24 @@ export default function HowItWorks() {
           <img src={CONNECTOR_LINE} alt="" width="1" height="77" />
         </div>
 
-        <h2 className={styles.heading}>Closes the learning loop</h2>
-        <p className={styles.tagline}>
-          Teacher anchored &nbsp;•&nbsp; Parent Supported &nbsp;•&nbsp; AI Enabled
-        </p>
+        {/* Content group: heading + tagline + card */}
+        <div className={styles.introContent}>
+          <h2 className={styles.heading}>Closes the learning loop</h2>
+          <p className={styles.tagline}>
+            Teacher anchored &nbsp;•&nbsp; Parent Supported &nbsp;•&nbsp; AI Enabled
+          </p>
 
-        {/* Feature bullets card */}
-        <div ref={(el) => { featureRef.current = el; featureCardRef.current = el; }}
-          className={`${styles.featureCard} fade-in`}
-        >
-          {FEATURE_BULLETS.map((text) => (
-            <div key={text} className={styles.featureBullet}>
-              <img src={CHECK_ICON} alt="" width="18" height="18" loading="lazy" aria-hidden="true" />
-              <span className={styles.featureBulletText}>{text}</span>
-            </div>
-          ))}
+          {/* Feature bullets card */}
+          <div ref={(el) => { featureRef.current = el; featureCardRef.current = el; }}
+            className={`${styles.featureCard} fade-in`}
+          >
+            {FEATURE_BULLETS.map((text) => (
+              <div key={text} className={styles.featureBullet}>
+                <img src={CHECK_ICON} alt="" width="18" height="18" loading="lazy" aria-hidden="true" />
+                <span className={styles.featureBulletText}>{text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -253,17 +252,16 @@ export default function HowItWorks() {
       </div>
 
       {/* ── Persona sections ─────────────────────────────── */}
-      {PERSONA_DATA.map((persona) => (
-        <div key={persona.id}>
-          <h3 className={styles.personaRole}>{persona.role}</h3>
-          <PersonaSection persona={persona} />
-        </div>
-      ))}
+      <div className={styles.personasList}>
+        {PERSONA_DATA.map((persona) => (
+          <PersonaSection key={persona.id} persona={persona} />
+        ))}
+      </div>
 
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <div className={styles.ctaWrap}>
         <a href="#cta" className={`btn-primary ${styles.ctaBtn}`}>
-          Try School AI for free
+          Try School Ai for free
         </a>
       </div>
     </section>

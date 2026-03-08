@@ -2,7 +2,7 @@ import styles from './Hero.module.css';
 
 /* ── YouTube embed ───────────────────────────────────────── */
 const YT_ID    = '61iN2emMqbs';
-const YT_EMBED = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&rel=0&playsinline=1`;
+const YT_EMBED = `https://www.youtube.com/embed/${YT_ID}?rel=0&playsinline=1`;
 
 /* ── School logos ────────────────────────────────────────── */
 const SCHOOL_LOGOS = [
@@ -73,7 +73,7 @@ export default function Hero() {
                 className={styles.video}
                 src={YT_EMBED}
                 title="Intro video about CoSchool"
-                allow="autoplay; encrypted-media; picture-in-picture"
+                allow="encrypted-media; picture-in-picture"
                 allowFullScreen
                 loading="eager"
               />

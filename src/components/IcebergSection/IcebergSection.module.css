@@ -1,0 +1,303 @@
+/* ─────────────────────────────────────────────────────────────
+   IcebergSection — Screen 1a
+   Mobile-first, frame 393×896
+   ───────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* Centered frame matching Figma's 393px canvas */
+.frame {
+  position: relative;
+  width: 393px;
+  min-height: 896px;
+  flex-shrink: 0;
+}
+
+/* ── Background gradient blobs ────────────────────────────── */
+.orbLeft,
+.orbRight {
+  position: absolute;
+  border-radius: 140px;
+  background: rgba(213, 244, 205, 0.4);
+  filter: blur(37px);
+  pointer-events: none;
+  width: 223px;
+  height: 221px;
+}
+
+.orbLeft {
+  left: -88px;
+  top: 157px;
+}
+
+.orbRight {
+  right: -52px;
+  top: 762px;
+}
+
+/* ── Top connector line ───────────────────────────────────── */
+.topConnector {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 73px;
+  overflow: visible;
+}
+
+.topConnectorSvg {
+  width: 2px;
+  height: 73px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  text-align: center;
+  padding: 73px 25px 0;
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.288px;
+  color: #3c3d3c;
+  width: 343px;
+  max-width: 100%;
+}
+
+.subheading {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #434c3d;
+  width: 307px;
+  max-width: 100%;
+}
+
+/* ── Illustration container ───────────────────────────────── */
+/* Positioned to match Figma: starts at y=396 from section top.
+   Header area (73px connector + ~168px header + gap) ≈ 258px.
+   So illustration top = 396px from section top. We use absolute. */
+.illustration {
+  position: absolute;
+  top: 396px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 393px;
+  height: 789px;
+}
+
+/* Bottom green — the solid green extending full width to page bottom */
+.bottomGreen {
+  position: absolute;
+  top: 86px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 703px;
+  background: #effae6;
+}
+
+/* Blue gradient — water just below surface */
+.blueGradient {
+  position: absolute;
+  top: 85px;
+  left: 0;
+  width: 392px;
+  height: 101px;
+  background: linear-gradient(
+    to bottom,
+    rgba(120, 110, 192, 0.5),
+    rgba(145, 138, 189, 0)
+  );
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+/* Water surface line */
+.middleLine {
+  position: absolute;
+  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 392px;
+  height: 2px;
+  overflow: visible;
+  z-index: 3;
+}
+
+.middleLineSvg {
+  width: 100%;
+  height: 2px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Iceberg ──────────────────────────────────────────────── */
+.iceberg {
+  position: absolute;
+  top: 0;
+  left: 106px;
+  width: 176px;
+  height: 296px;
+  z-index: 4;
+  cursor: pointer;
+  animation: icebergFloat 4s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.icebergSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* Floating animation */
+@keyframes icebergFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Dip on tap — overrides float momentarily */
+.icebergDipped {
+  animation: none;
+  transform: translateY(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iceberg {
+    animation: none;
+  }
+}
+
+/* ── Label positioning containers ─────────────────────────── */
+/* Positives: Figma frame at x=21, y=321, w=355, h=110 */
+.positives {
+  position: absolute;
+  top: 321px;
+  left: 21px;
+  width: 355px;
+  height: 110px;
+  z-index: 5;
+}
+
+/* Negatives: Figma frame at x=13, y=499, w=373, h=287 */
+.negatives {
+  position: absolute;
+  top: 499px;
+  left: 13px;
+  width: 373px;
+  height: 287px;
+  z-index: 5;
+}
+
+/* Positive connector line (Vector 413 — inside positives at x=128, y=81, h=29) */
+.posConnector {
+  position: absolute;
+  left: 128px;
+  top: 81px;
+  width: 2px;
+  height: 29px;
+  overflow: visible;
+}
+
+/* Negative connector lines */
+.negConnector {
+  position: absolute;
+  width: 2px;
+  overflow: visible;
+}
+
+.connectorSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Label rows ───────────────────────────────────────────── */
+.labelLeft,
+.labelRight {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ── Positive text styles ─────────────────────────────────── */
+.posBold {
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #226c0f;
+  white-space: nowrap;
+}
+
+.posDesc {
+  position: absolute;
+  top: 15px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #434c3d;
+  white-space: nowrap;
+}
+
+/* Left-side labels are right-aligned */
+.labelLeft .posBold,
+.labelLeft .posDesc {
+  text-align: right;
+}
+
+/* ── Negative text styles ─────────────────────────────────── */
+.negBold {
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #c44a4a;
+  white-space: nowrap;
+}
+
+.negDesc {
+  position: absolute;
+  top: 17px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #501c1c;
+}
+
+.labelLeft .negBold,
+.labelLeft .negDesc {
+  text-align: right;
+}

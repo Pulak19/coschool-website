@@ -1,5 +1,6 @@
 import Nav from './components/Nav/Nav.jsx';
 import Hero from './components/Hero/Hero.jsx';
+import IcebergSection from './components/IcebergSection/IcebergSection.jsx';
 import LoopSequence from './components/LoopSequence/LoopSequence.jsx';
 import HowItWorks from './components/HowItWorks/HowItWorks.jsx';
 import CardsStack from './components/CardsStack/CardsStack.jsx';
@@ -13,6 +14,7 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
+        <IcebergSection />
         <LoopSequence />
         <HowItWorks />
         <CardsStack />

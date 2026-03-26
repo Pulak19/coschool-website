@@ -1,8 +1,5 @@
+import { useEffect, useRef } from 'react';
 import styles from './Hero.module.css';
-
-/* ── YouTube embed ───────────────────────────────────────── */
-const YT_ID    = '61iN2emMqbs';
-const YT_EMBED = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&mute=1&loop=1&playlist=${YT_ID}&rel=0&playsinline=1`;
 
 /* ── School logos ────────────────────────────────────────── */
 const SCHOOL_LOGOS = [
@@ -16,12 +13,46 @@ const SCHOOL_LOGOS = [
 
 export default function Hero() {
   const logoSet = [...SCHOOL_LOGOS, ...SCHOOL_LOGOS];
+  const sectionRef = useRef(null);
+
+  /* ── Interactive gradient blobs: follow pointer subtly ── */
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const orbs = section.querySelectorAll('[data-orb]');
+    let rafId = null;
+
+    const handlePointer = (e) => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const rect = section.getBoundingClientRect();
+        // Normalise pointer to -1…1 range within section
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+
+        orbs.forEach((orb, i) => {
+          // Each orb moves a different amount for parallax feel
+          const factor = (i + 1) * 12;
+          orb.style.transform = `translate(${nx * factor}px, ${ny * factor}px)`;
+        });
+        rafId = null;
+      });
+    };
+
+    section.addEventListener('pointermove', handlePointer);
+    return () => {
+      section.removeEventListener('pointermove', handlePointer);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
-    <section id="hero" className={styles.section} aria-label="Hero">
-      {/* Background orbs */}
-      <div className={styles.orbTopRight} aria-hidden="true" />
-      <div className={styles.orbBottomLeft} aria-hidden="true" />
+    <section id="hero" className={styles.section} aria-label="Hero" ref={sectionRef}>
+      {/* Background gradient blobs */}
+      <div className={styles.orbTop} data-orb aria-hidden="true" />
+      <div className={styles.orbBottomLeft} data-orb aria-hidden="true" />
+      <div className={styles.orbBottomRight} data-orb aria-hidden="true" />
 
       <div className={styles.inner}>
 
@@ -33,7 +64,7 @@ export default function Hero() {
           </h1>
 
           <p className={styles.subtext}>
-            Trusted by over 40 schools all over country in just 2 years.
+            Trusted by Leading Schools Across India
           </p>
 
           {/* School logo carousel */}
@@ -60,29 +91,41 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* ── Media column ──────────────────────────────── */}
+        {/* ── Bottom section: connector + prompt + CTA ── */}
         <div className={styles.mediaCol}>
-          {/*
-            connectorArea: holds the decorative vertical line (via ::before),
-            the video, and the mobile-only CTA — in that order top to bottom.
-          */}
           <div className={styles.connectorArea}>
-            {/* Video frame — full-width on mobile */}
-            <div className={styles.videoFrame}>
-              <iframe
-                className={styles.video}
-                src={YT_EMBED}
-                title="Intro video about CoSchool"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-                loading="eager"
+            {/* Connector line */}
+            <div className={styles.connectorLine} aria-hidden="true">
+              <img
+                src="/assets/fe4a6420c1980e7626260716b0b108c823286c69.svg"
+                alt=""
+                className={styles.connectorSvg}
               />
             </div>
 
-            {/* Mobile-only CTA — hidden on desktop */}
-            <a href="#cta" className={`btn-primary ${styles.cta} ${styles.ctaMobile}`} aria-label="Learn more about CoSchool">
-              About Us
-            </a>
+            {/* Prompt text */}
+            <p className={styles.promptText}>
+              Interested in knowing how we work?
+            </p>
+
+            {/* CTA button with Vin character */}
+            <div className={styles.ctaGroup}>
+              <div className={styles.vinCharacter}>
+                <img
+                  src="/assets/f9eea7c0af5c6fb9ac1882d0ddfcdcf60ac3e972.png"
+                  alt="Vin — CoSchool assistant"
+                  className={styles.vinImg}
+                />
+              </div>
+              <button className={styles.startBtn} type="button">
+                <span className={styles.startBtnLabel}>Start Conversation</span>
+                <img
+                  src="/assets/93bd38f320dbc9a8e7727ae41126a804833c0a9b.svg"
+                  alt=""
+                  className={styles.eqIcon}
+                />
+              </button>
+            </div>
           </div>
         </div>
 

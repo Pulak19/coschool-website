@@ -26,29 +26,78 @@
   }
 }
 
-/* ── Background orbs ─────────────────────────────────────── */
-.orbTopRight {
+/* ── Background gradient blobs ────────────────────────────── */
+/* Shared base for all blobs */
+.orbTop,
+.orbBottomLeft,
+.orbBottomRight {
   position: absolute;
-  top: -30px;
-  right: -40px;
-  width: 223px;
-  height: 221px;
-  border-radius: 140px;
+  border-radius: 50%;
   background: var(--color-bg-orb);
-  filter: blur(37px);
   pointer-events: none;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Top blob — larger, more blur (Figma 37:52) */
+.orbTop {
+  top: -104px;
+  right: -20px;
+  width: 286px;
+  height: 283px;
+  border-radius: 179px;
+  filter: blur(47px);
+  animation: orbFloat1 8s ease-in-out infinite;
+}
+
+/* Bottom-left blob (Figma 39:101) */
 .orbBottomLeft {
-  position: absolute;
-  bottom: 80px;
+  bottom: 140px;
   left: -88px;
   width: 223px;
   height: 221px;
   border-radius: 140px;
-  background: var(--color-bg-orb);
   filter: blur(37px);
-  pointer-events: none;
+  animation: orbFloat2 10s ease-in-out infinite;
+}
+
+/* Bottom-right blob (Figma 39:100) */
+.orbBottomRight {
+  bottom: 60px;
+  right: -40px;
+  width: 223px;
+  height: 221px;
+  border-radius: 140px;
+  filter: blur(37px);
+  animation: orbFloat3 12s ease-in-out infinite;
+}
+
+/* Floating animations — each blob drifts on its own cycle */
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-8px, 12px) scale(1.03); }
+  66%      { transform: translate(6px, -8px) scale(0.97); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%      { transform: translate(14px, -10px) scale(1.04); }
+  70%      { transform: translate(-6px, 8px) scale(0.98); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  35%      { transform: translate(-10px, 6px) scale(0.96); }
+  75%      { transform: translate(8px, -12px) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbTop,
+  .orbBottomLeft,
+  .orbBottomRight {
+    animation: none;
+    transition: none;
+  }
 }
 
 /* ── Inner layout ─────────────────────────────────────────── */
@@ -145,7 +194,7 @@
   font-size: var(--size-body);
   line-height: var(--lh-body);
   color: var(--color-fg-2);
-  max-width: 260px;
+  max-width: 291px;
 }
 
 @media (min-width: 1024px) {
@@ -222,7 +271,7 @@
   border-radius: 50%;
 }
 
-/* ── CTA button ──────────────────────────────────────────── */
+/* ── CTA button (desktop About Us) ──────────────────────── */
 .cta {
   margin-top: var(--sp-8);
 }
@@ -232,25 +281,14 @@
   display: none;
 }
 
-/* Mobile: show the CTA inside connectorArea */
-.ctaMobile {
-  display: inline-flex;
-  position: relative;
-  z-index: 1;
-}
-
 @media (min-width: 1024px) {
   /* Desktop: show CTA in text column */
   .ctaDesktop {
     display: inline-flex;
   }
-  /* Desktop: hide the one inside connectorArea */
-  .ctaMobile {
-    display: none;
-  }
 }
 
-/* ── Media column ────────────────────────────────────────── */
+/* ── Media column (bottom section) ──────────────────────── */
 .mediaCol {
   position: relative;
   display: flex;
@@ -266,76 +304,161 @@
   }
 }
 
-/* ── Connector area (mobile: line + video + CTA) ─────────── */
-/*
-  The ::before pseudo-element draws the thin vertical decorative line
-  that runs behind both the video and the CTA button.
-*/
+/* ── Connector area ─────────────────────────────────────── */
 .connectorArea {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-24);
-  padding: 20px 0 0;
+  gap: 20px;
+  padding: 0;
   width: 100%;
 }
 
-/* Vertical connector line */
-.connectorArea::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-0.5px);
+/* ── Connector line SVG ─────────────────────────────────── */
+.connectorLine {
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(140, 190, 120, 0.45) 8%,
-    rgba(140, 190, 120, 0.45) 92%,
-    transparent 100%
-  );
-  z-index: 0;
-  pointer-events: none;
+  height: 79px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.connectorSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 @media (min-width: 1024px) {
-  .connectorArea {
-    padding: 0;
-    gap: 0;
-  }
-  /* Hide the connector line on desktop */
-  .connectorArea::before {
+  .connectorLine {
     display: none;
   }
 }
 
-/* ── Video frame ─────────────────────────────────────────── */
-.videoFrame {
+/* ── Prompt text ────────────────────────────────────────── */
+.promptText {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.29px;
+  color: #434c3d;
+  text-align: center;
+  max-width: 281px;
+}
+
+/* ── CTA group: Vin + Start Conversation button ─────────── */
+.ctaGroup {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  padding-top: 10px;
+}
+
+/* Vin character — overlaps the left side of the button */
+.vinCharacter {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  /* Figma: Vin is ~112px left of center, size ~84x85 */
+  transform: translateX(calc(-50% - 112px));
+  width: 84px;
+  height: 85px;
+  z-index: 2;
+  border-radius: 77px;
+  filter: drop-shadow(0px 5px 5px rgba(184, 174, 243, 0.25));
+}
+
+.vinImg {
+  width: 58px;
+  height: 70px;
+  object-fit: contain;
+  position: absolute;
+  left: 13px;
+  top: 7px;
+}
+
+/* Start Conversation button — animated gradient stroke */
+.startBtn {
   position: relative;
   z-index: 1;
-  /* Mobile: extend to 8px from each screen edge */
-  width: calc(100vw - 16px);
-  max-width: none;
-  border-radius: var(--radius-video);
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: var(--shadow-video);
-}
-
-@media (min-width: 1024px) {
-  .videoFrame {
-    width: 100%;
-    max-width: 480px;
-  }
-}
-
-.video {
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  /* Asymmetric padding: 60px left to accommodate Vin overlap */
+  padding: 12px 24px 12px 60px;
+  background: rgba(255, 255, 255, 0.96);
   border: none;
-  display: block;
-  border-radius: var(--radius-video);
+  border-radius: 38px;
+  box-shadow: 0px 16px 27px 0px rgba(124, 112, 198, 0.16);
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+  /* Isolate so pseudo-element stays behind content */
+  isolation: isolate;
+}
+
+/* Animated gradient border via pseudo-element */
+.startBtn::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 38px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--btn-border-angle, 0deg),
+    rgba(184, 174, 243, 0.5),
+    rgba(255, 255, 255, 0.9) 25%,
+    rgba(184, 174, 243, 0.35) 50%,
+    rgba(255, 255, 255, 0.9) 75%,
+    rgba(184, 174, 243, 0.5)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  animation: borderRotate 6s linear infinite;
+}
+
+@keyframes borderRotate {
+  to { --btn-border-angle: 360deg; }
+}
+
+/* Register custom property for animation */
+@property --btn-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.startBtn:hover {
+  box-shadow: 0px 20px 35px 0px rgba(124, 112, 198, 0.24);
+  transform: translateY(-1px);
+}
+
+.startBtn:active {
+  transform: translateY(0);
+}
+
+.startBtnLabel {
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #3c3d3c;
+  white-space: nowrap;
+}
+
+.eqIcon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }

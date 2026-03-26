@@ -1,7 +1,7 @@
 .section {
   background: #fff;
   min-height: 100vh;
-  padding: 101px 0 var(--sp-40);
+  padding: 230px 0 var(--sp-40);
   overflow: hidden;
   position: relative;
 }

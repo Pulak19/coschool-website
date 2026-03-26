@@ -8,14 +8,8 @@
 .outer {
   position: relative;
   height: 595vh;
-}
-
-/* Bottom padding: dark space after the sticky content releases */
-.outer::after {
-  content: '';
-  display: block;
-  height: 230px;
   background: #272727;
+  padding-bottom: 200px;
 }
 
 /* Sticky viewport-sized container */

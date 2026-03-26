@@ -47,7 +47,7 @@ const VALUES = [
   },
 ];
 
-const TOTAL_STEPS = VALUES.length + 1; // 7 values + 1 CTA
+const TOTAL_STEPS = VALUES.length + 2; // 7 values + 1 CTA reveal + 1 CTA hold
 
 export default function ClosedLoopSection() {
   const outerRef = useRef(null);
@@ -91,7 +91,7 @@ export default function ClosedLoopSection() {
 
   // Circle progress: 0 = gray, 1 = fully purple
   const circleProgress = Math.min(activeStep / VALUES.length, 1);
-  const showCTA = activeStep >= TOTAL_STEPS || hasCompleted;
+  const showCTA = activeStep > VALUES.length || hasCompleted;
 
   return (
     <section

@@ -16,9 +16,9 @@ export default function IcebergSection() {
         <div className={styles.orbLeft} aria-hidden="true" />
         <div className={styles.orbRight} aria-hidden="true" />
 
-        {/* Top connector line from previous section */}
-        <div className={styles.topConnector} aria-hidden="true">
-          <img src="/assets/7f5ff8cc69e97e5e2d6be2768514258996bc95a7.svg" alt="" className={styles.topConnectorSvg} />
+        {/* Ornament line below header leading to iceberg */}
+        <div className={styles.ornamentLine} aria-hidden="true">
+          <img src="/assets/7f5ff8cc69e97e5e2d6be2768514258996bc95a7.svg" alt="" className={styles.ornamentLineSvg} />
         </div>
 
         {/* Header */}

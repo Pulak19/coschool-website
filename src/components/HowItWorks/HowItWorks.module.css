@@ -1,19 +1,20 @@
 .section {
   background: #fff;
   min-height: 100vh;
-  padding: 101px 0 var(--sp-40);
+  padding: 160px 0 var(--sp-40);
   overflow: hidden;
   position: relative;
+  margin-top: 10vh;
 }
 
 /* Smooth dark→white gradient at the top edge */
 .section::before {
   content: '';
   position: absolute;
-  top: -15vh;
+  top: -30vh;
   left: 0;
   right: 0;
-  height: 20vh;
+  height: 35vh;
   background: linear-gradient(to bottom, #272727 0%, #fff 100%);
   pointer-events: none;
   z-index: 0;

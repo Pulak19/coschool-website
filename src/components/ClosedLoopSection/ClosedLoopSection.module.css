@@ -23,6 +23,19 @@
   pointer-events: none;
 }
 
+/* Dark breathing space after the section */
+.outer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30vh;
+  background: #272727;
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* Sticky viewport-sized container */
 .sticky {
   position: sticky;

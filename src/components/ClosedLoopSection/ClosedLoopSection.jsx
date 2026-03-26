@@ -52,36 +52,24 @@ const TOTAL_STEPS = VALUES.length + 2; // 7 values + 1 CTA reveal + 1 CTA hold
 export default function ClosedLoopSection() {
   const outerRef = useRef(null);
   const [activeStep, setActiveStep] = useState(0);
-  const [hasCompleted, setHasCompleted] = useState(false);
 
   const handleScroll = useCallback(() => {
     const outer = outerRef.current;
     if (!outer) return;
 
     const rect = outer.getBoundingClientRect();
-    const sectionTop = -rect.top; // how far we've scrolled into the section
+    const sectionTop = -rect.top;
     const scrollableHeight = outer.offsetHeight - window.innerHeight;
 
     if (sectionTop < 0 || scrollableHeight <= 0) {
-      // Haven't entered section yet
-      if (!hasCompleted) setActiveStep(0);
-      return;
-    }
-
-    if (hasCompleted) {
-      // Already completed — always show final state
-      setActiveStep(TOTAL_STEPS);
+      setActiveStep(0);
       return;
     }
 
     const progress = Math.min(sectionTop / scrollableHeight, 1);
     const step = Math.min(Math.floor(progress * TOTAL_STEPS), TOTAL_STEPS);
     setActiveStep(step);
-
-    if (step >= TOTAL_STEPS) {
-      setHasCompleted(true);
-    }
-  }, [hasCompleted]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -91,7 +79,7 @@ export default function ClosedLoopSection() {
 
   // Circle progress: 0 = gray, 1 = fully purple
   const circleProgress = Math.min(activeStep / VALUES.length, 1);
-  const showCTA = activeStep > VALUES.length || hasCompleted;
+  const showCTA = activeStep > VALUES.length;
 
   return (
     <section ref={outerRef} className={styles.outer}>

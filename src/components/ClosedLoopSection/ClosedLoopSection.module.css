@@ -22,6 +22,17 @@
   justify-content: center;
 }
 
+/* After completion: no longer sticky, just fills the section */
+.stickyDone {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: #272727;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
 /* Centered 393px frame */
 .frame {
   position: relative;
@@ -185,7 +196,7 @@
   justify-content: center;
   padding: 16px 30px;
   border-radius: 38px;
-  border: 1px solid #fff;
+  border: 1px solid #626262;
   background: linear-gradient(110.67deg, rgba(0, 0, 0, 0.96) 7.97%, rgba(39, 39, 39, 0.96) 97.89%);
   color: #fff;
   font-family: 'Open Sans', sans-serif;

@@ -2,7 +2,7 @@ import Nav from './components/Nav/Nav.jsx';
 import Hero from './components/Hero/Hero.jsx';
 import IcebergSection from './components/IcebergSection/IcebergSection.jsx';
 import ClosedLoopSection from './components/ClosedLoopSection/ClosedLoopSection.jsx';
-import LoopSequence from './components/LoopSequence/LoopSequence.jsx';
+// import LoopSequence from './components/LoopSequence/LoopSequence.jsx'; // archived — bring back when needed
 import HowItWorks from './components/HowItWorks/HowItWorks.jsx';
 import CardsStack from './components/CardsStack/CardsStack.jsx';
 import Founders from './components/Founders/Founders.jsx';
@@ -17,7 +17,6 @@ export default function App() {
         <Hero />
         <IcebergSection />
         <ClosedLoopSection />
-        <LoopSequence />
         <HowItWorks />
         <CardsStack />
         <Founders />

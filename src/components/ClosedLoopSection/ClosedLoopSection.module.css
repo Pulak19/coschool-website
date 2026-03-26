@@ -1,0 +1,208 @@
+/* ─────────────────────────────────────────────────────────────
+   ClosedLoopSection — Screen 1b
+   Scroll-pinned dark section with animated value circle
+   ───────────────────────────────────────────────────────────── */
+
+/* Outer: tall container that creates scroll space.
+   8 steps × ~80vh per step + 100vh for sticky = ~740vh */
+.outer {
+  position: relative;
+  height: 740vh;
+}
+
+/* Sticky viewport-sized container */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  background: #272727;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* Centered 393px frame */
+.frame {
+  position: relative;
+  width: 393px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* ── Background gradient orbs ─────────────────────────────── */
+.orbTL,
+.orbTR,
+.orbBL {
+  position: absolute;
+  border-radius: 140px;
+  background: rgba(0, 0, 0, 0.4);
+  filter: blur(37px);
+  pointer-events: none;
+}
+
+.orbTL {
+  width: 223px;
+  height: 221px;
+  left: -111px;
+  top: -75px;
+}
+
+.orbTR {
+  width: 223px;
+  height: 221px;
+  left: 257px;
+  top: 216px;
+}
+
+.orbBL {
+  width: 245px;
+  height: 243px;
+  left: -87px;
+  bottom: -20px;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  text-align: center;
+  padding: 73px 25px 0;
+  color: #fff;
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.288px;
+  width: 343px;
+  max-width: 100%;
+}
+
+.subheading {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  width: 307px;
+  max-width: 100%;
+}
+
+/* ── Circle area ──────────────────────────────────────────── */
+.circleArea {
+  position: absolute;
+  /* Circle center from Figma: x≈200.6, y≈508.1 (center of 352px circle at x=24.4, y=332) */
+  top: 332px;
+  left: 24px;
+  width: 352px;
+  height: 352px;
+}
+
+.circleRing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Dots ─────────────────────────────────────────────────── */
+.dot {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #272727;
+  border: 1px solid #000;
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  z-index: 2;
+  /* Offset: dots in Figma are relative to frame (0,0=section top-left),
+     but circleArea starts at (24, 332). Adjust in inline styles. */
+  transform: translate(-24px, -332px);
+}
+
+.dotActive {
+  background: #9582FF;
+  border-color: #000;
+  border-width: 2px;
+  box-shadow: 0 0 8px rgba(149, 130, 255, 0.4);
+}
+
+/* ── Labels ───────────────────────────────────────────────── */
+.label {
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.29px;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.1);
+  z-index: 3;
+  /* Figma uses center positioning via translate -50% -50% */
+  transform: translate(calc(-50% - 24px), calc(-50% - 332px));
+  transition: opacity 0.5s ease, color 0.5s ease;
+}
+
+/* ── Center content ───────────────────────────────────────── */
+.centerContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 195px;
+  text-align: center;
+  z-index: 4;
+}
+
+/* Description text */
+.description {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.29px;
+  color: #fff;
+  text-align: center;
+  animation: fadeIn 0.45s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA Button */
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 30px;
+  border-radius: 38px;
+  border: 1px solid #fff;
+  background: linear-gradient(110.67deg, rgba(0, 0, 0, 0.96) 7.97%, rgba(39, 39, 39, 0.96) 97.89%);
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-out;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(149, 130, 255, 0.25);
+}
+
+.ctaBtn:active {
+  transform: translateY(0);
+}

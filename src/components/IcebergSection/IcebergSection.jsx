@@ -1,8 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './IcebergSection.module.css';
 
 export default function IcebergSection() {
   const [isDipped, setIsDipped] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleIcebergTap = () => {
     setIsDipped(true);
@@ -10,7 +23,11 @@ export default function IcebergSection() {
   };
 
   return (
-    <section className={styles.section} aria-label="Understanding the Learning Gap">
+    <section
+      ref={sectionRef}
+      className={`${styles.section} ${isVisible ? styles.revealed : ''}`}
+      aria-label="Understanding the Learning Gap"
+    >
       <div className={styles.frame}>
         {/* Background gradient blobs */}
         <div className={styles.orbLeft} aria-hidden="true" />

@@ -6,10 +6,20 @@
 .section {
   position: relative;
   width: 100%;
+  min-height: 100vh;
   background: #fff;
   overflow: hidden;
   display: flex;
   justify-content: center;
+  /* Smooth entrance */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Centered frame matching Figma's 393px canvas */

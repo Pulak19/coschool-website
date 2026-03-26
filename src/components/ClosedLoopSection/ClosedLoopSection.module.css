@@ -10,6 +10,19 @@
   height: 595vh;
 }
 
+/* Smooth bg transition gradient from white (previous section) to dark */
+.outer::before {
+  content: '';
+  position: absolute;
+  top: -15vh;
+  left: 0;
+  right: 0;
+  height: 20vh;
+  background: linear-gradient(to bottom, #fff 0%, #272727 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* Sticky viewport-sized container */
 .sticky {
   position: sticky;
@@ -83,6 +96,12 @@
   text-align: center;
   padding: 73px 25px 0;
   color: #fff;
+  animation: revealUp 0.9s ease-out both;
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .heading {
@@ -112,6 +131,7 @@
   left: 24px;
   width: 352px;
   height: 352px;
+  animation: revealUp 1s ease-out 0.2s both;
 }
 
 .circleRing {

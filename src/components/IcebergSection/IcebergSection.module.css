@@ -92,6 +92,34 @@
   max-width: 100%;
 }
 
+/* ── Translucent background text ──────────────────────────── */
+.bgTextVisible,
+.bgTextHidden {
+  position: absolute;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 97px;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bgTextVisible {
+  top: 321px;
+  color: rgba(34, 108, 15, 0.1);
+  z-index: 0;
+}
+
+.bgTextHidden {
+  top: 766px;
+  color: rgba(196, 74, 74, 0.1);
+  z-index: 6;
+}
+
 /* ── Illustration container ───────────────────────────────── */
 .illustration {
   position: absolute;
@@ -114,13 +142,13 @@
   z-index: 1;
 }
 
-/* ── Iceberg — BELOW water layers ─────────────────────────── */
+/* ── Iceberg — BELOW water layers, shifted up ~55px ───────── */
 .iceberg {
   position: absolute;
-  top: 0;
+  top: -55px;
   left: 106px;
   width: 176px;
-  height: 296px;
+  height: 373px;
   z-index: 2;
   cursor: pointer;
   animation: icebergFloat 4s ease-in-out infinite;
@@ -236,62 +264,25 @@
 }
 
 /* ── Positive labels (above water) ────────────────────────── */
-/* Figma: frame at x=21, y=321, w=355, h=110 */
+/* Figma: frame at x=21, y=321, w=355, h=159 */
 .positives {
   position: absolute;
   top: 321px;
   left: 21px;
   width: 355px;
-  height: 130px;
+  height: 159px;
   z-index: 5;
 }
 
 /* ── Negative labels (below water) ────────────────────────── */
-/* Figma: frame at x=13, y=499, w=373, h=287 */
+/* Figma: frame at x=13, y=499, w=373, h=342 */
 .negatives {
   position: absolute;
   top: 499px;
   left: 13px;
   width: 373px;
-  height: 287px;
+  height: 342px;
   z-index: 5;
-}
-
-/* ── Elastic connector lines ──────────────────────────────── */
-.elasticLine {
-  position: absolute;
-  width: 1px;
-  background: #6E7A66;
-  transform-origin: top center;
-}
-
-/* Positive-side lines: when iceberg floats UP, lines get shorter
-   (iceberg tip approaches text). Sync with 4s float cycle. */
-.elasticPos {
-  animation: elasticStretchPos 4s ease-in-out infinite;
-}
-
-/* Negative-side lines: when iceberg floats UP, lines get longer
-   (iceberg bottom moves away from text). Inverse of positive. */
-.elasticNeg {
-  animation: elasticStretchNeg 4s ease-in-out infinite;
-}
-
-@keyframes elasticStretchPos {
-  0%, 100% { transform: scaleY(1); }
-  50%      { transform: scaleY(0.88); }
-}
-
-@keyframes elasticStretchNeg {
-  0%, 100% { transform: scaleY(1); }
-  50%      { transform: scaleY(1.12); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .elasticPos,
-  .elasticNeg {
-    animation: none;
-  }
 }
 
 /* ── Text styles ──────────────────────────────────────────── */
@@ -303,12 +294,12 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 10.5px;
   line-height: 1.5;
-  white-space: nowrap;
 }
 
 .posBold {
   font-weight: 700;
   color: #226c0f;
+  white-space: nowrap;
 }
 
 .posDesc {
@@ -319,13 +310,11 @@
 .negBold {
   font-weight: 700;
   color: #c44a4a;
-  white-space: normal;
 }
 
 .negDesc {
   font-weight: 400;
   color: #501c1c;
-  white-space: normal;
 }
 
 .alignRight {

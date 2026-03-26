@@ -35,17 +35,6 @@
   justify-content: center;
 }
 
-/* After completion: no longer sticky, just fills the section */
-.stickyDone {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  background: #272727;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-}
-
 /* Centered 393px frame */
 .frame {
   position: relative;

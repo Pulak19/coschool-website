@@ -94,12 +94,8 @@ export default function ClosedLoopSection() {
   const showCTA = activeStep > VALUES.length || hasCompleted;
 
   return (
-    <section
-      ref={outerRef}
-      className={styles.outer}
-      style={hasCompleted ? { height: '100vh' } : undefined}
-    >
-      <div className={hasCompleted ? styles.stickyDone : styles.sticky}>
+    <section ref={outerRef} className={styles.outer}>
+      <div className={styles.sticky}>
         <div className={styles.frame}>
           {/* Background gradient orbs */}
           <div className={styles.orbTL} aria-hidden="true" />

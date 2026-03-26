@@ -10,30 +10,12 @@
   height: 595vh;
 }
 
-/* Smooth bg transition gradient from white (previous section) to dark */
-.outer::before {
-  content: '';
-  position: absolute;
-  top: -15vh;
-  left: 0;
-  right: 0;
-  height: 20vh;
-  background: linear-gradient(to bottom, #fff 0%, #272727 100%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Dark breathing space after the section */
+/* Bottom padding: dark space after the sticky content releases */
 .outer::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30vh;
+  display: block;
+  height: 230px;
   background: #272727;
-  z-index: -1;
-  pointer-events: none;
 }
 
 /* Sticky viewport-sized container */

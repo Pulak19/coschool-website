@@ -4,10 +4,10 @@
    ───────────────────────────────────────────────────────────── */
 
 /* Outer: tall container that creates scroll space.
-   8 steps × ~80vh per step + 100vh for sticky = ~740vh */
+   8 steps × ~55vh per step + 100vh for sticky = ~540vh */
 .outer {
   position: relative;
-  height: 740vh;
+  height: 540vh;
 }
 
 /* Sticky viewport-sized container */

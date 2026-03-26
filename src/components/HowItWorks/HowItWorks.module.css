@@ -1,8 +1,22 @@
 .section {
   background: #fff;
+  min-height: 100vh;
   padding: 101px 0 var(--sp-40);
   overflow: hidden;
   position: relative;
+}
+
+/* Smooth dark→white gradient at the top edge */
+.section::before {
+  content: '';
+  position: absolute;
+  top: -15vh;
+  left: 0;
+  right: 0;
+  height: 20vh;
+  background: linear-gradient(to bottom, #272727 0%, #fff 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 @media (min-width: 768px) {

@@ -3,26 +3,41 @@ import styles from './IcebergSection.module.css';
 
 export default function IcebergSection() {
   const [isDipped, setIsDipped] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [showNegatives, setShowNegatives] = useState(false);
+  const [sectionRevealed, setSectionRevealed] = useState(false); // one-time entrance
+  const [showPositives, setShowPositives] = useState(false);     // re-triggerable
+  const [showNegatives, setShowNegatives] = useState(false);     // re-triggerable
   const sectionRef = useRef(null);
+  const positivesRef = useRef(null);
   const negativesRef = useRef(null);
   const bgVisibleRef = useRef(null);
   const bgHiddenRef = useRef(null);
+  const rafRef = useRef(null);
 
-  // Section entrance observer
+  // Section entrance — one-time fade-in only
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
+      ([entry]) => { if (entry.isIntersecting) setSectionRevealed(true); },
       { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  // Negatives reveal observer — triggers when negatives area enters viewport
+  // Positives reveal — re-triggers each time
+  useEffect(() => {
+    const el = positivesRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowPositives(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Negatives reveal — re-triggers each time
   useEffect(() => {
     const el = negativesRef.current;
     if (!el) return;
@@ -34,26 +49,34 @@ export default function IcebergSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Scroll-linked parallax for background text
+  // Scroll-linked parallax for background text — rAF throttled
   const handleScroll = useCallback(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const rect = section.getBoundingClientRect();
-    const scrollProgress = -rect.top / (rect.height || 1);
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      const section = sectionRef.current;
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const scrollProgress = -rect.top / (rect.height || 1);
 
-    if (bgVisibleRef.current) {
-      bgVisibleRef.current.style.transform =
-        `translateX(-50%) translateY(${scrollProgress * -18}px)`;
-    }
-    if (bgHiddenRef.current) {
-      bgHiddenRef.current.style.transform =
-        `translateX(-50%) translateY(${scrollProgress * 25}px)`;
-    }
+        if (bgVisibleRef.current) {
+          bgVisibleRef.current.style.transform =
+            `translateX(-50%) translateY(${scrollProgress * -18}px)`;
+        }
+        if (bgHiddenRef.current) {
+          bgHiddenRef.current.style.transform =
+            `translateX(-50%) translateY(${scrollProgress * 25}px)`;
+        }
+      }
+      rafRef.current = null;
+    });
   }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [handleScroll]);
 
   const handleIcebergTap = () => {
@@ -64,7 +87,7 @@ export default function IcebergSection() {
   return (
     <section
       ref={sectionRef}
-      className={`${styles.section} ${isVisible ? styles.revealed : ''}`}
+      className={`${styles.section} ${sectionRevealed ? styles.revealed : ''}`}
       aria-label="Understanding the Learning Gap"
     >
       <div className={styles.frame}>
@@ -133,22 +156,22 @@ export default function IcebergSection() {
         </div>
 
         {/* ── Positive labels (above water) — staggered blur-in ── */}
-        <div className={styles.positives}>
+        <div ref={positivesRef} className={styles.positives}>
           {/* Cluster 0: Classes (left) */}
-          <span className={`${styles.posBold} ${styles.alignRight} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 96, top: 23, '--stagger': 0 }}>Classes</span>
-          <span className={`${styles.posDesc} ${styles.alignRight} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 35, top: 38, width: 100, '--stagger': 0 }}>Syllabus being covered timely</span>
+          <span className={`${styles.posBold} ${styles.alignRight} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 96, top: 23, '--stagger': 0 }}>Classes</span>
+          <span className={`${styles.posDesc} ${styles.alignRight} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 35, top: 38, width: 100, '--stagger': 0 }}>Syllabus being covered timely</span>
 
           {/* Cluster 1: Homework (right) */}
-          <span className={`${styles.posBold} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 190, top: 31, '--stagger': 1 }}>Homework</span>
-          <span className={`${styles.posDesc} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 190, top: 46, width: 80, '--stagger': 1 }}>Lessons seems on track</span>
+          <span className={`${styles.posBold} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 190, top: 31, '--stagger': 1 }}>Homework</span>
+          <span className={`${styles.posDesc} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 190, top: 46, width: 80, '--stagger': 1 }}>Lessons seems on track</span>
 
           {/* Cluster 2: PTMs (left) */}
-          <span className={`${styles.posBold} ${styles.alignRight} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 71, top: 90, '--stagger': 2 }}>PTMs</span>
-          <span className={`${styles.posDesc} ${styles.alignRight} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: -6, top: 105, width: 105, '--stagger': 2 }}>Parents seem informed</span>
+          <span className={`${styles.posBold} ${styles.alignRight} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 71, top: 90, '--stagger': 2 }}>PTMs</span>
+          <span className={`${styles.posDesc} ${styles.alignRight} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: -6, top: 105, width: 105, '--stagger': 2 }}>Parents seem informed</span>
 
           {/* Cluster 3: Report Card (right) */}
-          <span className={`${styles.posBold} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 250, top: 90, '--stagger': 3 }}>Report Card</span>
-          <span className={`${styles.posDesc} ${isVisible ? styles.blurIn : styles.blurHidden}`} style={{ left: 250, top: 105, width: 90, '--stagger': 3 }}>Looks fine for each term</span>
+          <span className={`${styles.posBold} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 250, top: 90, '--stagger': 3 }}>Report Card</span>
+          <span className={`${styles.posDesc} ${showPositives ? styles.blurIn : styles.blurHidden}`} style={{ left: 250, top: 105, width: 90, '--stagger': 3 }}>Looks fine for each term</span>
         </div>
 
         {/* ── Negative labels (below water) — staggered blur-in on scroll ── */}

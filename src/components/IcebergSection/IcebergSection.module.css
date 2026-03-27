@@ -371,21 +371,27 @@
 /* ── Staggered blur-in animation ─────────────────────────── */
 .blurHidden {
   opacity: 0;
-  filter: blur(8px);
+  filter: blur(10px);
+  transform: translateY(8px);
+  transition: opacity 0.5s ease-out, filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .blurIn {
   opacity: 0;
-  filter: blur(8px);
-  animation: blurReveal 0.55s ease-out forwards;
-  animation-delay: calc(var(--stagger, 0) * 0.28s);
+  filter: blur(10px);
+  animation: blurReveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--stagger, 0) * 0.56s);
 }
 
 @keyframes blurReveal {
   0% {
     opacity: 0;
-    filter: blur(8px);
-    transform: translateY(6px);
+    filter: blur(10px);
+    transform: translateY(8px);
+  }
+  40% {
+    opacity: 0.6;
+    filter: blur(4px);
   }
   100% {
     opacity: 1;

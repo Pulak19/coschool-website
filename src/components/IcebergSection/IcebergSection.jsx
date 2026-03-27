@@ -15,7 +15,7 @@ export default function IcebergSection() {
     const el = sectionRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.1 }
     );
     observer.observe(el);
@@ -27,7 +27,7 @@ export default function IcebergSection() {
     const el = negativesRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setShowNegatives(true); },
+      ([entry]) => setShowNegatives(entry.isIntersecting),
       { threshold: 0.15 }
     );
     observer.observe(el);

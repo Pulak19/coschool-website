@@ -19,10 +19,6 @@
 }
 
 /* ── Gradient frame — 3-sided ∩ around logo (mobile only) ── */
-/*
-  Left + right via ::before/::after, right via .logoFrameRight child.
-  Positioned relative to section top, matching Figma placement.
-*/
 .logoFrame {
   position: absolute;
   top: 44px;
@@ -33,7 +29,6 @@
   z-index: 0;
 }
 
-/* Top gradient line */
 .logoFrame::before {
   content: '';
   position: absolute;
@@ -50,7 +45,6 @@
   );
 }
 
-/* Left gradient line */
 .logoFrame::after {
   content: '';
   position: absolute;
@@ -67,7 +61,6 @@
   );
 }
 
-/* Right gradient line */
 .logoFrameRight {
   display: block;
   position: absolute;
@@ -84,7 +77,6 @@
   );
 }
 
-/* Hide frame on wider screens */
 @media (min-width: 768px) {
   .logoFrame {
     display: none;
@@ -118,17 +110,17 @@
   }
 }
 
-/* ── Content group: heading + tagline + card ─────────────── */
+/* ── Content group: heading + card ───────────────────────── */
 .introContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
   text-align: center;
 }
 
-/* ── SchoolAI logo ────────────────────────────────────────── */
+/* ── SchoolAI logo — slightly larger per Figma update ────── */
 .brandLogo {
   display: flex;
   flex-direction: column;
@@ -138,23 +130,22 @@
 
 .brandLogoMain {
   display: flex;
-  align-items: flex-end; /* baseline-align the wordmark parts */
+  align-items: flex-end;
   gap: 5px;
 }
 
 .logoLeft {
   display: block;
-  width: 111px;
+  width: 138px;
   height: auto;
   object-fit: contain;
 }
 
 .logoRight {
   display: block;
-  width: 33px;
+  width: 41px;
   height: auto;
   object-fit: contain;
-  /* align slightly above the baseline to match Figma */
   margin-bottom: 4px;
 }
 
@@ -162,17 +153,26 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  /* left-align with the "Ai" portion of the logo */
-  padding-left: 72px;
+  padding-left: 90px;
 }
 
 .brandByText {
   font-family: 'Helvetica Neue', 'Arial', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 17px;
   color: #3b374f;
-  letter-spacing: -0.12px;
+  letter-spacing: -0.15px;
   line-height: 1.3;
+}
+
+/* ── Subtitle ────────────────────────────────────────────── */
+.subtitle {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--size-body);
+  line-height: var(--lh-body);
+  color: var(--color-fg-2);
+  margin-top: 20px;
 }
 
 /* ── Connector: logo → heading ───────────────────────────── */
@@ -205,20 +205,7 @@
   }
 }
 
-/* ── Tagline ─────────────────────────────────────────────── */
-.tagline {
-  font-family: var(--font-body);
-  font-weight: var(--weight-regular);
-  font-size: var(--size-body);
-  line-height: var(--lh-body);
-  color: var(--color-fg-2);
-}
-
 /* ── Feature bullets card ────────────────────────────────── */
-/*
-  Subtle shimmer sweeps across via ::after.
-  Scroll-driven tilt applied via JS inline transform.
-*/
 .featureCard {
   background: linear-gradient(114.698deg, rgb(255, 255, 255) 0.91%, rgb(242, 245, 240) 100%);
   border: 1px solid #a5d187;
@@ -235,7 +222,6 @@
   transition: transform 0.4s var(--ease-std);
 }
 
-/* Shimmer stripe — sweeps left to right every 7 s */
 @keyframes cardShimmer {
   0%   { transform: translateX(-120%); }
   100% { transform: translateX(220%); }
@@ -279,8 +265,8 @@
 
 .featureBulletText {
   font-family: var(--font-body);
-  font-weight: var(--weight-bold);
-  font-size: var(--size-body);
+  font-weight: 600;
+  font-size: 17px;
   line-height: var(--lh-body);
   color: var(--color-fg-2);
 }
@@ -317,7 +303,7 @@
   height: 147px;
 }
 
-/* ── Persona list ─────────────────────────────────────────── */
+/* ── Persona list ────────────────────────────────────────── */
 .personasList {
   display: flex;
   flex-direction: column;
@@ -329,85 +315,124 @@
 .persona {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-24);
+  gap: 32px;
   width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .persona {
-    flex-direction: row;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    gap: 60px;
-    padding: 0 var(--content-pad-lg);
-    align-items: center;
-  }
-
-  .personaReverse {
-    flex-direction: row-reverse;
-  }
-}
-
-.personaText {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-13);
-  flex: 1;
   padding: 0 20px;
 }
 
-@media (min-width: 1024px) {
-  .personaText {
-    max-width: 400px;
-    padding: 0;
-  }
+/* ── Persona pill badge ──────────────────────────────────── */
+.personaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 8px;
+  border: 1px solid #c5e3b0;
+  border-radius: 38px;
+  background: linear-gradient(
+    116deg,
+    rgb(232, 250, 219) 2.4%,
+    rgb(255, 255, 255) 21%,
+    rgb(255, 255, 255) 88.6%,
+    rgb(232, 250, 219) 109.3%
+  );
+  width: fit-content;
 }
 
-.personaTextContent {
+.badgeIconWrap {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeIcon {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.badgeLabel {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #3c3d3c;
+  white-space: nowrap;
+}
+
+/* ── Horizontal scroll carousel ──────────────────────────── */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;        /* Firefox */
+  margin: 0 -20px;              /* bleed to section edges */
+  padding: 0 20px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;                /* Chrome/Safari */
+}
+
+.carouselSlide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-width: 0;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+/* ── Slide text ──────────────────────────────────────────── */
+.slideText {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.slideTextContent {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
-.personaFeature {
-  font-family: var(--font-body);
-  font-weight: var(--weight-bold);
-  font-size: var(--size-subheader);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-subheader);
-  color: var(--color-fg-1);
+.slideFeature {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.29px;
+  color: #3c3d3c;
 }
 
-.personaBody {
-  font-family: var(--font-body);
-  font-weight: var(--weight-regular);
-  font-size: var(--size-body);
-  line-height: var(--lh-body);
-  color: var(--color-fg-2);
+.slideBody {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #434c3d;
 }
 
-.personaMedia {
-  flex: 1;
+/* ── Slide iPad mockup ───────────────────────────────────── */
+.slideMedia {
   width: 100%;
 }
 
-/* ── iPad mockup ─────────────────────────────────────────── */
-/* Mobile: 430px wide, bleeds off one edge (section overflow:hidden clips it) */
 .ipadWrap {
   position: relative;
   width: 430px;
   max-width: none;
-  margin-left: 0; /* bleed off right by default */
-}
-
-/* Reverse personas: anchor to right edge, bleed off left */
-.ipadWrapReverse {
-  margin-left: calc(100% - 430px);
 }
 
 @media (min-width: 768px) {
-  .ipadWrap,
-  .ipadWrapReverse {
+  .ipadWrap {
     width: 100%;
     max-width: 430px;
     margin-left: auto;
@@ -418,7 +443,7 @@
 .ipadInner {
   position: relative;
   width: 100%;
-  padding-bottom: 71.2%; /* 306/430 aspect ratio */
+  padding-bottom: 71.2%;       /* 306/430 aspect ratio */
 }
 
 .ipadScreen {
@@ -442,14 +467,41 @@
   pointer-events: none;
 }
 
-/* ── Bottom CTA ─────────────────────────────────────────── */
+/* ── Pagination dots ─────────────────────────────────────── */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #d4d4d4;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dot:hover {
+  background: #a0a0a0;
+}
+
+.dotActive {
+  background: #3c3d3c;
+  transform: scale(1.25);
+}
+
+/* ── Bottom CTA ──────────────────────────────────────────── */
 .ctaWrap {
   display: flex;
   justify-content: center;
   padding: var(--sp-40) 0 var(--sp-56);
 }
 
-/* Shimmer on CTA button */
 .ctaBtn {
   position: relative;
   overflow: hidden;

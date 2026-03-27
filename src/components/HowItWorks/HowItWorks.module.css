@@ -428,50 +428,50 @@
   object-fit: contain;
 }
 
-/* ── Pagination — Figma SVG asset ────────────────────────── */
-.pagination {
-  display: block;
+/* ── Pagination dots — functional ─────────────────────────── */
+.dots {
+  display: flex;
+  gap: 6px;
 }
 
-/* ── Text area — crossfade between slides ────────────────── */
-.textArea {
-  position: relative;
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4d4d4;
+  transition: background 0.3s ease;
+}
+
+.dotActive {
+  background: #3c3d3c;
+}
+
+/* ── Text scroll — clipped container + inner scrollable ──── */
+.textClip {
   width: 100%;
-  min-height: 80px;            /* prevent layout collapse during transition */
+  overflow: hidden;
+}
+
+.textScroll {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.textScroll::-webkit-scrollbar {
+  display: none;
 }
 
 .textSlide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 7px;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-.textVisible {
-  opacity: 1;
-  transform: translateX(0);
-  position: relative;
-  z-index: 1;
-}
-
-.textHidden {
-  opacity: 0;
-  transform: translateX(30px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .textSlide {
-    transition: none;
-  }
-  .textHidden {
-    transform: none;
-  }
+  box-sizing: border-box;
 }
 
 .slideFeature {

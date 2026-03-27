@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './HowItWorks.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
@@ -161,15 +161,33 @@ function IpadMockup({ src, alt, visible }) {
   );
 }
 
-/* ── Persona section — state-driven text swap + image crossfade ── */
+/* ── Persona section — text scroll + image crossfade ─────── */
 function PersonaSection({ persona }) {
   const sectionRef = useRef(null);
+  const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const autoTimerRef = useRef(null);
 
   const slideCount = persona.slides.length;
 
-  // Auto-advance when section scrolls into view
+  // Scroll text to a given index
+  const scrollTo = useCallback((idx) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const slideW = el.firstChild?.offsetWidth || el.offsetWidth;
+    el.scrollTo({ left: idx * slideW, behavior: 'smooth' });
+  }, []);
+
+  // Sync activeIndex from scroll position
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const slideW = el.firstChild?.offsetWidth || el.offsetWidth;
+    const idx = Math.round(el.scrollLeft / slideW);
+    setActiveIndex(Math.min(idx, slideCount - 1));
+  }, [slideCount]);
+
+  // Auto-advance when section enters viewport
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -186,7 +204,7 @@ function PersonaSection({ persona }) {
               clearInterval(autoTimerRef.current);
               return;
             }
-            setActiveIndex(current);
+            scrollTo(current);
           }, 2800);
         }
       },
@@ -198,7 +216,15 @@ function PersonaSection({ persona }) {
       observer.disconnect();
       if (autoTimerRef.current) clearInterval(autoTimerRef.current);
     };
-  }, [slideCount]);
+  }, [slideCount, scrollTo]);
+
+  // Stop auto on manual touch
+  const stopAuto = useCallback(() => {
+    if (autoTimerRef.current) {
+      clearInterval(autoTimerRef.current);
+      autoTimerRef.current = null;
+    }
+  }, []);
 
   return (
     <div ref={sectionRef} className={styles.persona} data-persona={persona.id}>
@@ -215,30 +241,35 @@ function PersonaSection({ persona }) {
         />
       </div>
 
-      {/* Pagination SVG from Figma */}
-      <img
-        src={PAGINATION_SVG}
-        alt=""
-        className={styles.pagination}
-        width="36"
-        height="8"
-        aria-hidden="true"
-      />
-
-      {/* Text area — crossfade between slides */}
-      <div className={styles.textArea}>
-        {persona.slides.map((slide, i) => (
-          <div
+      {/* Functional pagination dots */}
+      <div className={styles.dots}>
+        {persona.slides.map((_, i) => (
+          <span
             key={i}
-            className={`${styles.textSlide} ${i === activeIndex ? styles.textVisible : styles.textHidden}`}
-          >
-            <h3 className={styles.slideFeature}>{slide.feature}</h3>
-            <p className={styles.slideBody}>{slide.body}</p>
-          </div>
+            className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ''}`}
+          />
         ))}
       </div>
 
-      {/* Image area — crossfade, stays in place */}
+      {/* Text — horizontal scroll, clipped */}
+      <div className={styles.textClip}>
+        <div
+          ref={scrollRef}
+          className={styles.textScroll}
+          onScroll={handleScroll}
+          onTouchStart={stopAuto}
+          onMouseDown={stopAuto}
+        >
+          {persona.slides.map((slide, i) => (
+            <div key={i} className={styles.textSlide}>
+              <h3 className={styles.slideFeature}>{slide.feature}</h3>
+              <p className={styles.slideBody}>{slide.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Image — crossfade, stays in place */}
       <div className={styles.imageArea}>
         {persona.slides.map((slide, i) => (
           <IpadMockup

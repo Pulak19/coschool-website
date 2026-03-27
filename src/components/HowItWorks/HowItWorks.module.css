@@ -92,7 +92,7 @@
   align-items: center;
   gap: 2px;
   max-width: 393px;
-  margin: 0 auto var(--sp-40);
+  margin: 0 auto;
   padding: 0 15px;
   text-align: center;
 }
@@ -110,17 +110,7 @@
   }
 }
 
-/* ── Content group: heading + card ───────────────────────── */
-.introContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  text-align: center;
-}
-
-/* ── SchoolAI logo — slightly larger per Figma update ────── */
+/* ── SchoolAI logo — enlarged per Figma update ───────────── */
 .brandLogo {
   display: flex;
   flex-direction: column;
@@ -173,6 +163,7 @@
   line-height: var(--lh-body);
   color: var(--color-fg-2);
   margin-top: 20px;
+  text-align: center;
 }
 
 /* ── Connector: logo → heading ───────────────────────────── */
@@ -182,6 +173,8 @@
   justify-content: center;
   opacity: 0.4;
   flex-shrink: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .vertLine img {
@@ -197,6 +190,7 @@
   line-height: var(--lh-header);
   letter-spacing: var(--ls-header);
   color: var(--color-fg-1);
+  text-align: center;
 }
 
 @media (min-width: 1024px) {
@@ -205,58 +199,27 @@
   }
 }
 
-/* ── Feature bullets card ────────────────────────────────── */
-.featureCard {
-  background: linear-gradient(114.698deg, rgb(255, 255, 255) 0.91%, rgb(242, 245, 240) 100%);
-  border: 1px solid #a5d187;
-  border-radius: var(--radius-card);
-  box-shadow: 0px 24px 44px 0px rgba(115, 180, 98, 0.2);
-  padding: 27px 19px;
-  width: 100%;
+/* ── Feature bullets — plain, no card ────────────────────── */
+.featureBullets {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-16);
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
-  transition: transform 0.4s var(--ease-std);
+  gap: 17px;
+  max-width: 344px;
+  margin: 20px auto 0;
+  padding: 0 24px;
 }
 
-@keyframes cardShimmer {
-  0%   { transform: translateX(-120%); }
-  100% { transform: translateX(220%); }
-}
-
-.featureCard::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -40%;
-  width: 35%;
-  height: 100%;
-  background: linear-gradient(
-    105deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.32) 50%,
-    transparent 100%
-  );
-  animation: cardShimmer 7s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .featureCard::after {
-    animation: none;
-  }
-  .featureCard {
-    transition: none;
+@media (min-width: 1024px) {
+  .featureBullets {
+    max-width: 500px;
+    padding: 0;
   }
 }
 
 .featureBullet {
   display: flex;
   align-items: center;
-  gap: var(--sp-10);
+  gap: 10px;
 }
 
 .featureBullet img {
@@ -271,12 +234,12 @@
   color: var(--color-fg-2);
 }
 
-/* ── HOW IT WORKS label group ────────────────────────────── */
+/* ── HOW IT WORKS label + connector ──────────────────────── */
 .howLabelGroup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-16);
+  gap: 10px;
   margin-top: 188px;
   margin-bottom: var(--sp-24);
 }
@@ -291,16 +254,43 @@
   text-align: center;
 }
 
-.howVertLine {
-  height: 147px;
-  display: flex;
-  justify-content: center;
-  opacity: 0.4;
-}
-
-.howVertLine img {
+/* Connector line with shimmer animation */
+.howConnector {
   width: 1px;
   height: 147px;
+  position: relative;
+  background: rgba(60, 61, 60, 0.15);
+  overflow: hidden;
+}
+
+.howConnector::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.7) 40%,
+    rgba(165, 209, 135, 0.9) 50%,
+    rgba(140, 185, 120, 0.7) 60%,
+    transparent 100%
+  );
+  animation: connectorShimmer 3s ease-in-out infinite;
+}
+
+@keyframes connectorShimmer {
+  0%   { top: -60%; }
+  100% { top: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .howConnector::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* ── Persona list ────────────────────────────────────────── */
@@ -315,7 +305,7 @@
 .persona {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 26px;
   width: 100%;
   padding: 0 20px;
 }
@@ -364,46 +354,37 @@
   white-space: nowrap;
 }
 
-/* ── Horizontal scroll carousel ──────────────────────────── */
-.carousel {
+/* ── Pagination dots — static indicator ──────────────────── */
+.dots {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;        /* Firefox */
-  margin: 0 -20px;              /* bleed to section edges */
-  padding: 0 20px;
+  gap: 8px;
 }
 
-.carousel::-webkit-scrollbar {
-  display: none;                /* Chrome/Safari */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4d4d4;
 }
 
-.carouselSlide {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  min-width: 0;
-  padding-right: 20px;
-  box-sizing: border-box;
+.dotActive {
+  background: #3c3d3c;
 }
 
-/* ── Slide text ──────────────────────────────────────────── */
-.slideText {
+/* ── Persona text ────────────────────────────────────────── */
+.personaText {
   display: flex;
   flex-direction: column;
   gap: 13px;
 }
 
-.slideTextContent {
+.personaTextContent {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
-.slideFeature {
+.personaFeature {
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 20px;
@@ -412,7 +393,7 @@
   color: #3c3d3c;
 }
 
-.slideBody {
+.personaBody {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 15px;
@@ -420,8 +401,8 @@
   color: #434c3d;
 }
 
-/* ── Slide iPad mockup ───────────────────────────────────── */
-.slideMedia {
+/* ── Persona iPad mockup ─────────────────────────────────── */
+.personaMedia {
   width: 100%;
 }
 
@@ -465,34 +446,6 @@
   object-fit: contain;
   z-index: 2;
   pointer-events: none;
-}
-
-/* ── Pagination dots ─────────────────────────────────────── */
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding-top: 4px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  background: #d4d4d4;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.dot:hover {
-  background: #a0a0a0;
-}
-
-.dotActive {
-  background: #3c3d3c;
-  transform: scale(1.25);
 }
 
 /* ── Bottom CTA ──────────────────────────────────────────── */

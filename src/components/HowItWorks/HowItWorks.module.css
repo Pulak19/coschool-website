@@ -433,30 +433,45 @@
   display: block;
 }
 
-/* ── Text carousel — horizontal scroll ───────────────────── */
-.textCarousel {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  margin: 0 -20px;
-  padding: 0 20px;
-}
-
-.textCarousel::-webkit-scrollbar {
-  display: none;
+/* ── Text area — crossfade between slides ────────────────── */
+.textArea {
+  position: relative;
+  width: 100%;
+  min-height: 80px;            /* prevent layout collapse during transition */
 }
 
 .textSlide {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   gap: 7px;
-  min-width: 0;
-  padding-right: 32px;
-  box-sizing: border-box;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.textVisible {
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+  z-index: 1;
+}
+
+.textHidden {
+  opacity: 0;
+  transform: translateX(30px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textSlide {
+    transition: none;
+  }
+  .textHidden {
+    transform: none;
+  }
 }
 
 .slideFeature {

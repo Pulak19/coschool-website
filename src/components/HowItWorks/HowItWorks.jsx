@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './HowItWorks.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
@@ -161,31 +161,15 @@ function IpadMockup({ src, alt, visible }) {
   );
 }
 
-/* ── Persona section with text scroll + image crossfade ──── */
+/* ── Persona section — state-driven text swap + image crossfade ── */
 function PersonaSection({ persona }) {
   const sectionRef = useRef(null);
-  const textScrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const autoTimerRef = useRef(null);
 
   const slideCount = persona.slides.length;
 
-  // Scroll text to specific slide
-  const scrollTextTo = useCallback((idx) => {
-    const el = textScrollRef.current;
-    if (!el) return;
-    el.scrollTo({ left: idx * el.offsetWidth, behavior: 'smooth' });
-  }, []);
-
-  // Track active slide from text scroll position
-  const handleTextScroll = useCallback(() => {
-    const el = textScrollRef.current;
-    if (!el) return;
-    const idx = Math.round(el.scrollLeft / el.offsetWidth);
-    setActiveIndex(Math.min(idx, slideCount - 1));
-  }, [slideCount]);
-
-  // Auto-scroll when section enters viewport center
+  // Auto-advance when section scrolls into view
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -202,11 +186,11 @@ function PersonaSection({ persona }) {
               clearInterval(autoTimerRef.current);
               return;
             }
-            scrollTextTo(current);
-          }, 2500);
+            setActiveIndex(current);
+          }, 2800);
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.35 }
     );
     observer.observe(el);
 
@@ -214,15 +198,7 @@ function PersonaSection({ persona }) {
       observer.disconnect();
       if (autoTimerRef.current) clearInterval(autoTimerRef.current);
     };
-  }, [slideCount, scrollTextTo]);
-
-  // Stop auto on manual interaction
-  const stopAuto = useCallback(() => {
-    if (autoTimerRef.current) {
-      clearInterval(autoTimerRef.current);
-      autoTimerRef.current = null;
-    }
-  }, []);
+  }, [slideCount]);
 
   return (
     <div ref={sectionRef} className={styles.persona} data-persona={persona.id}>
@@ -249,16 +225,13 @@ function PersonaSection({ persona }) {
         aria-hidden="true"
       />
 
-      {/* Text carousel — horizontal scroll */}
-      <div
-        ref={textScrollRef}
-        className={styles.textCarousel}
-        onScroll={handleTextScroll}
-        onTouchStart={stopAuto}
-        onMouseDown={stopAuto}
-      >
+      {/* Text area — crossfade between slides */}
+      <div className={styles.textArea}>
         {persona.slides.map((slide, i) => (
-          <div key={i} className={styles.textSlide}>
+          <div
+            key={i}
+            className={`${styles.textSlide} ${i === activeIndex ? styles.textVisible : styles.textHidden}`}
+          >
             <h3 className={styles.slideFeature}>{slide.feature}</h3>
             <p className={styles.slideBody}>{slide.body}</p>
           </div>

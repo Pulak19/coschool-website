@@ -201,6 +201,9 @@ export default function HowItWorks() {
       {/* ── Gradient frame lines (3-sided ∩ around logo) ──── */}
       <div className={styles.logoFrame} aria-hidden="true">
         <span className={styles.logoFrameRight} />
+        <span className={styles.logoFrameShimmerTop} />
+        <span className={styles.logoFrameShimmerLeft} />
+        <span className={styles.logoFrameShimmerRight} />
       </div>
 
       {/* ── Section header / intro ────────────────────────── */}
@@ -233,11 +236,6 @@ export default function HowItWorks() {
 
         {/* Subtitle */}
         <p className={styles.subtitle}>Built for schools, designed for success</p>
-
-        {/* Connector line: logo → heading */}
-        <div className={styles.vertLine} aria-hidden="true">
-          <img src={CONNECTOR_LINE} alt="" width="1" height="77" />
-        </div>
 
         {/* Heading */}
         <h2 className={styles.heading}>Closes the learning loop with key measures</h2>

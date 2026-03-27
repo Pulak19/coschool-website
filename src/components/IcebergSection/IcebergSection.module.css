@@ -116,18 +116,55 @@
   pointer-events: none;
   left: 50%;
   transform: translateX(-50%);
+  /* Shimmer: gradient text fill */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 250% 100%;
+  animation: bgShimmer 5s ease-in-out infinite;
+  /* Smooth parallax via JS transform override */
+  will-change: transform;
+  transition: transform 0.1s linear;
 }
 
 .bgTextVisible {
   top: 289px;
-  color: rgba(34, 108, 15, 0.1);
   z-index: 0;
+  background-image: linear-gradient(
+    90deg,
+    rgba(34, 108, 15, 0.08) 0%,
+    rgba(34, 108, 15, 0.18) 25%,
+    rgba(80, 170, 50, 0.12) 50%,
+    rgba(34, 108, 15, 0.18) 75%,
+    rgba(34, 108, 15, 0.08) 100%
+  );
 }
 
 .bgTextHidden {
   top: 594px;
-  color: rgba(196, 74, 74, 0.1);
   z-index: 6;
+  background-image: linear-gradient(
+    90deg,
+    rgba(196, 74, 74, 0.08) 0%,
+    rgba(196, 74, 74, 0.18) 25%,
+    rgba(230, 110, 110, 0.12) 50%,
+    rgba(196, 74, 74, 0.18) 75%,
+    rgba(196, 74, 74, 0.08) 100%
+  );
+}
+
+@keyframes bgShimmer {
+  0%   { background-position: 100% center; }
+  50%  { background-position: 0% center; }
+  100% { background-position: 100% center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bgTextVisible,
+  .bgTextHidden {
+    animation: none;
+    background-position: 50% center;
+  }
 }
 
 /* ── Illustration container ───────────────────────────────── */
@@ -329,4 +366,42 @@
 
 .alignRight {
   text-align: right;
+}
+
+/* ── Staggered blur-in animation ─────────────────────────── */
+.blurHidden {
+  opacity: 0;
+  filter: blur(8px);
+}
+
+.blurIn {
+  opacity: 0;
+  filter: blur(8px);
+  animation: blurReveal 0.55s ease-out forwards;
+  animation-delay: calc(var(--stagger, 0) * 0.28s);
+}
+
+@keyframes blurReveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blurIn {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+  .blurHidden {
+    opacity: 1;
+    filter: none;
+  }
 }

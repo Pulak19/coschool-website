@@ -92,6 +92,7 @@ export default function ClosedLoopSection() {
 
           {/* Header */}
           <div className={styles.header}>
+            <span className={styles.eyebrow}>WHAT WE DO</span>
             <h2 className={styles.heading}>
               Closed-Loop Learning Platform for Schools
             </h2>

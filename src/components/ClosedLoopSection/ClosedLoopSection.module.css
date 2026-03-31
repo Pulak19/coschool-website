@@ -82,6 +82,16 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+.eyebrow {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 6px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
 .heading {
   font-family: var(--font-header);
   font-weight: var(--weight-light);

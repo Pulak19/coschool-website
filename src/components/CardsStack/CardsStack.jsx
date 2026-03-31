@@ -170,9 +170,7 @@ export default function CardsStack() {
         <h2 className={styles.heading}>
           What this unlocks for your school
         </h2>
-        <div className={styles.connectorLine} aria-hidden="true">
-          <img src={CONNECTOR} alt="" width="1" loading="lazy" />
-        </div>
+        <div className={styles.connectorLine} aria-hidden="true" />
       </div>
 
       {/* Cards grid */}

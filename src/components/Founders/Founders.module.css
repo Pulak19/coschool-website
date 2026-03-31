@@ -1,6 +1,8 @@
 .section {
   background: #fff;
   overflow: hidden;
+  min-height: 100vh;
+  padding-top: 80px;
 }
 
 /* ── White header ─────────────────────────────────────────── */

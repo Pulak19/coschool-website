@@ -7,7 +7,7 @@
   position: relative;
   background: #fff;
   overflow: hidden;
-  padding: 65px 0 60px;
+  padding: 65px 0 120px;
 }
 
 /* ── Background gradient blobs ────────────────────────────── */
@@ -76,16 +76,43 @@
   max-width: 343px;
 }
 
+/* Connector line with shimmer — matches HowItWorks */
 .connectorLine {
-  height: 122px;
-  display: flex;
-  justify-content: center;
-  opacity: 0.4;
-}
-
-.connectorLine img {
   width: 1px;
   height: 122px;
+  position: relative;
+  background: rgba(60, 61, 60, 0.15);
+  overflow: hidden;
+}
+
+.connectorLine::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.7) 40%,
+    rgba(165, 209, 135, 0.9) 50%,
+    rgba(140, 185, 120, 0.7) 60%,
+    transparent 100%
+  );
+  animation: connectorShimmer 3s ease-in-out infinite;
+}
+
+@keyframes connectorShimmer {
+  0%   { top: -60%; }
+  100% { top: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connectorLine::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* ── Cards grid — 2-column staggered ─────────────────────── */

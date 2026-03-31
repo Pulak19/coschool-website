@@ -1,142 +1,185 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './CardsStack.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
-const CARD_ICON = '/assets/59a8d6a60c4831bea3dd7b6863a0a5692f178ab1.svg';
-const VERT_LINE = '/assets/3a05e52d8b662a9c3c4b10e96eaceb33167358be.svg';
+const CONNECTOR = '/assets/unlock-connector.svg';
 
 const CARDS = [
   {
-    id: 'card-1',
-    title: 'Curriculum-Aligned & Safe',
-    bullets: ['Guardrails protect students', 'Parents trust the system'],
+    id: 'students',
+    title: 'Students',
+    titleColor: '#62a135',
+    body: "Gaps closes before they compound. AI guidance, right when they're stuck. Not days later.",
+    icon: '/assets/unlock-icon-students.svg',
+    iconSize: 97,
+    borderColor: '#dbe6da',
+    shadow: 'rgba(110, 188, 57, 0.1)',
+    gradient: 'linear-gradient(102deg, #fff 6%, #edf3ea 100%)',
+    floatie: '/assets/avatar-student.png',
+    floatieType: 'photo',
+    floatieBorder: '#8cd35a',
+    floatiePos: { left: -18, top: 23 },
+    column: 'left',
   },
   {
-    id: 'card-2',
-    title: 'Teacher Remains in Control',
-    bullets: ['Assigns and unlocks content', 'AI assists — never replaces'],
+    id: 'teachers',
+    title: 'Teachers',
+    titleColor: '#c44a4a',
+    body: "Less correction. More teaching. Walk in knowing exactly who understood and who didn't.",
+    icon: '/assets/unlock-icon-teachers.svg',
+    iconSize: 83,
+    borderColor: '#f9c9c9',
+    shadow: 'rgba(196, 74, 74, 0.1)',
+    gradient: 'linear-gradient(103deg, #fff 6%, #f8eeee 100%)',
+    floatie: '/assets/avatar-teacher.png',
+    floatieType: 'photo',
+    floatieBorder: '#e27979',
+    floatiePos: { right: -16, top: 31 },
+    column: 'right',
   },
   {
-    id: 'card-3',
-    title: 'No Cost to School',
-    bullets: ['Parents pay for usage', 'Risk-free decision'],
+    id: 'parents',
+    title: 'Parents',
+    titleColor: '#6554c7',
+    body: 'Trust the school, drop the tuition. Specific guidance replaces vague report cards.',
+    icon: '/assets/unlock-icon-parents.svg',
+    iconSize: 91,
+    borderColor: '#cdc8eb',
+    shadow: 'rgba(101, 84, 199, 0.1)',
+    gradient: 'linear-gradient(104deg, #fff 6%, #f1effc 100%)',
+    floatie: '/assets/avatar-parent.png',
+    floatieType: 'photo',
+    floatieBorder: '#8e7eea',
+    floatiePos: { right: -12, top: 69 },
+    column: 'left',
   },
   {
-    id: 'card-4',
-    title: 'Real-Time Learning Signals',
-    bullets: ['Gaps surface immediately', 'Interventions happen on time'],
-  },
-  {
-    id: 'card-5',
-    title: 'Complete Visibility',
-    bullets: ['Data drives teaching decisions', 'Leadership governs with insight'],
+    id: 'school',
+    title: 'School',
+    titleColor: '#2e2f2d',
+    body: 'Outcomes you can point to. When marks improve, the school gets the credit. Traceably.',
+    icon: '/assets/unlock-icon-school.svg',
+    iconSize: 86,
+    borderColor: '#cdcdcd',
+    shadow: 'rgba(33, 33, 33, 0.1)',
+    gradient: 'linear-gradient(103deg, #fff 6%, #e1e1e1 100%)',
+    floatie: '/assets/unlock-school-floatie.svg',
+    floatieType: 'icon',
+    floatieBorder: '#cec6fb',
+    floatiePos: { right: -12, top: 22 },
+    column: 'right',
   },
 ];
 
+/* ── Scroll reveal hook ──────────────────────────────────── */
+function useReveal(threshold = 0.15) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add(styles.visible);
+          observer.disconnect();
+        }
+      },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+  return ref;
+}
+
+/* ── Single card ─────────────────────────────────────────── */
+function UnlockCard({ card, delay }) {
+  const ref = useReveal(0.2);
+
+  const floatieStyle = {
+    borderColor: card.floatieBorder,
+    ...(card.floatiePos.left != null ? { left: card.floatiePos.left } : {}),
+    ...(card.floatiePos.right != null ? { right: card.floatiePos.right } : {}),
+    top: card.floatiePos.top,
+  };
+
+  return (
+    <article
+      ref={ref}
+      className={`${styles.card} ${card.column === 'right' ? styles.cardRight : styles.cardLeft}`}
+      style={{
+        '--delay': `${delay}s`,
+        border: `1px solid ${card.borderColor}`,
+        boxShadow: `0px 20px 30px 0px ${card.shadow}`,
+        background: card.gradient,
+      }}
+    >
+      {/* Icon */}
+      <div className={styles.cardIcon}>
+        <img
+          src={card.icon}
+          alt=""
+          width={card.iconSize}
+          height={card.iconSize}
+          loading="lazy"
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* Text */}
+      <div className={styles.cardText}>
+        <h3 className={styles.cardTitle} style={{ color: card.titleColor }}>
+          {card.title}
+        </h3>
+        <p className={styles.cardBody}>{card.body}</p>
+      </div>
+
+      {/* Floatie */}
+      <div
+        className={`${styles.floatie} ${card.floatieType === 'icon' ? styles.floatieIcon : ''}`}
+        style={floatieStyle}
+      >
+        <img
+          src={card.floatie}
+          alt=""
+          className={styles.floatieImg}
+          aria-hidden="true"
+        />
+      </div>
+    </article>
+  );
+}
+
 /* ── Main component ──────────────────────────────────────── */
 export default function CardsStack() {
-  const sectionRef = useRef(null);
-  const rafRef     = useRef(null);
-  const [rawProgress, setRawProgress] = useState(0);
-
-  const onScroll = useCallback(() => {
-    cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      const section = sectionRef.current;
-      if (!section) return;
-      const rect    = section.getBoundingClientRect();
-      const scrolled = -rect.top;
-      const total    = rect.height - window.innerHeight;
-      if (total <= 0) return;
-      setRawProgress(Math.max(0, Math.min(1, scrolled / total)));
-    });
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, [onScroll]);
-
-  // Card 1 visible immediately; cards 2–5 animate in via scroll
-  const cardProgress = 1 + rawProgress * (CARDS.length - 1);
-  const activeIdx = Math.min(Math.floor(cardProgress), CARDS.length) - 1;
+  const headerRef = useReveal(0.2);
 
   return (
     <section
-      ref={sectionRef}
       id="what-it-unlocks"
       className={styles.section}
       aria-label="What CoSchool unlocks for your school"
     >
-      <div className={styles.sticky}>
-        <div className={styles.orbTL} aria-hidden="true" />
+      {/* Background blobs */}
+      <div className={styles.orbTL} aria-hidden="true" />
+      <div className={styles.orbBR} aria-hidden="true" />
+      <div className={styles.orbBL} aria-hidden="true" />
 
-        {/* ── Header ─────────────────────────────────────── */}
-        <div className={styles.header}>
-          <h2 className={styles.heading}>
-            What this unlocks for your school
-          </h2>
-          <div className={styles.vertLine} aria-hidden="true">
-            <img src={VERT_LINE} alt="" width="1" loading="lazy" />
-          </div>
+      {/* Header */}
+      <div ref={headerRef} className={styles.header}>
+        <h2 className={styles.heading}>
+          What this unlocks for your school
+        </h2>
+        <div className={styles.connectorLine} aria-hidden="true">
+          <img src={CONNECTOR} alt="" width="1" loading="lazy" />
         </div>
+      </div>
 
-        {/* ── Card stack ─────────────────────────────────── */}
-        <div className={styles.cardStack} aria-live="polite">
-          {CARDS.map((card, i) => {
-            const progress = Math.max(0, Math.min(1, cardProgress - i));
-            const behind   = Math.max(0, activeIdx - i);
-
-            let transform;
-            let opacity;
-
-            if (progress <= 0) {
-              // Hidden below
-              transform = 'translateY(120%)';
-              opacity = 0;
-            } else if (progress < 1) {
-              // Sliding in from below
-              const slideY = (1 - progress) * 100;
-              transform = `translateY(${slideY}%)`;
-              opacity = Math.min(1, progress * 2);
-            } else {
-              // Fully in — recede as newer cards stack on top
-              const recession = Math.min(behind, 4);
-              const scale  = 1 - recession * 0.03;
-              const yShift = -recession * 10;
-              transform = `translateY(${yShift}px) scale(${scale})`;
-              opacity = 1;
-            }
-
-            return (
-              <article
-                key={card.id}
-                className={styles.card}
-                style={{
-                  transform,
-                  opacity,
-                  zIndex: i + 1,
-                }}
-              >
-                <div className={styles.cardIcon} aria-hidden="true">
-                  <img src={CARD_ICON} alt="" width="97" height="97" loading="lazy" />
-                </div>
-                <div className={styles.cardContent}>
-                  <h3 className={styles.cardTitle}>{card.title}</h3>
-                  <ul className={styles.cardBullets}>
-                    {card.bullets.map((b) => (
-                      <li key={b} className={styles.cardBullet}>{b}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+      {/* Cards grid */}
+      <div className={styles.cardsGrid}>
+        {CARDS.map((card, i) => (
+          <UnlockCard key={card.id} card={card} delay={i * 0.2} />
+        ))}
       </div>
     </section>
   );

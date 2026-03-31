@@ -1,182 +1,253 @@
 /* ─────────────────────────────────────────────────────────────
-   CardsStack — Scroll-driven stacking cards
-   Cards reveal one-by-one as user scrolls. Each new card
-   slides up from below and stacks on top of the previous.
+   CardsStack — "What this unlocks for your school"
+   2-column staggered card grid with floating avatars
    ───────────────────────────────────────────────────────────── */
 
 .section {
   position: relative;
-  height: 500vh;
   background: #fff;
-}
-
-.sticky {
-  position: sticky;
-  top: 64px;
-  height: calc(100svh - 64px);
-  min-height: 480px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 65px 0 60px;
 }
 
-/* ── Background orb ─────────────────────────────────────── */
+/* ── Background gradient blobs ────────────────────────────── */
 .orbTL {
   position: absolute;
-  left: -88px;
-  top: 134px;
   width: 223px;
   height: 221px;
+  left: -67px;
+  top: -66px;
   border-radius: 140px;
   background: rgba(213, 244, 205, 0.4);
   filter: blur(37px);
   pointer-events: none;
-  z-index: 0;
 }
 
-/* ── Header: heading + vertical line ────────────────────── */
-/*
-  Figma: header at top:96px, height:237px, width:343px, gap:8px.
-  Total height = 96px padding + 237px content = 333px (border-box).
-  Vertical line is flex:1, filling ~147px of remaining space.
-*/
+.orbBR {
+  position: absolute;
+  width: 223px;
+  height: 221px;
+  right: -67px;
+  top: 537px;
+  border-radius: 140px;
+  background: rgba(213, 244, 205, 0.4);
+  filter: blur(37px);
+  pointer-events: none;
+}
+
+.orbBL {
+  position: absolute;
+  width: 223px;
+  height: 221px;
+  left: -112px;
+  top: 942px;
+  border-radius: 140px;
+  background: rgba(213, 244, 205, 0.19);
+  filter: blur(52px);
+  pointer-events: none;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
 .header {
-  height: 333px;
-  padding-top: 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 343px;
-  text-align: center;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+  margin-bottom: 40px;
+  padding: 0 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .heading {
-  font-family: var(--font-header);
-  font-weight: var(--weight-light);
-  font-size: var(--size-header);
-  line-height: var(--lh-header);
-  letter-spacing: var(--ls-header);
-  color: var(--color-fg-1);
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 1.03;
+  letter-spacing: -0.288px;
+  color: #3c3d3c;
+  text-align: center;
+  max-width: 343px;
 }
 
-@media (min-width: 1024px) {
-  .header {
-    width: 480px;
-  }
-  .heading {
-    font-size: clamp(34px, 2.8vw, 44px);
-  }
-}
-
-.vertLine {
-  flex: 1;
+.connectorLine {
+  height: 122px;
   display: flex;
   justify-content: center;
   opacity: 0.4;
 }
 
-.vertLine img {
+.connectorLine img {
   width: 1px;
-  height: 100%;
-  display: block;
+  height: 122px;
 }
 
-/* ── Card stack area ────────────────────────────────────── */
-/*
-  Figma: cards at top:340px → 7px below header bottom (333px).
-  Cards are absolutely positioned within this container.
-  flex:1 fills remaining sticky height.
-*/
-.cardStack {
+/* ── Cards grid — 2-column staggered ─────────────────────── */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 12px;
+  max-width: 393px;
+  margin: 0 auto;
+  padding: 0 16px;
   position: relative;
-  width: 353px;
-  margin-top: 7px;
-  flex: 1;
-  z-index: 1;
+}
+
+@media (min-width: 500px) {
+  .cardsGrid {
+    max-width: 440px;
+    gap: 24px 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardsGrid {
+    max-width: 560px;
+    gap: 32px 24px;
+    padding: 0 24px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .cardStack {
-    width: min(420px, 50vw);
+  .cardsGrid {
+    max-width: 700px;
+    gap: 40px 32px;
   }
 }
 
-/* ── Card ────────────────────────────────────────────────── */
+/* ── Card ─────────────────────────────────────────────────── */
 .card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: relative;
+  border-radius: 20px;
+  padding: 10px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 10px;
-  padding-right: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border: 1px solid var(--color-card-border);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  background: linear-gradient(125.9deg, rgb(255, 255, 255) 5.94%, rgb(237, 243, 234) 99.75%);
-  will-change: transform, opacity;
-  transition: transform 0.15s linear, opacity 0.15s linear;
-  transform-origin: center top;
+  align-items: center;
+  justify-content: center;
+  /* Slide-up animation */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease-out var(--delay, 0s),
+              transform 0.7s ease-out var(--delay, 0s);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger: left cards sit higher, right cards sit lower */
+.cardLeft {
+  margin-top: 0;
+}
+
+.cardRight {
+  margin-top: 60px;
+}
+
+@media (max-width: 399px) {
+  .cardRight {
+    margin-top: 40px;
   }
 }
 
+/* ── Card icon ────────────────────────────────────────────── */
 .cardIcon {
-  width: 97px;
-  height: 97px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .cardIcon img {
-  width: 97px;
-  height: 97px;
-  object-fit: contain;
+  display: block;
 }
 
-.cardContent {
+/* ── Card text ────────────────────────────────────────────── */
+.cardText {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  flex: 1;
-  min-width: 0;
+  gap: 8px;
+  width: 100%;
 }
 
 .cardTitle {
-  font-family: var(--font-body);
-  font-weight: var(--weight-bold);
-  font-size: var(--size-subheader);
-  line-height: var(--lh-body);
-  letter-spacing: var(--ls-subheader);
-  color: var(--color-fg-2);
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
-.cardBullets {
+.cardBody {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #434c3d;
+}
+
+/* ── Floatie — floating avatar/icon ──────────────────────── */
+.floatie {
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  border-radius: 50%;
+  border-width: 0.72px;
+  border-style: solid;
+  overflow: hidden;
+  animation: floatieBob 3.5s ease-in-out infinite;
+  z-index: 2;
+}
+
+.floatieIcon {
+  background: #efecfe;
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  list-style: disc;
-  padding-left: 22px;
+  align-items: center;
+  justify-content: center;
 }
 
-.cardBullet {
-  font-family: var(--font-body);
-  font-weight: var(--weight-regular);
-  font-size: var(--size-body);
-  line-height: var(--lh-body);
-  color: var(--color-fg-2);
+.floatieImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.floatieIcon .floatieImg {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+@keyframes floatieBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* Stagger floatie animations so they don't all sync */
+.cardLeft .floatie {
+  animation-delay: 0s;
+}
+
+.cardRight .floatie {
+  animation-delay: 0.8s;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .floatie {
+    animation: none;
+  }
 }

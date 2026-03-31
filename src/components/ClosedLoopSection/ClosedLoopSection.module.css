@@ -64,13 +64,146 @@
   bottom: -20px;
 }
 
+/* ── Logo frame — 3-sided ∩ around logo (dark bg version) ── */
+.logoFrame {
+  position: absolute;
+  top: 23px;
+  left: 40px;
+  right: 40px;
+  height: 147px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.logoFrame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(171, 232, 129, 0.25) 20%,
+    rgba(171, 232, 129, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+.logoFrame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(171, 232, 129, 0.2) 25%,
+    rgba(171, 232, 129, 0.2) 75%,
+    transparent 100%
+  );
+}
+
+.logoFrameRight {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(171, 232, 129, 0.2) 25%,
+    rgba(171, 232, 129, 0.2) 75%,
+    transparent 100%
+  );
+}
+
+/* Shimmer overlays */
+.logoFrameShimmerTop {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.logoFrameShimmerTop::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -30%;
+  width: 30%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(171, 232, 129, 0.8) 50%, transparent 100%);
+  animation: frameShimmerH 4s ease-in-out infinite;
+}
+
+.logoFrameShimmerLeft {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.logoFrameShimmerLeft::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: 0;
+  width: 100%; height: 50%;
+  background: linear-gradient(180deg, transparent 0%, rgba(171, 232, 129, 0.8) 50%, transparent 100%);
+  animation: frameShimmerV 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.logoFrameShimmerRight {
+  position: absolute;
+  top: 0; right: 0;
+  width: 1px; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.logoFrameShimmerRight::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: 0;
+  width: 100%; height: 50%;
+  background: linear-gradient(180deg, transparent 0%, rgba(171, 232, 129, 0.8) 50%, transparent 100%);
+  animation: frameShimmerV 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes frameShimmerH {
+  0%   { left: -30%; }
+  100% { left: 100%; }
+}
+
+@keyframes frameShimmerV {
+  0%   { top: -50%; }
+  100% { top: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoFrameShimmerTop::after,
+  .logoFrameShimmerLeft::after,
+  .logoFrameShimmerRight::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* ── Header ───────────────────────────────────────────────── */
 .header {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 17px;
+  gap: 30px;
   text-align: center;
   padding: 73px 25px 0;
   color: #fff;
@@ -84,12 +217,57 @@
 
 .eyebrow {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 11px;
   line-height: 1.5;
-  letter-spacing: 6px;
-  color: #fff;
+  letter-spacing: 3px;
+  color: #abe881;
   text-transform: uppercase;
+}
+
+/* ── SchoolAI logo (white) ───────────────────────────────── */
+.brandLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.brandLogoMain {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.logoLeft {
+  display: block;
+  width: 138px;
+  height: auto;
+  object-fit: contain;
+}
+
+.logoRight {
+  display: block;
+  width: 41px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+.brandByRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 90px;
+}
+
+.brandByText {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: -0.15px;
+  line-height: 1.3;
 }
 
 .heading {
@@ -102,11 +280,18 @@
   max-width: 100%;
 }
 
+/* ── Subheading — positioned below circle area ───────────── */
 .subheading {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 15px;
   line-height: 1.5;
+  color: #fff;
+  text-align: center;
   width: 307px;
   max-width: 100%;
 }
@@ -114,8 +299,8 @@
 /* ── Circle area ──────────────────────────────────────────── */
 .circleArea {
   position: absolute;
-  /* Circle center from Figma: x≈200.6, y≈508.1 (center of 352px circle at x=24.4, y=332) */
-  top: 332px;
+  /* Circle from Figma: positioned lower to accommodate taller header with logo */
+  top: 386px;
   left: 24px;
   width: 352px;
   height: 352px;
@@ -142,7 +327,7 @@
   z-index: 2;
   /* Offset: dots in Figma are relative to frame (0,0=section top-left),
      but circleArea starts at (24, 332). Adjust in inline styles. */
-  transform: translate(-24px, -332px);
+  transform: translate(-24px, -386px);
 }
 
 .dotActive {
@@ -165,7 +350,7 @@
   color: rgba(255, 255, 255, 0.1);
   z-index: 3;
   /* Figma uses center positioning via translate -50% -50% */
-  transform: translate(calc(-50% - 24px), calc(-50% - 332px));
+  transform: translate(calc(-50% - 24px), calc(-50% - 386px));
   transition: opacity 0.5s ease, color 0.5s ease;
 }
 

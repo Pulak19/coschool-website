@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import styles from './ClosedLoopSection.module.css';
 
+/* ── Assets ──────────────────────────────────────────────── */
+const LOGO_LEFT  = '/assets/school-ai-logo-left-white.svg';
+const LOGO_RIGHT = '/assets/school-ai-logo-right-white.svg';
+const BY_COSCHOOL = '/assets/by-coschool-white.svg';
+
 /* ── 7 values with positions (from Figma, relative to 393px frame) ─── */
 const VALUES = [
   {
@@ -73,11 +78,10 @@ export default function ClosedLoopSection() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  // Circle progress: 0 = gray, 1 = fully purple
   const circleProgress = Math.min(activeStep / VALUES.length, 1);
   const showCTA = activeStep > VALUES.length;
 
@@ -90,20 +94,37 @@ export default function ClosedLoopSection() {
           <div className={styles.orbTR} aria-hidden="true" />
           <div className={styles.orbBL} aria-hidden="true" />
 
-          {/* Header */}
+          {/* ── Logo frame lines with shimmer ─────────────── */}
+          <div className={styles.logoFrame} aria-hidden="true">
+            <span className={styles.logoFrameRight} />
+            <span className={styles.logoFrameShimmerTop} />
+            <span className={styles.logoFrameShimmerLeft} />
+            <span className={styles.logoFrameShimmerRight} />
+          </div>
+
+          {/* ── Header ─────────────────────────────────────── */}
           <div className={styles.header}>
-            <span className={styles.eyebrow}>WHAT WE DO</span>
+            <span className={styles.eyebrow}>INTRODUCING</span>
+
+            {/* SchoolAI logo (white) */}
+            <div className={styles.brandLogo} aria-label="School AI by CoSchool">
+              <div className={styles.brandLogoMain}>
+                <img src={LOGO_LEFT} alt="School AI" className={styles.logoLeft} width="138" />
+                <img src={LOGO_RIGHT} alt="" className={styles.logoRight} width="41" aria-hidden="true" />
+              </div>
+              <div className={styles.brandByRow}>
+                <span className={styles.brandByText}>by</span>
+                <img src={BY_COSCHOOL} alt="CoSchool" width="73" height="13" />
+              </div>
+            </div>
+
             <h2 className={styles.heading}>
-              Closed-Loop Learning Platform for Schools
+              A Closed-Loop Learning Platform for Schools
             </h2>
-            <p className={styles.subheading}>
-              Anchored by Teachers - Supported by Parents and AI enabled
-            </p>
           </div>
 
           {/* ── Circle + values ──────────────────────────── */}
           <div className={styles.circleArea}>
-            {/* Main circle ring */}
             <svg
               className={styles.circleRing}
               viewBox="0 0 352.269 352.269"
@@ -121,13 +142,10 @@ export default function ClosedLoopSection() {
                 r="175.599"
                 stroke={circleProgress >= 1 ? '#9582FF' : 'url(#grayGrad)'}
                 strokeWidth="1.07"
-                style={{
-                  transition: 'stroke 0.6s ease',
-                }}
+                style={{ transition: 'stroke 0.6s ease' }}
               />
             </svg>
 
-            {/* Dots + Labels */}
             {VALUES.map((v, i) => {
               const isSeen = i < activeStep;
               const isActive = i === activeStep - 1 && activeStep <= VALUES.length;
@@ -135,12 +153,10 @@ export default function ClosedLoopSection() {
 
               return (
                 <div key={v.name}>
-                  {/* Dot */}
                   <div
                     className={`${styles.dot} ${isVisible ? styles.dotActive : ''}`}
                     style={{ left: v.dot[0], top: v.dot[1] }}
                   />
-                  {/* Label */}
                   <span
                     className={styles.label}
                     style={{
@@ -175,6 +191,11 @@ export default function ClosedLoopSection() {
               )}
             </div>
           </div>
+
+          {/* ── Subheading below circle ────────────────────── */}
+          <p className={styles.subheading}>
+            Anchored by Teachers - Supported by Parents - AI enabled
+          </p>
         </div>
       </div>
     </section>

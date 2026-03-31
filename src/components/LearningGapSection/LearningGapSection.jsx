@@ -1,61 +1,57 @@
 import { useEffect, useRef } from 'react';
 import styles from './LearningGapSection.module.css';
 
-/* ── Assets ──────────────────────────────────────────────── */
-const ILLUSTRATION = '/assets/learning-gap-illustration.png';
-const CHEVRON      = '/assets/chevron-red.svg';
+const CHEVRON = '/assets/chevron-red.svg';
 
-/* ── Step data — alternating layout ──────────────────────── */
-/* objectPos = vertical % of the sprite to center on for each scene */
+/* ── Step data — each with its own illustration ──────────── */
 const STEPS = [
   {
     title: 'Fixed Lesson Plan',
     body: 'One-size teaching, no personalisation',
-    objectPos: 'center 1%',
+    img: '/assets/illus-step-1.png',
     imageLeft: true,
   },
   {
     title: 'Hidden Learning Gaps',
     body: 'Students practise without detection',
-    objectPos: 'center 23%',
+    img: '/assets/illus-step-2.png',
     imageLeft: false,
   },
   {
     title: 'Generic Feedback',
     body: 'Arrives too late, not actionable',
-    objectPos: 'center 41%',
+    img: '/assets/illus-step-3.png',
     imageLeft: true,
   },
   {
     title: 'No timely intervention',
     body: 'Teacher sees too late',
-    objectPos: 'center 60%',
+    img: '/assets/illus-step-4.png',
     imageLeft: false,
   },
   {
     title: "Parents can't help",
     body: 'No useful guidance from school',
-    objectPos: 'center 80%',
+    img: '/assets/illus-step-5.png',
     imageLeft: true,
   },
   {
     title: 'Gaps Carry forward',
     body: 'Students move ahead with weak foundation',
-    objectPos: 'center 23%',
+    img: '/assets/illus-step-2.png',
     imageLeft: false,
   },
   {
     title: 'Leadership flying blind',
     body: 'Decision without any learning visibility',
-    objectPos: 'center 41%',
+    img: '/assets/illus-step-3.png',
     imageLeft: true,
   },
 ];
 
-/* ── Single step row ─────────────────────────────────────── */
-function StepRow({ step, index }) {
+/* ── Scroll reveal hook ──────────────────────────────────── */
+function useReveal(threshold = 0.25) {
   const ref = useRef(null);
-
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -66,19 +62,24 @@ function StepRow({ step, index }) {
           observer.disconnect();
         }
       },
-      { threshold: 0.25 }
+      { threshold }
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [threshold]);
+  return ref;
+}
+
+/* ── Step row ─────────────────────────────────────────────── */
+function StepRow({ step }) {
+  const ref = useReveal(0.2);
 
   const illustration = (
     <div className={styles.illustrationWrap}>
       <img
-        src={ILLUSTRATION}
+        src={step.img}
         alt=""
         className={styles.illustrationImg}
-        style={{ objectPosition: step.objectPos }}
         loading="lazy"
         aria-hidden="true"
       />
@@ -93,78 +94,30 @@ function StepRow({ step, index }) {
   );
 
   return (
-    <div
-      ref={ref}
-      className={styles.stepRow}
-      style={{ '--delay': `${index * 0.05}s` }}
-    >
-      {step.imageLeft ? (
-        <>{illustration}{text}</>
-      ) : (
-        <>{text}{illustration}</>
-      )}
+    <div ref={ref} className={styles.stepRow}>
+      {step.imageLeft ? <>{illustration}{text}</> : <>{text}{illustration}</>}
     </div>
   );
 }
 
 /* ── Chevron separator ───────────────────────────────────── */
 function ChevronSep() {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add(styles.visible);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
+  const ref = useReveal(0.5);
   return (
     <div ref={ref} className={styles.chevronWrap}>
-      <img
-        src={CHEVRON}
-        alt=""
-        className={styles.chevron}
-        width="28"
-        height="28"
-        aria-hidden="true"
-      />
+      <img src={CHEVRON} alt="" className={styles.chevron} width="28" height="28" aria-hidden="true" />
     </div>
   );
 }
 
 /* ── Main component ──────────────────────────────────────── */
 export default function LearningGapSection() {
-  const headerRef = useRef(null);
-
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add(styles.visible);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const headerRef = useReveal(0.2);
 
   return (
     <section className={styles.section} aria-label="Understanding the Learning Gap">
       <div className={styles.frame}>
-        {/* Header — same as old Iceberg section */}
+        {/* Header */}
         <div ref={headerRef} className={styles.header}>
           <h2 className={styles.heading}>Understanding the Learning Gap</h2>
           <p className={styles.subheading}>
@@ -178,13 +131,13 @@ export default function LearningGapSection() {
         <div className={styles.stepsFlow}>
           {STEPS.map((step, i) => (
             <div key={i}>
-              <StepRow step={step} index={i} />
+              <StepRow step={step} />
               {i < STEPS.length - 1 && <ChevronSep />}
             </div>
           ))}
         </div>
 
-        {/* Closing line */}
+        {/* Closing */}
         <p className={styles.closing}>And the cycle repeats</p>
       </div>
     </section>

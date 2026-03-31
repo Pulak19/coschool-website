@@ -1,0 +1,182 @@
+/* ─────────────────────────────────────────────────────────────
+   LearningGapSection — replaces IcebergSection
+   ───────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 73px 0 40px;
+}
+
+.frame {
+  position: relative;
+  width: 393px;
+  max-width: 100%;
+  padding: 0 12px;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+  text-align: center;
+  padding: 0 13px;
+  margin-bottom: 50px;
+  /* Fade-in */
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  font-family: var(--font-header);
+  font-weight: var(--weight-light);
+  font-size: 34px;
+  line-height: 1.2;
+  letter-spacing: -0.288px;
+  color: #3c3d3c;
+}
+
+.subheading {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #434c3d;
+  max-width: 307px;
+}
+
+/* ── Steps flow container ─────────────────────────────────── */
+.stepsFlow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Step row ─────────────────────────────────────────────── */
+.stepRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  /* Fade-in on scroll */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease-out var(--delay, 0s),
+              transform 0.7s ease-out var(--delay, 0s);
+}
+
+.stepRow.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Illustration ─────────────────────────────────────────── */
+.illustrationWrap {
+  flex: 1;
+  height: 136px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+}
+
+.illustrationImg {
+  position: absolute;
+  right: -92px;
+  width: 375px;
+  height: 735px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ── Step text ────────────────────────────────────────────── */
+.stepText {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.stepTextRight {
+  text-align: right;
+}
+
+.stepTitle {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #434c3d;
+}
+
+.stepBody {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #3c3d3c;
+}
+
+/* ── Chevron separator ────────────────────────────────────── */
+.chevronWrap {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  /* Fade-in */
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.chevronWrap.visible {
+  opacity: 1;
+}
+
+.chevron {
+  width: 28px;
+  height: 28px;
+  animation: chevronNudge 2.5s ease-in-out infinite;
+}
+
+@keyframes chevronNudge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+/* ── Closing line ─────────────────────────────────────────── */
+.closing {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.29px;
+  color: #c44a4a;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .stepRow,
+  .chevronWrap {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .chevron {
+    animation: none;
+  }
+}

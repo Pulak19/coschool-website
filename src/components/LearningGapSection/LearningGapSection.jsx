@@ -6,47 +6,48 @@ const ILLUSTRATION = '/assets/learning-gap-illustration.png';
 const CHEVRON      = '/assets/chevron-red.svg';
 
 /* ── Step data — alternating layout ──────────────────────── */
+/* objectPos = vertical % of the sprite to center on for each scene */
 const STEPS = [
   {
     title: 'Fixed Lesson Plan',
     body: 'One-size teaching, no personalisation',
-    imageOffset: -8,
+    objectPos: 'center 1%',
     imageLeft: true,
   },
   {
     title: 'Hidden Learning Gaps',
     body: 'Students practise without detection',
-    imageOffset: -169,
+    objectPos: 'center 23%',
     imageLeft: false,
   },
   {
     title: 'Generic Feedback',
     body: 'Arrives too late, not actionable',
-    imageOffset: -300,
+    objectPos: 'center 41%',
     imageLeft: true,
   },
   {
     title: 'No timely intervention',
     body: 'Teacher sees too late',
-    imageOffset: -443,
+    objectPos: 'center 60%',
     imageLeft: false,
   },
   {
     title: "Parents can't help",
     body: 'No useful guidance from school',
-    imageOffset: -590,
+    objectPos: 'center 80%',
     imageLeft: true,
   },
   {
     title: 'Gaps Carry forward',
     body: 'Students move ahead with weak foundation',
-    imageOffset: -169,
+    objectPos: 'center 23%',
     imageLeft: false,
   },
   {
     title: 'Leadership flying blind',
     body: 'Decision without any learning visibility',
-    imageOffset: -300,
+    objectPos: 'center 41%',
     imageLeft: true,
   },
 ];
@@ -77,7 +78,7 @@ function StepRow({ step, index }) {
         src={ILLUSTRATION}
         alt=""
         className={styles.illustrationImg}
-        style={{ top: step.imageOffset }}
+        style={{ objectPosition: step.objectPos }}
         loading="lazy"
         aria-hidden="true"
       />

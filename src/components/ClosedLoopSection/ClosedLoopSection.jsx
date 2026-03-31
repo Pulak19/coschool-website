@@ -155,12 +155,17 @@ export default function ClosedLoopSection() {
               );
             })}
 
-            {/* Center content: description or CTA */}
+            {/* Center content: number + description or CTA */}
             <div className={styles.centerContent}>
               {!showCTA && activeStep > 0 && activeStep <= VALUES.length && (
-                <p key={activeStep} className={styles.description}>
-                  {VALUES[activeStep - 1].desc}
-                </p>
+                <>
+                  <span key={`num-${activeStep}`} className={styles.stepNumber}>
+                    {activeStep}
+                  </span>
+                  <p key={`desc-${activeStep}`} className={styles.description}>
+                    {VALUES[activeStep - 1].desc}
+                  </p>
+                </>
               )}
               {showCTA && (
                 <button className={styles.ctaBtn} type="button">

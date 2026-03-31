@@ -243,6 +243,7 @@
   display: block;
   width: 138px;
   height: auto;
+  max-height: 34px;
   object-fit: contain;
 }
 
@@ -250,8 +251,14 @@
   display: block;
   width: 41px;
   height: auto;
+  max-height: 34px;
   object-fit: contain;
   margin-bottom: 4px;
+}
+
+.brandByRow img {
+  height: auto;
+  object-fit: contain;
 }
 
 .brandByRow {

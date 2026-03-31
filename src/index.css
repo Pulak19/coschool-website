@@ -9,6 +9,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* Lock font size — prevent device text scaling from breaking layout */
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {

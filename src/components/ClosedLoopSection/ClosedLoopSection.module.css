@@ -24,12 +24,19 @@
   justify-content: center;
 }
 
-/* Centered 393px frame */
+/* Centered 393px frame — scales down on narrow viewports */
 .frame {
   position: relative;
   width: 393px;
   height: 100%;
   flex-shrink: 0;
+  transform-origin: top center;
+}
+
+@media (max-width: 393px) {
+  .frame {
+    transform: scale(calc(100vw / 393));
+  }
 }
 
 /* ── Background gradient orbs ─────────────────────────────── */

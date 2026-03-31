@@ -17,6 +17,13 @@
   width: 393px;
   max-width: 100%;
   padding: 0 9px;
+  transform-origin: top center;
+}
+
+@media (max-width: 393px) {
+  .frame {
+    transform: scale(calc(100vw / 393));
+  }
 }
 
 /* ── Header ───────────────────────────────────────────────── */

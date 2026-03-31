@@ -147,12 +147,15 @@
 .chevron {
   width: 28px;
   height: 28px;
-  animation: chevronFloat 2.4s ease-in-out infinite;
+  animation: chevronPulse 2s ease-in-out infinite;
 }
 
-@keyframes chevronFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(4px); }
+@keyframes chevronPulse {
+  0%   { opacity: 0; transform: translateY(-4px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  50%  { opacity: 1; transform: translateY(4px); }
+  70%  { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 0; transform: translateY(-4px); }
 }
 
 /* ── Closing line ─────────────────────────────────────────── */

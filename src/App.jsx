@@ -6,6 +6,7 @@ import ClosedLoopSection from './components/ClosedLoopSection/ClosedLoopSection.
 // import LoopSequence from './components/LoopSequence/LoopSequence.jsx'; // archived — bring back when needed
 import HowItWorks from './components/HowItWorks/HowItWorks.jsx';
 import CardsStack from './components/CardsStack/CardsStack.jsx';
+import Testimonials from './components/Testimonials/Testimonials.jsx';
 import Founders from './components/Founders/Founders.jsx';
 import CTASection from './components/CTASection/CTASection.jsx';
 import Footer from './components/Footer/Footer.jsx';
@@ -20,6 +21,7 @@ export default function App() {
         <ClosedLoopSection />
         <HowItWorks />
         <CardsStack />
+        <Testimonials />
         <Founders />
         <CTASection />
       </main>

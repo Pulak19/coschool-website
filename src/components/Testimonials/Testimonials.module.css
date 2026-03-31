@@ -1,0 +1,184 @@
+/* ─────────────────────────────────────────────────────────────
+   Testimonials — horizontal scrolling cards
+   ───────────────────────────────────────────────────────────── */
+
+.section {
+  background: #fff;
+  padding: 80px 0 80px;
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 48px;
+  padding: 0 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  font-family: 'Roboto Serif', serif;
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 1.03;
+  letter-spacing: -0.288px;
+  color: #3c3d3c;
+  text-align: center;
+}
+
+/* Connector with shimmer */
+.connector {
+  width: 1px;
+  height: 100px;
+  position: relative;
+  background: rgba(60, 61, 60, 0.15);
+  overflow: hidden;
+}
+
+.connector::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(140, 185, 120, 0.7) 40%,
+    rgba(165, 209, 135, 0.9) 50%,
+    rgba(140, 185, 120, 0.7) 60%,
+    transparent 100%
+  );
+  animation: connectorShimmer 3s ease-in-out infinite;
+}
+
+@keyframes connectorShimmer {
+  0%   { top: -60%; }
+  100% { top: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connector::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ── Scroll container ─────────────────────────────────────── */
+.scrollWrap {
+  width: 100%;
+}
+
+.scrollTrack {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 20px 20px;
+}
+
+.scrollTrack::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.card {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, #fff 0%, #f6faf4 100%);
+  border: 1px solid #dbe6da;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(110, 188, 57, 0.06);
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex: 0 0 320px;
+  }
+}
+
+/* ── Card top — avatar + meta ─────────────────────────────── */
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a5d187 0%, #62a135 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarInitial {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1;
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cardName {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #3c3d3c;
+}
+
+.cardRole {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #62a135;
+}
+
+/* ── Quote ─────────────────────────────────────────────────── */
+.cardQuote {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #434c3d;
+  font-style: italic;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

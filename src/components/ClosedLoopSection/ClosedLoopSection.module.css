@@ -280,21 +280,6 @@
   max-width: 100%;
 }
 
-/* ── Subheading — positioned below circle area ───────────── */
-.subheading {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 1.5;
-  color: #fff;
-  text-align: center;
-  width: 307px;
-  max-width: 100%;
-}
 
 /* ── Circle area ──────────────────────────────────────────── */
 .circleArea {

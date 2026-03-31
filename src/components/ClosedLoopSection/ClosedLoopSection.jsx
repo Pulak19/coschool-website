@@ -11,44 +11,44 @@ const VALUES = [
   {
     name: 'Assign',
     desc: 'Teacher sets goals, assigns practice work',
-    dot: [33, 430.5],
-    labelX: 39.5, labelY: 458.69,
+    dot: [33, 484.51],
+    labelX: 39.5, labelY: 512.69,
   },
   {
     name: 'Practise',
     desc: 'AI helps students learn, prevent cheating',
-    dot: [45.85, 595.4],
-    labelX: 52.5, labelY: 623.69,
+    dot: [45.85, 649.4],
+    labelX: 52.5, labelY: 677.69,
   },
   {
     name: 'Evidence',
     desc: 'Teacher sees gaps- by students, by concept',
-    dot: [177.55, 677.84],
-    labelX: 189.5, labelY: 708.69,
+    dot: [177.55, 731.84],
+    labelX: 189.5, labelY: 762.69,
   },
   {
     name: 'Intervene',
     desc: 'Teacher assigns personalised tasks in one click',
-    dot: [325.31, 622.17],
-    labelX: 332, labelY: 653.69,
+    dot: [325.31, 676.17],
+    labelX: 332, labelY: 707.69,
   },
   {
     name: 'Inform',
     desc: 'Parents get specific actionable nudges',
-    dot: [369.21, 482.97],
-    labelX: 356, labelY: 513.69,
+    dot: [369.21, 536.97],
+    labelX: 356, labelY: 567.69,
   },
   {
     name: 'Adapt',
     desc: 'Next day class shaped by learning evidence',
-    dot: [294.26, 357.7],
-    labelX: 302.5, labelY: 386,
+    dot: [294.26, 411.7],
+    labelX: 302.5, labelY: 440,
   },
   {
     name: 'Govern',
     desc: 'Leadership sees patterns receives actionable insights',
-    dot: [145.42, 333.07],
-    labelX: 148.5, labelY: 361,
+    dot: [145.42, 387.07],
+    labelX: 148.5, labelY: 415,
   },
 ];
 
@@ -192,10 +192,6 @@ export default function ClosedLoopSection() {
             </div>
           </div>
 
-          {/* ── Subheading below circle ────────────────────── */}
-          <p className={styles.subheading}>
-            Anchored by Teachers - Supported by Parents - AI enabled
-          </p>
         </div>
       </div>
     </section>

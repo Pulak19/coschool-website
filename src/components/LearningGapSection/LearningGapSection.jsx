@@ -7,45 +7,39 @@ const CHEVRON = '/assets/chevron-red.svg';
 const STEPS = [
   {
     title: 'Fixed Lesson Plan',
-    body: 'One-size teaching, no personalisation',
+    body: 'One-size fits all',
     img: '/assets/illus-step-1.png',
     imageLeft: true,
   },
   {
-    title: 'Hidden Learning Gaps',
-    body: 'Students practise without detection',
+    title: 'Student practice without support',
+    body: 'Gaps go unnoticed',
     img: '/assets/illus-step-2.png',
     imageLeft: false,
   },
   {
-    title: 'Generic Feedback',
-    body: 'Arrives too late, not actionable',
+    title: 'Teacher corrects homework',
+    body: 'No actionable feedback',
     img: '/assets/illus-step-3.png',
     imageLeft: true,
   },
   {
-    title: 'No timely intervention',
-    body: 'Teacher sees too late',
+    title: 'Feedback arrives late',
+    body: 'Class already moved on',
     img: '/assets/illus-step-4.png',
     imageLeft: false,
   },
   {
-    title: "Parents can't help",
-    body: 'No useful guidance from school',
+    title: 'No real-time visibility',
+    body: "Teachers and Parents can't intervene",
     img: '/assets/illus-step-5.png',
     imageLeft: true,
   },
   {
-    title: 'Gaps Carry forward',
-    body: 'Students move ahead with weak foundation',
+    title: 'Leaders lack system-wide visibility',
+    body: "Decisions don't drive change",
     img: '/assets/illus-step-2.png',
     imageLeft: false,
-  },
-  {
-    title: 'Leadership flying blind',
-    body: 'Decision without any learning visibility',
-    img: '/assets/illus-step-3.png',
-    imageLeft: true,
   },
 ];
 
@@ -137,8 +131,9 @@ export default function LearningGapSection() {
           ))}
         </div>
 
-        {/* Closing */}
-        <p className={styles.closing}>And the cycle repeats</p>
+        {/* Closing chevron + text */}
+        <ChevronSep />
+        <p className={styles.closing}>Learning Gaps Compound</p>
       </div>
     </section>
   );

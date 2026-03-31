@@ -2,10 +2,6 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './HowItWorks.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
-const SCHOOL_AI_LOGO_LEFT  = '/assets/128bcf7d26282a72f274e095622049314669b70c.svg';
-const SCHOOL_AI_LOGO_RIGHT = '/assets/b79886e508077f22b2f4fa5f999983e0684f0ed7.svg';
-const BY_COSCHOOL          = '/assets/dceefcdd05c9fb15ba2e9eb40b80b6f74efb34c0.svg';
-const CHECK_ICON           = '/assets/f23b72ff3341f4cd6ff46415458c6d512adef035.svg';
 const IPAD_FRAME           = '/assets/113f6c88d43c35ec11a950e6656f2781a318356c.png';
 const PAGINATION_SVG       = '/assets/pagination.svg';
 
@@ -107,32 +103,6 @@ const PERSONA_DATA = [
   },
 ];
 
-const FEATURE_BULLETS = [
-  'Learning evidence surfaces early.',
-  'Teachers act in time.',
-  'Parents reinforce at home.',
-];
-
-/* ── Fade-in hook ────────────────────────────────────────── */
-function useFadeIn() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('visible');
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return ref;
-}
 
 /* ── iPad mockup ─────────────────────────────────────────── */
 function IpadMockup({ src, alt, visible }) {
@@ -286,46 +256,8 @@ function PersonaSection({ persona }) {
 
 /* ── Main component ──────────────────────────────────────── */
 export default function HowItWorks() {
-  const headerRef = useFadeIn();
-  const bulletRef = useFadeIn();
-
   return (
     <section id="how-it-works" className={styles.section} aria-label="How CoSchool works">
-
-      {/* ── Gradient frame lines (3-sided ∩ around logo) ──── */}
-      <div className={styles.logoFrame} aria-hidden="true">
-        <span className={styles.logoFrameRight} />
-        <span className={styles.logoFrameShimmerTop} />
-        <span className={styles.logoFrameShimmerLeft} />
-        <span className={styles.logoFrameShimmerRight} />
-      </div>
-
-      {/* ── Section header / intro ────────────────────────── */}
-      <div ref={headerRef} className={`${styles.intro} fade-in`}>
-        <div className={styles.brandLogo} aria-label="School AI by CoSchool">
-          <div className={styles.brandLogoMain}>
-            <img src={SCHOOL_AI_LOGO_LEFT} alt="School AI" className={styles.logoLeft} width="138" loading="eager" />
-            <img src={SCHOOL_AI_LOGO_RIGHT} alt="" className={styles.logoRight} width="41" loading="eager" aria-hidden="true" />
-          </div>
-          <div className={styles.brandByRow}>
-            <span className={styles.brandByText}>by</span>
-            <img src={BY_COSCHOOL} alt="CoSchool" width="73" height="13" loading="eager" />
-          </div>
-        </div>
-
-        <p className={styles.subtitle}>Built for schools, designed for success</p>
-        <h2 className={styles.heading}>Closes the learning loop with key measures</h2>
-      </div>
-
-      {/* ── Feature bullets — plain ──────────────────────── */}
-      <div ref={bulletRef} className={`${styles.featureBullets} fade-in`}>
-        {FEATURE_BULLETS.map((text) => (
-          <div key={text} className={styles.featureBullet}>
-            <img src={CHECK_ICON} alt="" width="18" height="18" loading="lazy" aria-hidden="true" />
-            <span className={styles.featureBulletText}>{text}</span>
-          </div>
-        ))}
-      </div>
 
       {/* ── HOW IT WORKS label + connector with shimmer ──── */}
       <div className={styles.howLabelGroup}>

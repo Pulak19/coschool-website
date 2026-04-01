@@ -1,7 +1,7 @@
 import Nav from './components/Nav/Nav.jsx';
 import Hero from './components/Hero/Hero.jsx';
-// import IcebergSection from './components/IcebergSection/IcebergSection.jsx'; // archived — replaced by LearningGapSection
-import LearningGapSection from './components/LearningGapSection/LearningGapSection.jsx';
+// import IcebergSection from './components/IcebergSection/IcebergSection.jsx'; // archived
+import DisconnectedSteps from './components/DisconnectedSteps/DisconnectedSteps.jsx';
 import ClosedLoopSection from './components/ClosedLoopSection/ClosedLoopSection.jsx';
 // import LoopSequence from './components/LoopSequence/LoopSequence.jsx'; // archived — bring back when needed
 import HowItWorks from './components/HowItWorks/HowItWorks.jsx';
@@ -17,7 +17,7 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
-        <LearningGapSection />
+        <DisconnectedSteps />
         <ClosedLoopSection />
         <HowItWorks />
         <CardsStack />

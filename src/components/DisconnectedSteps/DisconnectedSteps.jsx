@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import styles from './LearningGapSection.module.css';
+import styles from './DisconnectedSteps.module.css';
 
 const CHEVRON = '/assets/chevron-red.svg';
 
@@ -105,11 +105,11 @@ function ChevronSep() {
 }
 
 /* ── Main component ──────────────────────────────────────── */
-export default function LearningGapSection() {
+export default function DisconnectedSteps() {
   const headerRef = useReveal(0.2);
 
   return (
-    <section className={styles.section} aria-label="Understanding the Learning Gap">
+    <section className={styles.section} aria-label="Disconnected Steps">
       <div className={styles.frame}>
         {/* Header */}
         <div ref={headerRef} className={styles.header}>

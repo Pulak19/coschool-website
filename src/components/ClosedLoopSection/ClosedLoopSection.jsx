@@ -195,13 +195,13 @@ export default function ClosedLoopSection() {
               </div>
             </div>
 
-            {/* ── Bottom text section ────────────────────────── */}
-            <p className={styles.bottomText}>
-              Anchored by Teachers - Supported by Parents - AI enabled
-            </p>
-
           </div>
         </div>
+
+        {/* ── Bottom text — positioned at bottom of sticky ── */}
+        <p className={styles.bottomText}>
+          Anchored by Teachers - Supported by Parents - AI enabled
+        </p>
       </div>
     </section>
   );

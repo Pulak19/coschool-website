@@ -7,7 +7,7 @@
    9 steps × ~55vh per step + 100vh for sticky = ~595vh */
 .outer {
   position: relative;
-  height: 595vh;
+  height: 700vh;
   background: #272727;
   padding-bottom: 200px;
 }
@@ -22,13 +22,14 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 /* Centered 393px frame — scales down on narrow viewports */
 .frame {
   position: relative;
   width: 393px;
-  height: 100%;
+  height: 100vh;
   flex-shrink: 0;
   transform-origin: top center;
 }
@@ -36,6 +37,14 @@
 @media (max-width: 393px) {
   .frame {
     transform: scale(calc(100vw / 393));
+  }
+}
+
+/* Scale down on short viewports so circle + header fit */
+@media (max-height: 750px) {
+  .frame {
+    transform: scale(calc(100vh / 800));
+    transform-origin: top center;
   }
 }
 

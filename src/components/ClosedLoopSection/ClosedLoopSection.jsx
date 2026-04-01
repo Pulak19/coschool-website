@@ -71,7 +71,12 @@ export default function ClosedLoopSection() {
       return;
     }
 
-    const progress = Math.min(sectionTop / scrollableHeight, 1);
+    // Dead zone: first 15% of scroll keeps circle centered, no animation
+    const deadZone = scrollableHeight * 0.15;
+    const adjustedScroll = Math.max(sectionTop - deadZone, 0);
+    const activeRange = scrollableHeight - deadZone;
+
+    const progress = Math.min(adjustedScroll / activeRange, 1);
     const step = Math.min(Math.floor(progress * TOTAL_STEPS), TOTAL_STEPS);
     setActiveStep(step);
   }, []);

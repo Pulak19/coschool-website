@@ -113,11 +113,9 @@ export default function LearningGapSection() {
       <div className={styles.frame}>
         {/* Header */}
         <div ref={headerRef} className={styles.header}>
-          <h2 className={styles.heading}>Understanding the Learning Gap</h2>
+          <h2 className={styles.heading}>Disconnected steps</h2>
           <p className={styles.subheading}>
-            A broken flow in today's education system.<br />
-            Learning gaps doesn't appear suddenly.<br />
-            They compound silently.
+            Preventing your school to become future-ready
           </p>
         </div>
 
@@ -133,7 +131,7 @@ export default function LearningGapSection() {
 
         {/* Closing chevron + text */}
         <ChevronSep />
-        <p className={styles.closing}>Learning Gaps Compound</p>
+        <p className={styles.closing}>...and the loop continues</p>
       </div>
     </section>
   );

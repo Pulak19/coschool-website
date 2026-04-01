@@ -56,14 +56,16 @@ const TOTAL_STEPS = VALUES.length + 2; // 7 values + 1 CTA reveal + 1 CTA hold
 
 export default function ClosedLoopSection() {
   const outerRef = useRef(null);
+  const stickyRef = useRef(null);
   const [activeStep, setActiveStep] = useState(0);
 
   const handleScroll = useCallback(() => {
     const outer = outerRef.current;
-    if (!outer) return;
+    const sticky = stickyRef.current;
+    if (!outer || !sticky) return;
 
-    const rect = outer.getBoundingClientRect();
-    const sectionTop = -rect.top;
+    const outerRect = outer.getBoundingClientRect();
+    const sectionTop = -outerRect.top;
     const scrollableHeight = outer.offsetHeight - window.innerHeight;
 
     if (sectionTop < 0 || scrollableHeight <= 0) {
@@ -71,10 +73,17 @@ export default function ClosedLoopSection() {
       return;
     }
 
-    // Dead zone: first 15% of scroll keeps circle centered, no animation
-    const deadZone = scrollableHeight * 0.15;
+    // Dead zone: animation starts only after the header has scrolled away
+    // and the circle is centered on screen
+    const headerHeight = sticky.offsetTop; // distance from outer top to sticky
+    const deadZone = headerHeight + (scrollableHeight * 0.05);
     const adjustedScroll = Math.max(sectionTop - deadZone, 0);
     const activeRange = scrollableHeight - deadZone;
+
+    if (activeRange <= 0) {
+      setActiveStep(0);
+      return;
+    }
 
     const progress = Math.min(adjustedScroll / activeRange, 1);
     const step = Math.min(Math.floor(progress * TOTAL_STEPS), TOTAL_STEPS);
@@ -92,12 +101,12 @@ export default function ClosedLoopSection() {
 
   return (
     <section ref={outerRef} className={styles.outer}>
-      <div className={styles.sticky}>
-        <div className={styles.frame}>
+      {/* Header scrolls away naturally */}
+      <div className={styles.headerWrap}>
+        <div className={styles.headerFrame}>
           {/* Background gradient orbs */}
           <div className={styles.orbTL} aria-hidden="true" />
           <div className={styles.orbTR} aria-hidden="true" />
-          <div className={styles.orbBL} aria-hidden="true" />
 
           {/* ── Logo frame lines with shimmer ─────────────── */}
           <div className={styles.logoFrame} aria-hidden="true">
@@ -127,76 +136,80 @@ export default function ClosedLoopSection() {
               A Closed-Loop Learning Platform for Schools
             </h2>
           </div>
+        </div>
+      </div>
 
-          {/* ── Circle + values ──────────────────────────── */}
-          <div className={styles.circleArea}>
-            <svg
-              className={styles.circleRing}
-              viewBox="0 0 352.269 352.269"
-              fill="none"
-            >
-              <defs>
-                <linearGradient id="grayGrad" x1="63.7" y1="0" x2="278.9" y2="387.6" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#000" />
-                  <stop offset="1" stopColor="#666" />
-                </linearGradient>
-              </defs>
-              <circle
-                cx="176.135"
-                cy="176.135"
-                r="175.599"
-                stroke={circleProgress >= 1 ? '#9582FF' : 'url(#grayGrad)'}
-                strokeWidth="1.07"
-                style={{ transition: 'stroke 0.6s ease' }}
-              />
-            </svg>
+      {/* Sticky circle area — pinned and centered on screen */}
+      <div ref={stickyRef} className={styles.sticky}>
+        <div className={styles.orbBL} aria-hidden="true" />
 
-            {VALUES.map((v, i) => {
-              const isSeen = i < activeStep;
-              const isActive = i === activeStep - 1 && activeStep <= VALUES.length;
-              const isVisible = isSeen || showCTA;
+        {/* ── Circle + values ──────────────────────────── */}
+        <div className={styles.circleArea}>
+          <svg
+            className={styles.circleRing}
+            viewBox="0 0 352.269 352.269"
+            fill="none"
+          >
+            <defs>
+              <linearGradient id="grayGrad" x1="63.7" y1="0" x2="278.9" y2="387.6" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#000" />
+                <stop offset="1" stopColor="#666" />
+              </linearGradient>
+            </defs>
+            <circle
+              cx="176.135"
+              cy="176.135"
+              r="175.599"
+              stroke={circleProgress >= 1 ? '#9582FF' : 'url(#grayGrad)'}
+              strokeWidth="1.07"
+              style={{ transition: 'stroke 0.6s ease' }}
+            />
+          </svg>
 
-              return (
-                <div key={v.name}>
-                  <div
-                    className={`${styles.dot} ${isVisible ? styles.dotActive : ''}`}
-                    style={{ left: v.dot[0], top: v.dot[1] }}
-                  />
-                  <span
-                    className={styles.label}
-                    style={{
-                      left: v.labelX,
-                      top: v.labelY,
-                      opacity: isActive ? 1 : isVisible || showCTA ? 0.8 : 0.1,
-                      color: isActive || isVisible || showCTA ? '#fff' : 'rgba(255,255,255,0.1)',
-                    }}
-                  >
-                    {v.name}
-                  </span>
-                </div>
-              );
-            })}
+          {VALUES.map((v, i) => {
+            const isSeen = i < activeStep;
+            const isActive = i === activeStep - 1 && activeStep <= VALUES.length;
+            const isVisible = isSeen || showCTA;
 
-            {/* Center content: number + description or CTA */}
-            <div className={styles.centerContent}>
-              {!showCTA && activeStep > 0 && activeStep <= VALUES.length && (
-                <>
-                  <span key={`num-${activeStep}`} className={styles.stepNumber}>
-                    {activeStep}
-                  </span>
-                  <p key={`desc-${activeStep}`} className={styles.description}>
-                    {VALUES[activeStep - 1].desc}
-                  </p>
-                </>
-              )}
-              {showCTA && (
-                <button className={styles.ctaBtn} type="button">
-                  Try School Ai
-                </button>
-              )}
-            </div>
+            return (
+              <div key={v.name}>
+                <div
+                  className={`${styles.dot} ${isVisible ? styles.dotActive : ''}`}
+                  style={{ left: v.dot[0] - 24, top: v.dot[1] - 386 }}
+                />
+                <span
+                  className={styles.label}
+                  style={{
+                    left: v.labelX - 24,
+                    top: v.labelY - 386,
+                    opacity: isActive ? 1 : isVisible || showCTA ? 0.8 : 0.1,
+                    color: isActive || isVisible || showCTA ? '#fff' : 'rgba(255,255,255,0.1)',
+                  }}
+                >
+                  {v.name}
+                </span>
+              </div>
+            );
+          })}
+
+          {/* Center content: number + description or CTA */}
+          <div className={styles.centerContent}>
+            {!showCTA && activeStep > 0 && activeStep <= VALUES.length && (
+              <>
+                <span key={`num-${activeStep}`} className={styles.stepNumber}>
+                  {activeStep}
+                </span>
+                <p key={`desc-${activeStep}`} className={styles.description}>
+                  {VALUES[activeStep - 1].desc}
+                </p>
+              </>
+            )}
+            {showCTA && (
+              <button className={styles.ctaBtn} type="button">
+                Try School Ai
+              </button>
+            )}
           </div>
-
         </div>
       </div>
     </section>

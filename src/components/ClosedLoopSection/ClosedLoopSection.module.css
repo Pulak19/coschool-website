@@ -1,10 +1,9 @@
 /* ─────────────────────────────────────────────────────────────
    ClosedLoopSection — Screen 1b
-   Scroll-pinned dark section with animated value circle
+   Header scrolls away, circle is sticky-centered on viewport
    ───────────────────────────────────────────────────────────── */
 
-/* Outer: tall container that creates scroll space.
-   9 steps × ~55vh per step + 100vh for sticky = ~595vh */
+/* Outer: tall container that creates scroll space */
 .outer {
   position: relative;
   height: 700vh;
@@ -12,7 +11,30 @@
   padding-bottom: 200px;
 }
 
-/* Sticky viewport-sized container */
+/* ── Header wrapper — scrolls naturally (not sticky) ─────── */
+.headerWrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #272727;
+}
+
+.headerFrame {
+  position: relative;
+  width: 393px;
+  max-width: 100%;
+  padding: 0 9px;
+}
+
+@media (max-width: 393px) {
+  .headerFrame {
+    transform: scale(calc(100vw / 393));
+    transform-origin: top center;
+  }
+}
+
+/* ── Sticky viewport-sized container (circle only) ───────── */
 .sticky {
   position: sticky;
   top: 0;
@@ -23,29 +45,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Centered 393px frame — scales down on narrow viewports */
-.frame {
-  position: relative;
-  width: 393px;
-  height: 100vh;
-  flex-shrink: 0;
-  transform-origin: top center;
-}
-
-@media (max-width: 393px) {
-  .frame {
-    transform: scale(calc(100vw / 393));
-  }
-}
-
-/* Scale down on short viewports so circle + header fit */
-@media (max-height: 750px) {
-  .frame {
-    transform: scale(calc(100vh / 800));
-    transform-origin: top center;
-  }
 }
 
 /* ── Background gradient orbs ─────────────────────────────── */
@@ -69,7 +68,7 @@
 .orbTR {
   width: 223px;
   height: 221px;
-  left: 257px;
+  right: -50px;
   top: 216px;
 }
 
@@ -221,7 +220,7 @@
   align-items: center;
   gap: 30px;
   text-align: center;
-  padding: 73px 25px 0;
+  padding: 73px 25px 60px;
   color: #fff;
   animation: revealUp 0.9s ease-out both;
 }
@@ -303,16 +302,19 @@
   max-width: 100%;
 }
 
-
-/* ── Circle area ──────────────────────────────────────────── */
+/* ── Circle area — centered in sticky viewport ───────────── */
 .circleArea {
-  position: absolute;
-  /* Circle from Figma: positioned lower to accommodate taller header with logo */
-  top: 386px;
-  left: 24px;
+  position: relative;
   width: 352px;
   height: 352px;
   animation: revealUp 1s ease-out 0.2s both;
+}
+
+/* Scale circle to fit on small screens */
+@media (max-width: 420px) {
+  .circleArea {
+    transform: scale(calc((100vw - 40px) / 352));
+  }
 }
 
 .circleRing {
@@ -333,9 +335,7 @@
   border: 1px solid #000;
   transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   z-index: 2;
-  /* Offset: dots in Figma are relative to frame (0,0=section top-left),
-     but circleArea starts at (24, 332). Adjust in inline styles. */
-  transform: translate(-24px, -386px);
+  transform: translate(-50%, -50%);
 }
 
 .dotActive {
@@ -357,8 +357,7 @@
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.1);
   z-index: 3;
-  /* Figma uses center positioning via translate -50% -50% */
-  transform: translate(calc(-50% - 24px), calc(-50% - 386px));
+  transform: translate(-50%, -50%);
   transition: opacity 0.5s ease, color 0.5s ease;
 }
 

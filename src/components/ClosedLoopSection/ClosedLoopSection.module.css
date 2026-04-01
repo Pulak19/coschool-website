@@ -3,8 +3,7 @@
    Scroll-pinned dark section with animated value circle
    ───────────────────────────────────────────────────────────── */
 
-/* Outer: tall container that creates scroll space.
-   9 steps × ~55vh per step + 100vh for sticky = ~595vh */
+/* Outer: tall container that creates scroll space */
 .outer {
   position: relative;
   height: 595vh;
@@ -24,7 +23,7 @@
   justify-content: center;
 }
 
-/* Centered 393px frame — scales down on narrow viewports */
+/* Centered 393px frame */
 .frame {
   position: relative;
   width: 393px;
@@ -203,16 +202,27 @@
   }
 }
 
-/* ── Header ───────────────────────────────────────────────── */
-.header {
+/* ── Content column — flex layout matching Figma ─────────── */
+.contentCol {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 29px;
+  padding-top: 73px;
+  width: 100%;
+}
+
+/* ── Header (Logo text section) ──────────────────────────── */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 30px;
   text-align: center;
-  padding: 73px 25px 0;
+  width: 343px;
+  max-width: 100%;
   color: #fff;
   animation: revealUp 0.9s ease-out both;
 }
@@ -290,31 +300,27 @@
   font-size: 34px;
   line-height: 1.2;
   letter-spacing: -0.288px;
-  width: 343px;
   max-width: 100%;
 }
 
-
-/* ── Circle area ──────────────────────────────────────────── */
+/* ── Circle area (Loop animation frame) ──────────────────── */
 .circleArea {
-  position: absolute;
-  /* Circle from Figma: positioned lower to accommodate taller header with logo */
-  top: 386px;
-  left: 24px;
-  width: 352px;
-  height: 352px;
+  position: relative;
+  width: 393px;
+  height: 429px;
+  flex-shrink: 0;
   animation: revealUp 1s ease-out 0.2s both;
 }
 
 .circleRing {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 10px;
+  left: 20.43px;
+  width: 352.269px;
+  height: 352.269px;
 }
 
-/* ── Dots ─────────────────────────────────────────────────── */
+/* ── Dots — positioned relative to circleArea ────────────── */
 .dot {
   position: absolute;
   width: 13px;
@@ -324,9 +330,7 @@
   border: 1px solid #000;
   transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   z-index: 2;
-  /* Offset: dots in Figma are relative to frame (0,0=section top-left),
-     but circleArea starts at (24, 332). Adjust in inline styles. */
-  transform: translate(-24px, -386px);
+  transform: translate(-50%, -50%);
 }
 
 .dotActive {
@@ -336,7 +340,7 @@
   box-shadow: 0 0 8px rgba(149, 130, 255, 0.4);
 }
 
-/* ── Labels ───────────────────────────────────────────────── */
+/* ── Labels — positioned relative to circleArea ──────────── */
 .label {
   position: absolute;
   font-family: 'Open Sans', sans-serif;
@@ -348,16 +352,15 @@
   white-space: nowrap;
   color: rgba(255, 255, 255, 0.1);
   z-index: 3;
-  /* Figma uses center positioning via translate -50% -50% */
-  transform: translate(calc(-50% - 24px), calc(-50% - 386px));
+  transform: translate(-50%, -50%);
   transition: opacity 0.5s ease, color 0.5s ease;
 }
 
 /* ── Center content ───────────────────────────────────────── */
 .centerContent {
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 177px;
   transform: translate(-50%, -50%);
   width: 195px;
   text-align: center;
@@ -410,6 +413,18 @@
   .description {
     animation: none;
   }
+}
+
+/* ── Bottom text ─────────────────────────────────────────── */
+.bottomText {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #fff;
+  text-align: center;
+  width: 307px;
+  max-width: 100%;
 }
 
 /* CTA Button */

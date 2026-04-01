@@ -5,18 +5,12 @@ import styles from './HowItWorks.module.css';
 const IPAD_FRAME           = '/assets/113f6c88d43c35ec11a950e6656f2781a318356c.png';
 const PAGINATION_SVG       = '/assets/pagination.svg';
 
-/* ── Persona avatars ─────────────────────────────────────── */
-const AVATAR_TEACHER  = '/assets/avatar-teacher.png';
-const AVATAR_STUDENT  = '/assets/avatar-student.png';
-const AVATAR_PARENT   = '/assets/avatar-parent.png';
-const ICON_SCHOOL_V2  = '/assets/icon-school-v2.svg';
-
 /* ── Persona data with slides ────────────────────────────── */
 const PERSONA_DATA = [
   {
     id: 'teacher',
-    avatar: AVATAR_TEACHER,
-    avatarType: 'photo',
+    gradientTitle: "Teacher's Assistant",
+    gradient: 'linear-gradient(98.42deg, #D2EAD2 2.06%, #F2F9F2 84.8%)',
     slides: [
       {
         feature: 'Teacher Assigns Homework',
@@ -37,8 +31,8 @@ const PERSONA_DATA = [
   },
   {
     id: 'student',
-    avatar: AVATAR_STUDENT,
-    avatarType: 'photo',
+    gradientTitle: "Student's AI tutor",
+    gradient: 'linear-gradient(104.93deg, #FCE4E4 1.71%, #FFF4F4 88.63%)',
     slides: [
       {
         feature: 'Students learn with Ai',
@@ -59,8 +53,8 @@ const PERSONA_DATA = [
   },
   {
     id: 'parent',
-    avatar: AVATAR_PARENT,
-    avatarType: 'photo',
+    gradientTitle: "Parent's confidant",
+    gradient: 'linear-gradient(104.76deg, #E2DEF8 2.28%, #F8F6FF 80.36%)',
     slides: [
       {
         feature: 'Parents get updates',
@@ -81,8 +75,8 @@ const PERSONA_DATA = [
   },
   {
     id: 'admin',
-    avatar: ICON_SCHOOL_V2,
-    avatarType: 'icon',
+    gradientTitle: "Admin's insights",
+    gradient: 'linear-gradient(109.21deg, #E2E2E2 2.92%, #F7F7F7 72.11%)',
     slides: [
       {
         feature: 'School leadership are aware',
@@ -198,18 +192,13 @@ function PersonaSection({ persona }) {
 
   return (
     <div ref={sectionRef} className={styles.persona} data-persona={persona.id}>
-      {/* Circular avatar */}
-      <div className={`${styles.avatar} ${persona.avatarType === 'icon' ? styles.avatarIcon : ''}`}>
-        <img
-          src={persona.avatar}
-          alt=""
-          className={styles.avatarImg}
-          width="71"
-          height="71"
-          loading="lazy"
-          aria-hidden="true"
-        />
-      </div>
+      {/* Gradient title */}
+      <h3
+        className={styles.gradientTitle}
+        style={{ backgroundImage: persona.gradient }}
+      >
+        {persona.gradientTitle}
+      </h3>
 
       {/* Functional pagination dots */}
       <div className={styles.dots}>

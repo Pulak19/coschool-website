@@ -63,8 +63,8 @@ export default function Hero() {
       setTimeout(() => {
         setHintIndex((prev) => (prev + 1) % HINT_TEXTS.length);
         setHintVisible(true);
-      }, 500); // fade out duration before switching
-    }, 3500); // total time per hint
+      }, 300); // brief pause then fade in next
+    }, 3000); // total display time per hint
     return () => clearInterval(interval);
   }, []);
 
@@ -116,13 +116,7 @@ export default function Hero() {
         <div className={styles.mediaCol}>
           <div className={styles.connectorArea}>
             {/* Connector line */}
-            <div className={styles.connectorLine} aria-hidden="true">
-              <img
-                src="/assets/fe4a6420c1980e7626260716b0b108c823286c69.svg"
-                alt=""
-                className={styles.connectorSvg}
-              />
-            </div>
+            <div className={styles.connector} aria-hidden="true" />
 
             {/* CTA button with Vin character */}
             <div className={styles.ctaGroup}>

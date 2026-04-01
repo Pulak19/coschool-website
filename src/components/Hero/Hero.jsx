@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Hero.module.css';
 
 /* ── School logos ────────────────────────────────────────── */
@@ -11,9 +11,18 @@ const SCHOOL_LOGOS = [
   { src: '/assets/1af9e7182a6274f1e6bf0d33e112a2214e408c3f.png', alt: 'Partner School 6' },
 ];
 
+const HINT_TEXTS = [
+  'What is a future ready school?',
+  'What is SchoolAi?',
+  'How can SchoolAi help my school?',
+  'How easy it is to adopt SchoolAi?',
+];
+
 export default function Hero() {
   const logoSet = [...SCHOOL_LOGOS, ...SCHOOL_LOGOS];
   const sectionRef = useRef(null);
+  const [hintIndex, setHintIndex] = useState(0);
+  const [hintVisible, setHintVisible] = useState(true);
 
   /* ── Interactive gradient blobs: follow pointer subtly ── */
   useEffect(() => {
@@ -47,6 +56,18 @@ export default function Hero() {
     };
   }, []);
 
+  /* ── Rotating hint text ──────────────────────────────────── */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHintVisible(false);
+      setTimeout(() => {
+        setHintIndex((prev) => (prev + 1) % HINT_TEXTS.length);
+        setHintVisible(true);
+      }, 500); // fade out duration before switching
+    }, 3500); // total time per hint
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="hero" className={styles.section} aria-label="Hero" ref={sectionRef}>
       {/* Background gradient blobs */}
@@ -59,12 +80,12 @@ export default function Hero() {
         {/* ── Text column ───────────────────────────────── */}
         <div className={styles.textCol}>
           <h1 className={styles.heading}>
-            India's trusted AI Partner for{' '}
+            Trusted AI Partner for{' '}
             <span className={styles.shimmer}>future&#8209;ready schools.</span>
           </h1>
 
           <p className={styles.subtext}>
-            Trusted by Leading Schools Across India
+            Enabling schools across India to become AI-powered
           </p>
 
           {/* School logo carousel */}
@@ -103,11 +124,6 @@ export default function Hero() {
               />
             </div>
 
-            {/* Prompt text */}
-            <p className={styles.promptText}>
-              Interested in knowing how we work?
-            </p>
-
             {/* CTA button with Vin character */}
             <div className={styles.ctaGroup}>
               <div className={styles.vinCharacter}>
@@ -118,7 +134,7 @@ export default function Hero() {
                 />
               </div>
               <button className={styles.startBtn} type="button">
-                <span className={styles.startBtnLabel}>Start Conversation</span>
+                <span className={styles.startBtnLabel}>Talk to Vin</span>
                 <img
                   src="/assets/93bd38f320dbc9a8e7727ae41126a804833c0a9b.svg"
                   alt=""
@@ -126,6 +142,11 @@ export default function Hero() {
                 />
               </button>
             </div>
+
+            {/* Rotating hint text */}
+            <p className={`${styles.hintText} ${hintVisible ? styles.hintVisible : styles.hintHidden}`}>
+              &ldquo; {HINT_TEXTS[hintIndex]} &rdquo;
+            </p>
           </div>
         </div>
 

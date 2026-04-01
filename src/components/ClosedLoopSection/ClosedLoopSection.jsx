@@ -6,7 +6,8 @@ const LOGO_LEFT  = '/assets/school-ai-logo-left-white.svg';
 const LOGO_RIGHT = '/assets/school-ai-logo-right-white.svg';
 const BY_COSCHOOL = '/assets/by-coschool-white.svg';
 
-/* ── 7 values with positions (from Figma, relative to 393px frame) ─── */
+/* ── 7 values with positions (from Figma, relative to 393px frame)
+   Clockwise from Assign (9 o'clock) → up → right → down ─── */
 const VALUES = [
   {
     name: 'Assign',
@@ -17,38 +18,38 @@ const VALUES = [
   {
     name: 'Practise',
     desc: 'AI helps students learn, prevent cheating',
-    dot: [45.85, 649.4],
-    labelX: 52.5, labelY: 677.69,
+    dot: [145.42, 387.07],
+    labelX: 148.5, labelY: 415,
   },
   {
     name: 'Evidence',
     desc: 'Teacher sees gaps- by students, by concept',
-    dot: [177.55, 731.84],
-    labelX: 189.5, labelY: 762.69,
-  },
-  {
-    name: 'Intervene',
-    desc: 'Teacher assigns personalised tasks in one click',
-    dot: [325.31, 676.17],
-    labelX: 332, labelY: 707.69,
-  },
-  {
-    name: 'Inform',
-    desc: 'Parents get specific actionable nudges',
-    dot: [369.21, 536.97],
-    labelX: 356, labelY: 567.69,
-  },
-  {
-    name: 'Adapt',
-    desc: 'Next day class shaped by learning evidence',
     dot: [294.26, 411.7],
     labelX: 302.5, labelY: 440,
   },
   {
+    name: 'Intervene',
+    desc: 'Teacher assigns personalised tasks in one click',
+    dot: [369.21, 536.97],
+    labelX: 356, labelY: 567.69,
+  },
+  {
+    name: 'Inform',
+    desc: 'Parents get specific actionable nudges',
+    dot: [325.31, 676.17],
+    labelX: 332, labelY: 707.69,
+  },
+  {
+    name: 'Adapt',
+    desc: 'Next day class shaped by learning evidence',
+    dot: [177.55, 731.84],
+    labelX: 189.5, labelY: 762.69,
+  },
+  {
     name: 'Govern',
     desc: 'Leadership sees patterns receives actionable insights',
-    dot: [145.42, 387.07],
-    labelX: 148.5, labelY: 415,
+    dot: [45.85, 649.4],
+    labelX: 52.5, labelY: 677.69,
   },
 ];
 

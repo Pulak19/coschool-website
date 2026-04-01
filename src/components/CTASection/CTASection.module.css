@@ -104,10 +104,10 @@
 
 .subheading {
   font-family: var(--font-body);
-  font-weight: var(--weight-bold);
-  font-size: var(--size-subheader);
+  font-weight: 600;
+  font-size: 18px;
   line-height: var(--lh-body);
-  letter-spacing: var(--ls-subheader);
+  letter-spacing: -0.29px;
   color: var(--color-fg-2);
   max-width: 260px;
 }
@@ -156,7 +156,7 @@
 .videoFrame {
   position: relative;
   width: 100%;
-  max-width: 347px;
+  max-width: 377px;
   border-radius: var(--radius-video);
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.8);

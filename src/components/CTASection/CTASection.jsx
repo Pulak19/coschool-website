@@ -44,17 +44,13 @@ export default function CTASection() {
           <div ref={ctaRef} className={`${styles.ctaText} fade-in`}>
             <h2 className={styles.heading}>Your next step</h2>
             <p className={styles.subheading}>
-              Book a 30&#8209;Minute Conversation
+              Book a conversation with our school specialist
             </p>
             <div className={styles.body}>
               <p>
                 We'll show you how SchoolAI works with your curriculum,
                 what implementation looks like, and what changes for your school.
               </p>
-              <p>&nbsp;</p>
-              <p><strong>No slides.</strong></p>
-              <p>&nbsp;</p>
-              <p><strong>Real conversation.</strong></p>
             </div>
             <a href="mailto:demo@coschool.in" className="btn-primary" aria-label="Book your demo with CoSchool">
               Book your Demo

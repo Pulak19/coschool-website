@@ -140,10 +140,13 @@ export default function ClosedLoopSection() {
               <circle
                 cx="176.135"
                 cy="176.135"
-                r="175.599"
+                r="174.6"
                 stroke={circleProgress >= 1 ? '#9582FF' : 'url(#grayGrad)'}
-                strokeWidth="1.07"
-                style={{ transition: 'stroke 0.6s ease' }}
+                strokeWidth="3"
+                style={{
+                  transition: 'stroke 0.6s ease',
+                  filter: circleProgress >= 1 ? 'drop-shadow(0 0 8px rgba(149,130,255,0.4))' : 'none',
+                }}
               />
             </svg>
 
@@ -155,9 +158,11 @@ export default function ClosedLoopSection() {
               return (
                 <div key={v.name}>
                   <div
-                    className={`${styles.dot} ${isVisible ? styles.dotActive : ''}`}
+                    className={`${styles.numCircle} ${isVisible ? styles.numCircleActive : ''}`}
                     style={{ left: v.dot[0], top: v.dot[1] }}
-                  />
+                  >
+                    {i + 1}
+                  </div>
                   <span
                     className={styles.label}
                     style={{

@@ -314,26 +314,32 @@
   height: 100%;
 }
 
-/* ── Dots ─────────────────────────────────────────────────── */
-.dot {
+/* ── Numbered circles ─────────────────────────────────────── */
+.numCircle {
   position: absolute;
-  width: 13px;
-  height: 13px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #272727;
   border: 1px solid #000;
-  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.29px;
+  color: #000;
   z-index: 2;
-  /* Offset: dots in Figma are relative to frame (0,0=section top-left),
-     but circleArea starts at (24, 332). Adjust in inline styles. */
-  transform: translate(-24px, -386px);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  /* Same offset as old dots — positions are relative to full frame */
+  transform: translate(calc(-50% - 24px), calc(-50% - 386px));
 }
 
-.dotActive {
+.numCircleActive {
   background: #9582FF;
-  border-color: #000;
-  border-width: 2px;
-  box-shadow: 0 0 8px rgba(149, 130, 255, 0.4);
+  box-shadow: 0 4px 14px rgba(149, 130, 255, 0.33);
 }
 
 /* ── Labels ───────────────────────────────────────────────── */
@@ -341,7 +347,7 @@
   position: absolute;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.5;
   letter-spacing: -0.29px;
   text-align: center;
@@ -390,11 +396,11 @@
 .description {
   position: relative;
   font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
+  font-weight: 600;
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: -0.29px;
-  color: #fff;
+  color: #73b462;
   text-align: center;
   animation: fadeIn 0.45s ease-out;
   z-index: 1;

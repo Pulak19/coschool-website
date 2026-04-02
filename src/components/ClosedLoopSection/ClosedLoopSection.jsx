@@ -6,50 +6,50 @@ const LOGO_LEFT  = '/assets/school-ai-logo-left-white.svg';
 const LOGO_RIGHT = '/assets/school-ai-logo-right-white.svg';
 const BY_COSCHOOL = '/assets/by-coschool-white.svg';
 
-/* ── 7 values with positions (from Figma, relative to 393px frame)
+/* ── 7 values with positions (from Figma, full-frame coords, center-based)
    Clockwise from Assign (9 o'clock) → up → right → down ─── */
 const VALUES = [
   {
     name: 'Assign',
     desc: 'Teacher sets goals, assigns practice work',
-    dot: [33, 484.51],
-    labelX: 39.5, labelY: 512.69,
+    dot: [34.57, 504.9],
+    labelX: 44, labelY: 541.4,
   },
   {
     name: 'Practise',
     desc: 'AI helps students learn, prevent cheating',
-    dot: [145.42, 387.07],
-    labelX: 148.5, labelY: 415,
+    dot: [158.57, 390.9],
+    labelX: 162, labelY: 425.5,
   },
   {
     name: 'Evidence',
     desc: 'Teacher sees gaps- by students, by concept',
-    dot: [294.26, 411.7],
-    labelX: 302.5, labelY: 440,
+    dot: [308.57, 422.9],
+    labelX: 306, labelY: 457.5,
   },
   {
     name: 'Intervene',
     desc: 'Teacher assigns personalised tasks in one click',
-    dot: [369.21, 536.97],
-    labelX: 356, labelY: 567.69,
+    dot: [373.57, 538.9],
+    labelX: 348, labelY: 574.19,
   },
   {
     name: 'Inform',
     desc: 'Parents get specific actionable nudges',
-    dot: [325.31, 676.17],
-    labelX: 332, labelY: 707.69,
+    dot: [328.57, 677.9],
+    labelX: 329, labelY: 713.19,
   },
   {
     name: 'Adapt',
     desc: 'Next day class shaped by learning evidence',
-    dot: [177.55, 731.84],
-    labelX: 189.5, labelY: 762.69,
+    dot: [188.57, 737.9],
+    labelX: 189, labelY: 773.19,
   },
   {
     name: 'Govern',
     desc: 'Leadership sees patterns receives actionable insights',
-    dot: [45.85, 649.4],
-    labelX: 52.5, labelY: 677.69,
+    dot: [56.57, 660.9],
+    labelX: 57, labelY: 696.19,
   },
 ];
 
@@ -181,14 +181,9 @@ export default function ClosedLoopSection() {
             {/* Center content: number + description or CTA */}
             <div className={styles.centerContent}>
               {!showCTA && activeStep > 0 && activeStep <= VALUES.length && (
-                <>
-                  <span key={`num-${activeStep}`} className={styles.stepNumber}>
-                    {activeStep}
-                  </span>
-                  <p key={`desc-${activeStep}`} className={styles.description}>
-                    {VALUES[activeStep - 1].desc}
-                  </p>
-                </>
+                <p key={`desc-${activeStep}`} className={styles.description}>
+                  {VALUES[activeStep - 1].desc}
+                </p>
               )}
               {showCTA && (
                 <button className={styles.ctaBtn} type="button">

@@ -370,28 +370,6 @@
   z-index: 4;
 }
 
-/* Large faded step number behind text */
-.stepNumber {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Roboto Serif', serif;
-  font-weight: 300;
-  font-size: 200px;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  z-index: -1;
-  animation: numberFlip 0.5s ease-out;
-}
-
-@keyframes numberFlip {
-  0%   { opacity: 0; transform: translate(-50%, -50%) scaleY(0.4) translateY(20px); }
-  50%  { opacity: 0.06; transform: translate(-50%, -50%) scaleY(1.05); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scaleY(1); }
-}
-
 /* Description text */
 .description {
   position: relative;
@@ -412,7 +390,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stepNumber,
   .description {
     animation: none;
   }

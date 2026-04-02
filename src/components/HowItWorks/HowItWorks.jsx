@@ -3,94 +3,98 @@ import styles from './HowItWorks.module.css';
 
 /* ── Assets ──────────────────────────────────────────────── */
 const IPAD_FRAME           = '/assets/113f6c88d43c35ec11a950e6656f2781a318356c.png';
+const IPHONE_FRAME         = '/assets/iphone-17-black-portrait.png';
 const PAGINATION_SVG       = '/assets/pagination.svg';
 
 /* ── Persona data with slides ────────────────────────────── */
 const PERSONA_DATA = [
   {
     id: 'teacher',
-    gradientTitle: "Teacher's Assistant",
-    gradient: 'linear-gradient(98.42deg, #D2EAD2 2.06%, #F2F9F2 84.8%)',
+    gradientLabel: 'For',
+    gradientTitle: 'Teacher',
+    gradient: 'linear-gradient(101.16deg, #D2EAD2 2.06%, #F2F9F2 84.8%)',
+    mockup: 'ipad',
     slides: [
       {
         feature: 'Teacher Assigns Homework',
-        body: 'Set goals, unlocks chapters, maintains complete control — the natural way.',
+        body: "Set goals and assign differentiated homework — aligned to students' needs.",
         screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
       },
       {
-        feature: 'Monitor Student Progress',
-        body: 'Real-time visibility into student practice — see who needs help before they fall behind.',
+        feature: 'Get insights without correction load',
+        body: 'See learning gaps by student and concept — without manual correction.',
         screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
       },
       {
-        feature: 'Targeted Interventions',
-        body: 'Identify gaps early and act precisely — no more guesswork in the classroom.',
+        feature: 'Intervene where it matters',
+        body: 'Give every student the right support — in one click.',
+        screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
+      },
+      {
+        feature: 'Get adaptive lesson plans',
+        body: 'Get lesson plans that update daily based on class gaps.',
         screenSrc: '/assets/de0511d6ca4655271fdce0eb2eb0753e8b72f669.png',
       },
     ],
   },
   {
     id: 'student',
-    gradientTitle: "Student's AI tutor",
-    gradient: 'linear-gradient(104.93deg, #FCE4E4 1.71%, #FFF4F4 88.63%)',
+    gradientLabel: 'For',
+    gradientTitle: 'Student',
+    gradient: 'linear-gradient(109.58deg, #FCE4E4 1.71%, #FFF4F4 88.63%)',
+    mockup: 'ipad',
     slides: [
       {
-        feature: 'Students learn with Ai',
-        body: 'Set goals, unlocks chapters, maintains complete control — the natural way.',
+        feature: 'Do homework without getting stuck',
+        body: 'AI tutor, Vin supports students without giving away answers — building the habit of finding them.',
         screenSrc: '/assets/cb1235a3896fed456878160b7b5b29c154f2f94b.png',
       },
       {
-        feature: 'Practice at Their Own Pace',
-        body: 'Adaptive questions that meet students where they are — building confidence step by step.',
+        feature: 'Get a personalised study plan',
+        body: "Study plans adapt to each student's gaps and goals — and update as they improve.",
         screenSrc: '/assets/cb1235a3896fed456878160b7b5b29c154f2f94b.png',
       },
       {
-        feature: 'Track Your Journey',
-        body: 'Visual dashboards showing learning progress, strengths, and areas to improve.',
+        feature: 'See their learning index',
+        body: "Students see their learning journey over time — what's mastered and what needs focus.",
         screenSrc: '/assets/cb1235a3896fed456878160b7b5b29c154f2f94b.png',
       },
     ],
   },
   {
     id: 'parent',
-    gradientTitle: "Parent's confidant",
-    gradient: 'linear-gradient(104.76deg, #E2DEF8 2.28%, #F8F6FF 80.36%)',
+    gradientLabel: 'For',
+    gradientTitle: 'Parents',
+    gradient: 'linear-gradient(109.35deg, #E2DEF8 2.28%, #F8F6FF 80.36%)',
+    mockup: 'iphone',
     slides: [
       {
-        feature: 'Parents get updates',
-        body: 'Set goals, unlocks chapters, maintains complete control — the natural way.',
+        feature: 'Get insights on their child',
+        body: 'Clear visibility into strengths, gaps, and progress — without needing to ask.',
         screenSrc: '/assets/1c63e34f92b80349e2364f3e551c5057aa1cee4f.png',
       },
       {
-        feature: 'Daily Insights',
-        body: 'See what your child practiced today — stay informed without hovering.',
-        screenSrc: '/assets/1c63e34f92b80349e2364f3e551c5057aa1cee4f.png',
-      },
-      {
-        feature: 'Support at Home',
-        body: 'Guided activities to reinforce what was learned in class — meaningful involvement.',
+        feature: 'Support learning at home',
+        body: 'Simple, actionable steps help parents support learning beyond school.',
         screenSrc: '/assets/1c63e34f92b80349e2364f3e551c5057aa1cee4f.png',
       },
     ],
   },
   {
     id: 'admin',
-    gradientTitle: "Admin's insights",
-    gradient: 'linear-gradient(109.21deg, #E2E2E2 2.92%, #F7F7F7 72.11%)',
+    gradientLabel: 'For',
+    gradientTitle: 'Leadership',
+    gradient: 'linear-gradient(114.91deg, #E2E2E2 2.92%, #F7F7F7 72.11%)',
+    mockup: 'iphone',
     slides: [
       {
-        feature: 'School leadership are aware',
-        body: 'Set goals, unlocks chapters, maintains complete control — the natural way.',
+        feature: 'Get school-wide insights',
+        body: 'A single view of learning across classes, grades, and subjects — at a glance.',
         screenSrc: '/assets/71cc0798fdcb1e14b3d0fbf37d1137e8a3480bf8.png',
       },
       {
-        feature: 'School-wide Analytics',
-        body: 'Aggregate learning data across grades — see the big picture at a glance.',
-        screenSrc: '/assets/71cc0798fdcb1e14b3d0fbf37d1137e8a3480bf8.png',
-      },
-      {
-        feature: 'Evidence-based Decisions',
-        body: 'Data-driven curriculum planning — no more blind calls on what to prioritise.',
+        feature: 'Get alerts, take action',
+        body: 'Real-time alerts highlight issues early — with clear next steps to act fast.',
         screenSrc: '/assets/71cc0798fdcb1e14b3d0fbf37d1137e8a3480bf8.png',
       },
     ],
@@ -117,6 +121,23 @@ function IpadMockup({ src, alt, visible }) {
           className={styles.ipadFrame}
           width="430"
           height="306"
+          loading="lazy"
+          aria-hidden="true"
+        />
+      </div>
+    </div>
+  );
+}
+
+/* ── iPhone mockup ────────────────────────────────────────── */
+function IphoneMockup({ src, alt, visible }) {
+  return (
+    <div className={`${styles.iphoneWrap} ${visible ? styles.ipadVisible : styles.ipadHidden}`}>
+      <div className={styles.iphoneInner}>
+        <img
+          src={IPHONE_FRAME}
+          alt=""
+          className={styles.iphoneFrame}
           loading="lazy"
           aria-hidden="true"
         />
@@ -192,13 +213,14 @@ function PersonaSection({ persona }) {
 
   return (
     <div ref={sectionRef} className={styles.persona} data-persona={persona.id}>
-      {/* Gradient title */}
-      <h3
+      {/* Gradient title — 2-line: small label + large name */}
+      <div
         className={styles.gradientTitle}
         style={{ backgroundImage: persona.gradient }}
       >
-        {persona.gradientTitle}
-      </h3>
+        <span className={styles.gradientLabel}>{persona.gradientLabel}</span>
+        <span className={styles.gradientName}>{persona.gradientTitle}</span>
+      </div>
 
       {/* Functional pagination dots */}
       <div className={styles.dots}>
@@ -229,14 +251,23 @@ function PersonaSection({ persona }) {
       </div>
 
       {/* Image — crossfade, stays in place */}
-      <div className={styles.imageArea}>
+      <div className={persona.mockup === 'iphone' ? styles.imageAreaPhone : styles.imageArea}>
         {persona.slides.map((slide, i) => (
-          <IpadMockup
-            key={i}
-            src={slide.screenSrc}
-            alt={`${slide.feature} screen`}
-            visible={i === activeIndex}
-          />
+          persona.mockup === 'iphone' ? (
+            <IphoneMockup
+              key={i}
+              src={slide.screenSrc}
+              alt={`${slide.feature} screen`}
+              visible={i === activeIndex}
+            />
+          ) : (
+            <IpadMockup
+              key={i}
+              src={slide.screenSrc}
+              alt={`${slide.feature} screen`}
+              visible={i === activeIndex}
+            />
+          )
         ))}
       </div>
     </div>

@@ -31,7 +31,7 @@ const STEPS = [
   },
   {
     title: 'No real-time visibility',
-    body: "Teachers and Parents can't intervene",
+    body: "Teachers and Parents can't intervene timely",
     img: '/assets/illus-step-5-new.png',
     imageLeft: true,
   },
@@ -113,9 +113,9 @@ export default function DisconnectedSteps() {
       <div className={styles.frame}>
         {/* Header */}
         <div ref={headerRef} className={styles.header}>
-          <h2 className={styles.heading}>Disconnected steps</h2>
+          <h2 className={styles.heading}>Disconnected Steps</h2>
           <p className={styles.subheading}>
-            Preventing your school to become future-ready
+            Preventing your school from becoming future-ready
           </p>
         </div>
 

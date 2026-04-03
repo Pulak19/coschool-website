@@ -46,12 +46,6 @@ export default function CTASection() {
             <p className={styles.subheading}>
               Book a conversation with our school specialist
             </p>
-            <div className={styles.body}>
-              <p>
-                We'll show you how SchoolAI works with your curriculum,
-                what implementation looks like, and what changes for your school.
-              </p>
-            </div>
             <a href="mailto:demo@coschool.in" className="btn-primary" aria-label="Book your demo with CoSchool">
               Book your Demo
             </a>
@@ -76,7 +70,7 @@ export default function CTASection() {
               />
             </div>
 
-            <p className={styles.videoLabel}>Product Walkthrough</p>
+            <p className={styles.videoLabel}>Click Above To Watch</p>
           </div>
         </div>
       </div>

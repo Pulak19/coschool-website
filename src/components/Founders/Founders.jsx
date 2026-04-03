@@ -64,8 +64,7 @@ export default function Founders() {
         <div className={styles.contentBlock}>
           <div ref={bioRef} className="fade-in">
             <p className={styles.bioText}>
-              Naga Tummala and Raj Yarlagadda—35+ years combined experience in
-              Indian education. They built SchoolAI to solve the problems they lived.
+              33+ years of building child-centric institutions like Oakridge International &amp; Vikas, Co-founders of ARISE, and contributors to NEP 2020.
             </p>
           </div>
 

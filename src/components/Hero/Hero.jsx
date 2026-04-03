@@ -20,9 +20,8 @@ const SCHOOL_LOGOS = [
 
 const HINT_TEXTS = [
   'What is a future ready school?',
-  'What is SchoolAi?',
-  'How can SchoolAi help my school?',
-  'How easy it is to adopt SchoolAi?',
+  'How can Coschool help my School?',
+  'What does it improve class averages?',
 ];
 
 export default function Hero() {
@@ -88,7 +87,7 @@ export default function Hero() {
         <div className={styles.textCol}>
           <h1 className={styles.heading}>
             Trusted AI Partner for{' '}
-            <span className={styles.shimmer}>future&#8209;ready schools.</span>
+            <span className={styles.shimmer}>future&#8209;ready schools</span>
           </h1>
 
           <p className={styles.subtext}>

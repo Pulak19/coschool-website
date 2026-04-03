@@ -17,13 +17,13 @@ const VALUES = [
   },
   {
     name: 'Practise',
-    desc: 'AI helps students learn, prevent cheating',
+    desc: 'AI helps students learn, prevents cheating',
     dot: [158.57, 390.9],
     labelX: 162, labelY: 425.5,
   },
   {
     name: 'Evidence',
-    desc: 'Teacher sees gaps- by students, by concept',
+    desc: 'Teacher sees gaps - by student, by concept',
     dot: [308.57, 422.9],
     labelX: 306, labelY: 457.5,
   },
@@ -35,19 +35,19 @@ const VALUES = [
   },
   {
     name: 'Inform',
-    desc: 'Parents get specific actionable nudges',
+    desc: 'Parents get specific, actionable nudges',
     dot: [328.57, 677.9],
     labelX: 329, labelY: 713.19,
   },
   {
     name: 'Adapt',
-    desc: 'Next day class shaped by learning evidence',
+    desc: "Next day's class shaped by learning evidence",
     dot: [188.57, 737.9],
     labelX: 189, labelY: 773.19,
   },
   {
     name: 'Govern',
-    desc: 'Leadership sees patterns receives actionable insights',
+    desc: 'Leadership sees patterns, receives actionable insights',
     dot: [56.57, 660.9],
     labelX: 57, labelY: 696.19,
   },

@@ -258,8 +258,8 @@
 }
 
 .logoSlot {
-  width: 95px;
-  height: 95px;
+  width: 114px;
+  height: 114px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,8 +267,8 @@
 }
 
 .schoolLogo {
-  width: 76px;
-  height: 76px;
+  width: 91px;
+  height: 91px;
   object-fit: contain;
   border-radius: 50%;
 }

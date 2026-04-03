@@ -24,7 +24,7 @@ const STEPS = [
     imageLeft: true,
   },
   {
-    title: 'feedback arrives late',
+    title: 'Feedback arrives late',
     body: 'Class already moved on',
     img: '/assets/illus-step-4-new.png',
     imageLeft: false,

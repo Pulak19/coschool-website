@@ -120,7 +120,7 @@ export default function ClosedLoopSection() {
             </div>
 
             <h2 className={styles.heading}>
-              A Closed-Loop Learning Platform for Schools
+              Closed-Loop Learning Platform for Schools
             </h2>
           </div>
 
@@ -187,7 +187,7 @@ export default function ClosedLoopSection() {
               )}
               {showCTA && (
                 <button className={styles.ctaBtn} type="button">
-                  Try School Ai
+                  Try SchoolAi
                 </button>
               )}
             </div>

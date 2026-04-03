@@ -295,7 +295,7 @@ export default function HowItWorks() {
       {/* ── Bottom CTA ───────────────────────────────────── */}
       <div className={styles.ctaWrap}>
         <a href="#cta" className={`btn-primary ${styles.ctaBtn}`}>
-          Try School Ai for free
+          Try SchoolAi for free
         </a>
       </div>
     </section>

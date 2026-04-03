@@ -5,34 +5,22 @@ const QUOTE_ICON = '/assets/quote-open-green.svg';
 
 const TESTIMONIALS = [
   {
-    name: 'Priya Sharma',
-    role: 'Parent',
-    photo: '',
-    quote: 'For the first time, I actually know what my child is struggling with — not after exams, but while it\'s happening. The daily nudges help me support learning at home without guesswork.',
+    name: 'Fr. Bharath Reddy',
+    role: 'Principal, STEM School, Guntur',
+    photo: '/assets/testimonial-bharat-reddy.png',
+    quote: 'After adopting SchoolAi, children are getting support in completing homework, revising concepts, and clearing doubts, helping them go beyond the textbook.',
   },
   {
-    name: 'Ravi Menon',
-    role: 'Teacher',
-    photo: '',
-    quote: 'I used to spend hours correcting notebooks with no real impact. Now I see exactly where each student is stuck and can act the very next class. It\'s changed how I teach.',
+    name: 'Ms. Manisha Joshi',
+    role: 'Principal, Mother Mary\'s School, Delhi',
+    photo: '/assets/testimonial-manisha-joshi.png',
+    quote: 'Through SchoolAi, our students receive real personalised learning support and doubt clarification 24/7. Something that was not possible before in any means.',
   },
   {
-    name: 'Dr. Anita Desai',
-    role: 'School Leader',
-    photo: '',
-    quote: 'We finally have learning evidence — not just exam scores. The dashboards help us make decisions that actually move the needle on student outcomes.',
-  },
-  {
-    name: 'Kavitha Reddy',
-    role: 'Parent',
-    photo: '',
-    quote: 'We were spending a fortune on tuition classes. Since the school adopted this, my daughter\'s confidence has gone up and we\'ve been able to cut back significantly.',
-  },
-  {
-    name: 'Suresh Iyer',
-    role: 'Teacher',
-    photo: '',
-    quote: 'The AI doesn\'t replace me — it amplifies what I do. I walk into class knowing exactly who understood yesterday\'s lesson and who didn\'t. That precision is powerful.',
+    name: 'Dr. Rupamala Singh',
+    role: 'Principal, Hayde Heritage Academy, Uttarakhand',
+    photo: '/assets/testimonial-rupamala-singh.png',
+    quote: 'Parents at our school now do not worry about extra tuition, as students are getting the support they need from SchoolAi.',
   },
 ];
 

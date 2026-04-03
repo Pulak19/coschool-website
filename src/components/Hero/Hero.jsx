@@ -3,12 +3,19 @@ import styles from './Hero.module.css';
 
 /* ── School logos ────────────────────────────────────────── */
 const SCHOOL_LOGOS = [
-  { src: '/assets/7189a43be41332f496c96c2c441cb0d41369c051.png', alt: 'Partner School 1' },
-  { src: '/assets/317ba6c582beb06f3b2d8582cf8f2825f34cfd9e.png', alt: 'Partner School 2' },
-  { src: '/assets/56cacf5efbe291c1a7ad94ff87df708d3478cdc6.png', alt: 'Partner School 3' },
-  { src: '/assets/21cd530f0bc18ad3630da63e3150ea96c4118dfe.png', alt: 'Partner School 4' },
-  { src: '/assets/ab8ed4ef94483d8e032d65850d16e40465e94f48.png', alt: 'Partner School 5' },
-  { src: '/assets/1af9e7182a6274f1e6bf0d33e112a2214e408c3f.png', alt: 'Partner School 6' },
+  { src: '/assets/school-logo-1.png', alt: 'Partner School 1' },
+  { src: '/assets/school-logo-2.png', alt: 'Partner School 2' },
+  { src: '/assets/school-logo-3.png', alt: 'Partner School 3' },
+  { src: '/assets/school-logo-4.png', alt: 'Partner School 4' },
+  { src: '/assets/school-logo-5.png', alt: 'Partner School 5' },
+  { src: '/assets/school-logo-6.png', alt: 'Partner School 6' },
+  { src: '/assets/school-logo-7.png', alt: 'Partner School 7' },
+  { src: '/assets/school-logo-8.png', alt: 'Partner School 8' },
+  { src: '/assets/school-logo-9.png', alt: 'Partner School 9' },
+  { src: '/assets/school-logo-10.png', alt: 'Partner School 10' },
+  { src: '/assets/school-logo-11.png', alt: 'Partner School 11' },
+  { src: '/assets/school-logo-12.png', alt: 'Partner School 12' },
+  { src: '/assets/school-logo-13.png', alt: 'Partner School 13' },
 ];
 
 const HINT_TEXTS = [

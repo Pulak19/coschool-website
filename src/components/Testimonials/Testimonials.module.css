@@ -1,9 +1,9 @@
 /* ─────────────────────────────────────────────────────────────
-   Testimonials — horizontal scrolling cards
+   Testimonials — horizontal scrolling cards (redesigned)
    ───────────────────────────────────────────────────────────── */
 
 .section {
-  background: #fff;
+  background: #f7fff5;
   padding: 80px 0 80px;
   overflow: hidden;
 }
@@ -82,7 +82,7 @@
 
 .scrollTrack {
   display: flex;
-  gap: 16px;
+  gap: 13px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -96,46 +96,49 @@
 
 /* ── Card ─────────────────────────────────────────────────── */
 .card {
-  flex: 0 0 280px;
+  flex: 0 0 310px;
   scroll-snap-align: start;
-  background: linear-gradient(135deg, #fff 0%, #f6faf4 100%);
-  border: 1px solid #dbe6da;
-  border-radius: 16px;
-  padding: 24px;
+  background: linear-gradient(130.5deg, #fff 36.67%, #EAFBE5 103.13%);
+  border: 1px solid #dce9d3;
+  border-radius: 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 8px 24px rgba(110, 188, 57, 0.06);
+  gap: 11px;
 }
 
-@media (min-width: 768px) {
-  .card {
-    flex: 0 0 320px;
-  }
-}
-
-/* ── Card top — avatar + meta ─────────────────────────────── */
+/* ── Card top — photo + meta ──────────────────────────────── */
 .cardTop {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-end;
+  gap: 11px;
 }
 
-.avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.photoWrap {
+  width: 69px;
+  height: 90px;
+  border-radius: 16px 16px 16px 0;
+  border: 2px solid #fff;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   background: linear-gradient(135deg, #a5d187 0%, #62a135 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
-.avatarInitial {
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photoInitial {
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 28px;
   color: #fff;
   line-height: 1;
 }
@@ -143,35 +146,47 @@
 .cardMeta {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 5px;
 }
 
 .cardName {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: 600;
+  font-size: 18px;
   line-height: 1.5;
-  color: #3c3d3c;
+  letter-spacing: -0.29px;
+  color: #434c3d;
 }
 
 .cardRole {
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
-  letter-spacing: 1px;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: #62a135;
+  color: #73b462;
 }
 
-/* ── Quote ─────────────────────────────────────────────────── */
+/* ── Quote block ──────────────────────────────────────────── */
+.quoteBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quoteIcon {
+  width: 14px;
+  height: 12px;
+  display: block;
+}
+
 .cardQuote {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
   color: #434c3d;
-  font-style: italic;
 }
 
 /* ── Reduced motion ───────────────────────────────────────── */
